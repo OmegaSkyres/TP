@@ -1,4 +1,5 @@
 package tp.pr1;
 
-public enum Level {
+public enum Level { EASY, HARD, INSANE;
+
 }

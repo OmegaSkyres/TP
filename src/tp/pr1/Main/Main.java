@@ -1,6 +1,7 @@
 package tp.pr1.Main;
 
 import tp.pr1.Controller;
+import tp.pr1.Game;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -17,7 +18,7 @@ public class Main {
 		}*/
 
         Scanner in = new Scanner(System.in);
-
+        Game game = new Game();
         Controller controller = new Controller(size, initCells, random, in);
         System.out.println(size + " " + initCells);
         controller.run();

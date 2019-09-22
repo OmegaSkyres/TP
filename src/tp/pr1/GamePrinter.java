@@ -6,4 +6,14 @@ public class GamePrinter {
     String vDelimiter = "|";
     String hDelimiter = "-";
 
+    public GamePrinter(Game game){
+
+    }
+
+    public String toString(){
+
+
+        return "";
+    }
+
 }
