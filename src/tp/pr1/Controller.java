@@ -9,7 +9,7 @@ public class Controller {
 
 
     public Controller(int size, int numInitial, Random random, Scanner in) {
-        game = new Game(size, numInitial, random);
+        //game = new Game(size, numInitial, random);
         in = in;
     }
 
@@ -17,6 +17,7 @@ public class Controller {
     public void run(){
         String userCommand = "";
         System.out.print(game);
+        /*
         while(!game.isOver() && !game.isBlocked() && !"exit".equals(userCommand)) {
 
             System.out.print("Command > ");
@@ -39,5 +40,7 @@ public class Controller {
                 else
                     System.out.println("\nMove must be followed by a direction: up, down, left or right");
             }
+
+         */
     }
 }
