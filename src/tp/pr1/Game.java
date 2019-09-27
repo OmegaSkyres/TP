@@ -16,14 +16,11 @@ public class Game {
     private Random rand;
 
     public Game(){
-         UCMShip ship = new UCMShip(7,4);
+
 
     }
 
-    public String position(){
-        UCMShip ship = new UCMShip(7,4);
-        return ship.toString();
-    }
+
     public void update(int newround, int newpoints, Random newrandom, boolean newshockWave, int newnumberEnemies, int newlifes){
         round = newround;
         points = newpoints;
@@ -36,7 +33,11 @@ public class Game {
     }
 
     public void initGame(){
+        UCMShip ship = new UCMShip(7,4);
+    }
 
+    public void validate(int i, int j){
+        if ()
     }
     /*
     public boolean isOver(){

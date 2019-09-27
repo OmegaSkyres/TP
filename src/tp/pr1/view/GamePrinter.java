@@ -20,7 +20,7 @@ public class GamePrinter {
         board = new String[numRows][numCols];
         for(int i = 0; i < numRows; i++){
             for(int j = 0; j < numCols; i++){
-                game.position();
+                game.(i,j); //Revisar
             }
         }
         // TODO Codifica el game como una matriz numRowsxnumCols de Strings
