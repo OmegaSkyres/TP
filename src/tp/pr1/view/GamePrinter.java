@@ -1,16 +1,21 @@
 package tp.pr1.view;
 import tp.pr1.Game;
+import tp.pr1.UCMShip;
 import tp.pr1.util.MyStringUtils;
+import tp.pr1.UCMShip;
+
+
 
 public class GamePrinter {
 
     Game game;
+    String[][] board;
     int numRows;
     int numCols;
-    String[][] board;
     final String space = " ";
+    UCMShip ship = new UCMShip();
 
-    public GamePrinter (Game game, int cols, int rows) {
+    public GamePrinter (Game game, int rows, int cols) {
         this.game = game;
         this.numRows = rows;
         this.numCols = cols;
@@ -19,11 +24,10 @@ public class GamePrinter {
     private void encodeGame() {
         board = new String[numRows][numCols];
         for(int i = 0; i < numRows; i++){
-            for(int j = 0; j < numCols; i++){
-                game.(i,j); //Revisar
+            for(int j = 0; j < numCols; j++){
+            	board[i][j] = game.position(i, j);
             }
         }
-        // TODO Codifica el game como una matriz numRowsxnumCols de Strings
     }
 
     public String toString() {
