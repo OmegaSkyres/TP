@@ -65,8 +65,9 @@ public class Game {
 	
 	public boolean missileLaunch() {
 		
-		if(missile.getEnable()) return false;
-		else return missile.getEnable();
+		if(missile.getEnable()) return false; //Si el misil no se ha lanzado lo lanzamos y si no no se puede lanzar
+		else
+
 	}
 	
 	
