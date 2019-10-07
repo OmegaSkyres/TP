@@ -32,7 +32,7 @@ public class Controller {
             	break;
             case "shoot":
             case "s":
-            	game.missileLaunch();
+            	game.posibleLaunch();
             	
             	break;
             }

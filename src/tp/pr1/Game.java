@@ -10,6 +10,7 @@ public class Game {
 	private Missile missile;
     private RegularShipList regularShip;
     private DestroyerShipList destroyerShip;
+    private boolean missileLaunch = false;
     private BombList bombList;
     public GamePrinter GamePrinter;
     private int cycle;
@@ -38,18 +39,16 @@ public class Game {
         if(missile.getEnable())
         	missile.missileMove();
     }
-	
+
 	public String position(int numRows, int numCols) {
 		if (numRows == ROWS - 1) {
 			if (numCols == player.UCMShipPosition()) {
 				return player.toString();
 			}
-			else if (missile.getEnable()) {
-				missileLaunch();
-				if (numRows == missile.missilePositionY() && numCols == missile.missilePositionX()) {
-					System.out.println("gfds");
+			if (missileLaunch) {
+				if (numRows - 1 == missile.missilePositionY() && numCols == missile.missilePositionX()) {
 					return missile.toString();
-					
+
 				}
 				else return " ";
 			}
@@ -63,10 +62,12 @@ public class Game {
 	}
 	
 	
-	public boolean missileLaunch() {
+	public void posibleLaunch() {
 		
-		if(missile.getEnable()) return false; //Si el misil no se ha lanzado lo lanzamos y si no no se puede lanzar
-		else
+		if(missile.getEnable()) missileLaunch = false; //Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
+		else {
+			missileLaunch = true;
+		}
 
 	}
 	
