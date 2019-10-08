@@ -172,5 +172,21 @@ public class Game {
 	}
 
 	public void help() {
+    	/*
+    	System.out.println("move <left|right><1|2>: Moves UCM-Ship to the indicated direction.");
+		shoot: UCM-Ship launches a missile.
+		shockWave: UCM-Ship releases a shock wave.
+		list: Prints the list of available ships.
+		reset: Starts a new game.
+		help: Prints this help message.
+		exit: Terminates the program.
+	    [none]: Skips one cycle.
+
+);
+    	 */
+	}
+
+	public void skip() {
+    	this.cycle++;
 	}
 }

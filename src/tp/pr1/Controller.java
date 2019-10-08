@@ -49,6 +49,9 @@ public class Controller {
                 case "help":
                     game.help();
                     break;
+                case "none":
+                    game.skip();
+                    break;
 
             }
         	game.setCycle(game.getCycle() + 1);
