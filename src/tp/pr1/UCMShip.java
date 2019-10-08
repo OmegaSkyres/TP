@@ -2,17 +2,17 @@ package tp.pr1;
 
 public class UCMShip {
 
-    private int life;
+    public int life; //TODO PREGUNTAR POR ESTE PARAMETRO SI ES PUBLICO O PRIVADO
 	private static final int row = 7;
-	private int col;
+	private int column;
 	
 	public UCMShip() {
-		col = 4;
+		column = 4;
 		life = 3;
 	}
 	
 	public int UCMShipPosition() {
-		return col;
+		return column;
 	}
 
     public String toString(){
@@ -21,11 +21,11 @@ public class UCMShip {
     }
     
     public void moveRight() {
-    	if (col < Game.COLS - 1) col++;
+    	if (column < Game.COLS - 1) column++;
     }
     
     public void moveLeft() {
-    	if (col > 0) col--;
+    	if (column > 0) column--;
     }
     
     public boolean isAlive() {
@@ -34,7 +34,7 @@ public class UCMShip {
     }
 
     public boolean isOnPosition(int x, int y){
-		if(x == row && y == col) return true;
+		if(x == row && y == column) return true;
 		else return false;
 	}
 

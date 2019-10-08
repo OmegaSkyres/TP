@@ -32,14 +32,15 @@ public class Game {
     	lifes = 0;
     }
 
-	public void update(int newcycle, int newpoints, Random newrandom, boolean newshockWave, int newnumberEnemies, int newlifes){
+	public void update(){
+    	/*
         setCycle(newcycle++);
         points = newpoints;
         rand = newrandom;
         superpower = newshockWave;
         numberEnemies = newnumberEnemies;
         lifes = newlifes;
-        
+        */
         if(missile.getEnable()){
 			missile.missileMove();
 		}
@@ -55,6 +56,7 @@ public class Game {
 		}
 		else if (missileLaunch) {
 			if (numRows == missile.missilePositionY() && numCols == missile.missilePositionX()) {
+				missile.setEnable();
 				return missile.toString();
 
 			}
@@ -86,20 +88,16 @@ public class Game {
 	public boolean gameOver() {
 		return player.isAlive();
 	}
-    /*
+
     public boolean isOver(){
         boolean over = false;
 
-        if(round == Game.Objective)
+        if(player.life == 0)
             over = true;
 
         return over;
     }
 
-    public Boolean isBlocked() {
-        return _board.isBlocked();
-    }
-    */
     @Override
     public String toString() {
         String game;
@@ -113,14 +111,10 @@ public class Game {
         return game;
     }
     
-    /*
-    public void reset(){
-        board.initBoard();
-        points = 0;
-        randomInitCells();
-    }
 
-     */
+    public void reset(){
+        points = 0;
+    }
 
 	public int getCycle() {
 		return cycle;
@@ -165,5 +159,18 @@ public class Game {
 		if(player.isOnPosition(x,y)){
 			player.recibeDamage(damage);
 		}
+	}
+
+	public void shockwave() {
+    	
+	}
+
+	public void list() {
+	}
+
+	public void exit() {
+	}
+
+	public void help() {
 	}
 }
