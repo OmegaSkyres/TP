@@ -1,14 +1,14 @@
 package tp.pr1;
 
 public class UCMShip {
-    
-    private int resistance;
+
+    private int life;
 	private static final int row = 7;
 	private int col;
 	
 	public UCMShip() {
 		col = 4;
-		resistance = 3;	
+		life = 3;
 	}
 	
 	public int UCMShipPosition() {
@@ -29,7 +29,18 @@ public class UCMShip {
     }
     
     public boolean isAlive() {
-    	if(resistance == 0) return false;
+    	if(life == 0) return false;
     	else return true;
     }
+
+    public boolean isOnPosition(int x, int y){
+		if(x == row && y == col) return true;
+		else return false;
+	}
+
+	public void recibeDamage(int damage){
+		if(this.life > 0){
+			this.life = this.life - damage;
+		}
+	}
 }

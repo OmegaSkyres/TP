@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class Game {
 	private UCMShip player;
+	private RegularShip ship;
 	private Missile missile;
     private RegularShipList regularShip;
     private DestroyerShipList destroyerShip;
@@ -35,9 +36,14 @@ public class Game {
         setCycle(newcycle++);
         points = newpoints;
         rand = newrandom;
+        superpower = newshockWave;
+        numberEnemies = newnumberEnemies;
+        lifes = newlifes;
         
-        if(missile.getEnable())
-        	missile.missileMove();
+        if(missile.getEnable()){
+			missile.missileMove();
+		}
+
     }
 
 	public String position(int numRows, int numCols) {
@@ -45,12 +51,12 @@ public class Game {
 			if (numCols == player.UCMShipPosition()) {
 				return player.toString();
 			}
-			if (missileLaunch) {
-				if (numRows - 1 == missile.missilePositionY() && numCols == missile.missilePositionX()) {
-					return missile.toString();
+			else return " ";
+		}
+		else if (missileLaunch) {
+			if (numRows == missile.missilePositionY() && numCols == missile.missilePositionX()) {
+				return missile.toString();
 
-				}
-				else return " ";
 			}
 			else return " ";
 		}
@@ -147,7 +153,17 @@ public class Game {
 		return missile.getEnable();
 	}
 	
-	public void setMissileLauche() {
+	public void setMissileLauch() {
 		this.missile.active = true;
+	}
+
+	private void moveDestroyerShip(){
+
+	}
+
+	public void attackbomb(int x, int y, int damage){
+		if(player.isOnPosition(x,y)){
+			player.recibeDamage(damage);
+		}
 	}
 }
