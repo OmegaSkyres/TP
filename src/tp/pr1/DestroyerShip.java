@@ -13,7 +13,7 @@ public class DestroyerShip {
 
     public String toString(){
         String nave;
-        return nave = "D[3]";
+        return nave = "D[" + life +"]";
     }
 
     public void moveRight() {

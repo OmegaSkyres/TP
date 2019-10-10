@@ -15,7 +15,7 @@ public class RegularShip {
 
     public String toString(){
         String nave;
-        return nave = "C[3]";
+        return nave = "C[" + life +"]";
     }
 
     public void moveRight() {

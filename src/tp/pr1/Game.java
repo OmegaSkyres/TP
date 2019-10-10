@@ -9,11 +9,12 @@ public class Game {
 	private UCMShip player;
 	private RegularShip ship;
 	private Missile missile;
-    private RegularShipList regularShip;
-    private DestroyerShipList destroyerShip;
+    private RegularShipList listRegularShips;
+    private DestroyerShipList listDestroyerShips;
     private boolean missileLaunch = false;
     private BombList bombList;
     public GamePrinter GamePrinter;
+    private int seed;
     private int cycle;
     private int points;
     private int lifes;
@@ -22,10 +23,13 @@ public class Game {
     private int numberEnemies;
     private boolean superpower;
     private Random rand;
+    private Level level;
     
-    public Game(){
+    public Game(){//level,seed){
     	this.player = new UCMShip();
     	this.missile = new Missile();
+    	this.listRegularShips = new RegularShipList();
+    	this.listDestroyerShips= new DestroyerShipList(level);
     	GamePrinter = new GamePrinter(this, ROWS, COLS);
     	setCycle(0);
     	points = 0;
@@ -33,17 +37,13 @@ public class Game {
     }
 
 	public void update(){
-    	/*
-        setCycle(newcycle++);
-        points = newpoints;
-        rand = newrandom;
-        superpower = newshockWave;
-        numberEnemies = newnumberEnemies;
-        lifes = newlifes;
-        */
         if(missile.getEnable()){
 			missile.missileMove();
 		}
+        
+        if (missile.missilePositionY() < 0) {
+        	resetMissile();
+        }
 
     }
 
@@ -75,11 +75,17 @@ public class Game {
 		if(missile.getEnable()) missileLaunch = false; //Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
 		else {
 			missileLaunch = true;
+			missile.x = player.UCMShipPosition();
 		}
 
 	}
 	
-	
+	public void resetMissile() {
+			missile.active = false;
+			missileLaunch = false;
+			missile.reset();
+		
+	}
 	
 	public String toStringBoard() {
 		return GamePrinter.toString();
@@ -172,18 +178,15 @@ public class Game {
 	}
 
 	public void help() {
-    	/*
-    	System.out.println("move <left|right><1|2>: Moves UCM-Ship to the indicated direction.");
-		shoot: UCM-Ship launches a missile.
-		shockWave: UCM-Ship releases a shock wave.
-		list: Prints the list of available ships.
-		reset: Starts a new game.
-		help: Prints this help message.
-		exit: Terminates the program.
-	    [none]: Skips one cycle.
+    	System.out.println("move <left|right><1|2>: Moves UCM-Ship to the indicated direction." + "\n" +
+				"shoot: UCM-Ship launches a missile." + "\n" +
+		"shockWave: UCM-Ship releases a shock wave. " + "\n" +
+		"list: Prints the list of available ships. " + "\n" +
+		"reset: Starts a new game." + "\n" +
+		"help: Prints this help message." + "\n" +
+		"exit: Terminates the program." + "\n" +
+	    "[none]: Skips one cycle."+ "\n" + "\n");
 
-);
-    	 */
 	}
 
 	public void skip() {

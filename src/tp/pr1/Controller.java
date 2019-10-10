@@ -16,7 +16,7 @@ public class Controller {
 
     public void run(){   
         while (game.gameOver()) {
-            game.update();//game.getCycle(),game.getPoints(),game.getRandom(),game.getSuperpower() ,game.getNumerEnemies(), game.getlifes());
+            game.update();
         	System.out.println(game);
         	System.out.print("Command > ");
         	String cmd = sc.nextLine().toLowerCase();
