@@ -1,7 +1,7 @@
 package tp.pr1;
 
 public class DestroyerShipList {
-    private DestroyerShip[] list;
+    DestroyerShip[] list;
     private int contador = 0;
     private DestroyerShip ship = new DestroyerShip();
 

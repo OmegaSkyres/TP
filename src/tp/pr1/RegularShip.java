@@ -35,7 +35,10 @@ public class RegularShip {
         if(this.life > 0){
             this.life = this.life - damage;
         }
-        else deleteShip();
+        else{
+            deleteShip();
+            game.po
+        }
     }
 
     public String deleteShip() {

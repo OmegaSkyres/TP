@@ -1,7 +1,7 @@
 package tp.pr1;
 
 public class RegularShipList {
-    RegularShip[] list;
+    RegularShip[] list; //Privado o Public?
     private RegularShip ship;
     private int contador = 0;
     

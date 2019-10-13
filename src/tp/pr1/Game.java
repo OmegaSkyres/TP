@@ -58,6 +58,10 @@ public class Game {
         	else if (missile.missilePositionY() == ovni.getPositionY()){
         		resetMissile();
         		ovni.recibeDamage(1);
+        		if(!superpower){
+					superpower = true;
+				}
+
 			}
 			missile.missileMove();
 		}
@@ -298,13 +302,6 @@ public class Game {
 
 	}
 
-	public void moveOvni(){
-    	if(ovni.isActive()){
-
-		}
-
-	}
-
 
 
 	public void attackbomb(int x, int y, int damage){
@@ -314,6 +311,18 @@ public class Game {
 	}
 
 	public void shockwave() {
+    	if(superpower){
+    		for(int i = 0; i <listRegularShips.list.length; i++){
+    			listRegularShips.list[i].recibeDamage(1);
+			}
+			for(int i = 0; i <listDestroyerShips.; i++){
+				listRegularShips.list[i].recibeDamage(1);
+			}
+    		if(ovni.isActive()){
+    			ovni.recibeDamage(1);
+			}
+
+		}
     	
 	}
 
