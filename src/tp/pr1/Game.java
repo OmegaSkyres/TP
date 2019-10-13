@@ -295,11 +295,15 @@ public class Game {
 	}
 
 	public void moveRegularShips(){
-
+		for(int i = 0; i <listRegularShips.list.length; i++){
+			listRegularShips.list[i].moveLeft();
+		}
 	}
 
 	public void moveDestroyerShip(){
-
+		for(int i = 0; i <listDestroyerShips.; i++){
+			listRegularShips.list[i].moveLeft();
+		}
 	}
 
 
