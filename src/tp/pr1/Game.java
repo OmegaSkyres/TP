@@ -47,12 +47,27 @@ public class Game {
     		System.out.println("Aliens win");
 		}
         if(missile.getEnable()){
+        	if(missile.missilePositionY() == ship.getPositionY()){
+        		resetMissile();
+        		ship.recibeDamage(1);
+			}
+        	else if (missile.missilePositionY() == destroyerShip.getPositionY()){
+        		resetMissile();
+        		destroyerShip.recibeDamage(1);
+			}
+        	else if (missile.missilePositionY() == ovni.getPositionY()){
+        		resetMissile();
+        		ovni.recibeDamage(1);
+			}
 			missile.missileMove();
 		}
         
         if (missile.missilePositionY() < 0) {
         	resetMissile();
         }
+        if(ovni.isActive()){
+        	ovni.move();
+		}
 
     }
 
@@ -75,8 +90,8 @@ public class Game {
 			else return " ";
 		}
 		else if (bombLauch) {
-			if (numRows == bomb.PositionY() && numCols == bomb.PositionX()) {
-				bomb.setEnable();
+			if (numRows == bomb.getPositionY() && numCols == bomb.getPositionX()) {
+				bomb.setActive(true);
 				return missile.toString();
 
 			}
@@ -279,9 +294,18 @@ public class Game {
 
 	}
 
-	private void moveDestroyerShip(){
+	public void moveDestroyerShip(){
 
 	}
+
+	public void moveOvni(){
+    	if(ovni.isActive()){
+
+		}
+
+	}
+
+
 
 	public void attackbomb(int x, int y, int damage){
 		if(player.isOnPosition(x,y)){

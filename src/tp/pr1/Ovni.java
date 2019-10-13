@@ -54,4 +54,21 @@ public class Ovni {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    public void incrementPositionY(){
+        this.column++;
+    }
+
+    public void incrementPositionX(){
+        this.row++;
+    }
+
+    public void move(){
+        if(getPositionY() == 0){
+          incrementPositionY();
+        }
+        else{
+            moveLeft();
+        }
+    }
 }

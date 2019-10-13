@@ -3,8 +3,8 @@ package tp.pr1;
 public class Bomb {
     private DestroyerShip ship;
     private boolean active;
-    private int positionX;
-    private int positionY;
+    private int row;
+    private int column;
 
     public Bomb(){
 
@@ -25,22 +25,23 @@ public class Bomb {
     }
 
     public int getPositionX() {
-        return positionX;
+        return row;
     }
 
     public int getPositionY() {
-        return positionY;
+        return column;
     }
 
     public void setPositionX(int positionX) {
-        this.positionX = positionX;
+        this.row = positionX;
     }
 
     public void setPositionY(int positionY) {
-        this.positionY = positionY;
+        this.column = positionY;
     }
 
     public boolean isActive() {
         return active;
     }
+
 }

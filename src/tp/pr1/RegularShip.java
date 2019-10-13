@@ -35,6 +35,12 @@ public class RegularShip {
         if(this.life > 0){
             this.life = this.life - damage;
         }
+        else deleteShip();
+    }
+
+    public String deleteShip() {
+        String nave;
+        return " ";
     }
 
     public int getPositionY(){
