@@ -301,7 +301,7 @@ public class Game {
 	}
 
 	public void moveDestroyerShip(){
-		for(int i = 0; i <listDestroyerShips.; i++){
+		for(int i = 0; i <listDestroyerShips.list.length; i++){
 			listRegularShips.list[i].moveLeft();
 		}
 	}
@@ -319,7 +319,7 @@ public class Game {
     		for(int i = 0; i <listRegularShips.list.length; i++){
     			listRegularShips.list[i].recibeDamage(1);
 			}
-			for(int i = 0; i <listDestroyerShips.; i++){
+			for(int i = 0; i <listDestroyerShips.list.length; i++){
 				listRegularShips.list[i].recibeDamage(1);
 			}
     		if(ovni.isActive()){
