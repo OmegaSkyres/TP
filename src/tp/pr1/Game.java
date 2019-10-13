@@ -8,10 +8,14 @@ import java.util.Random;
 public class Game {
 	private UCMShip player;
 	private RegularShip ship;
+	private DestroyerShip destroyerShip;
+	private Bomb bomb;
 	private Missile missile;
     private RegularShipList listRegularShips;
     private DestroyerShipList listDestroyerShips;
+    private Ovni ovni;
     private boolean missileLaunch = false;
+    private boolean bombLauch = false;
     private BombList bombList;
     public GamePrinter GamePrinter;
     private int seed;
@@ -23,20 +27,25 @@ public class Game {
     private int numberEnemies;
     private boolean superpower;
     private Random rand;
-    private Level level;
+    private String level;
+
     
-    public Game(){//level,seed){
+    public Game(String difficulty, int seed){
     	this.player = new UCMShip();
     	this.missile = new Missile();
-    	this.listRegularShips = new RegularShipList();
+    	this.listRegularShips = new RegularShipList(level);
     	this.listDestroyerShips= new DestroyerShipList(level);
     	GamePrinter = new GamePrinter(this, ROWS, COLS);
     	setCycle(0);
     	points = 0;
-    	lifes = 0;
+    	lifes = 3;
+
     }
 
 	public void update(){
+    	if(isGameOver()){
+    		System.out.println("Aliens win");
+		}
         if(missile.getEnable()){
 			missile.missileMove();
 		}
@@ -49,8 +58,11 @@ public class Game {
 
 	public String position(int numRows, int numCols) {
 		if (numRows == ROWS - 1) {
-			if (numCols == player.UCMShipPosition()) {
-				return player.toString();
+			if (numCols == player.UCMShipPositionY()) {
+				if(player.life == 0){
+					return player.deathString();
+				}
+				else return player.toString();
 			}
 			else return " ";
 		}
@@ -62,20 +74,132 @@ public class Game {
 			}
 			else return " ";
 		}
+		else if (bombLauch) {
+			if (numRows == bomb.PositionY() && numCols == bomb.PositionX()) {
+				bomb.setEnable();
+				return missile.toString();
+
+			}
+			else return " ";
+		}
+		else if (level == "EASY"){
+			if(!ovni.isActive()){
+				if(numeroRandom() == 2){
+					if(numRows == 0){
+						if(numCols == ovni.getPositionY()){
+							return ovni.toString();
+						}
+					}
+				}
+			}
+			 if (numRows == ROWS - 8){
+				 if(numCols == COLS - 6) {
+					for(int i = 0; i < 4; i++){
+						return ship.toString();
+					}
+				}
+			 }
+			 if(numRows == ROWS - 7) {
+				 if(numCols == COLS - 5) {
+					 for (int i = 0; i < 2; i++) {
+						 return destroyerShip.toString();
+					 }
+				 }
+			 }
+		}
+
+		else if (level == "HARD"){
+			if(!ovni.isActive()) {
+				if (numeroRandom() == 3) {
+					if (numRows == 0) {
+						if (numCols == ovni.getPositionY()) {
+							return ovni.toString();
+						}
+					}
+				}
+			}
+			if (numRows == ROWS - 8){
+				if(numCols == COLS - 6) {
+					for(int i = 0; i < 4; i++){
+						return ship.toString();
+					}
+				}
+			}
+			if(numRows == ROWS - 7) {
+				if(numCols == COLS - 6) {
+					for(int i = 0; i < 4; i++){
+						return ship.toString();
+					}
+				}
+			}
+			if(numRows == ROWS - 6) {
+				if(numCols == COLS - 5) {
+					for (int i = 0; i < 2; i++) {
+						return destroyerShip.toString();
+					}
+				}
+			}
+		}
+
+		else if (level == "INSANE"){
+			if(!ovni.isActive()) {
+				if (numeroRandom() == 1) {
+					if (numRows == 0) {
+						if (numCols == ovni.getPositionY()) {
+							return ovni.toString();
+						}
+					}
+				}
+			}
+			if (numRows == ROWS - 8){
+				if(numCols == COLS - 6) {
+					for(int i = 0; i < 4; i++){
+						return ship.toString();
+					}
+				}
+			}
+			if(numRows == ROWS - 7) {
+				if(numCols == COLS - 6) {
+					for(int i = 0; i < 4; i++){
+						return ship.toString();
+					}
+				}
+			}
+			if(numRows == ROWS - 6) {
+				if(numCols == COLS - 5) {
+					for (int i = 0; i < 4; i++) {
+						return destroyerShip.toString();
+					}
+				}
+			}
+		}
 		else return " ";
 	}
 	
 	public int getPosShip() {
-		return player.UCMShipPosition();
+		return player.UCMShipPositionY();
 	}
-	
+	public int numeroRandom(){
+
+		double random = Math.random();// generamos un numero al azar entre 0 y 1
+		if (random < 0.1)// el 10% restante
+			return 1;
+
+		if(random > 0.1 && random < 0.6)// el 50% de las veces
+			return 2;
+
+		else if(random > 0.6 && random <0.8)// el 20% de las veces
+			return 3;
+
+		else return 0;
+	}
 	
 	public void posibleLaunch() {
 		
 		if(missile.getEnable()) missileLaunch = false; //Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
 		else {
 			missileLaunch = true;
-			missile.x = player.UCMShipPosition();
+			missile.x = player.UCMShipPositionY();
 		}
 
 	}
@@ -91,18 +215,12 @@ public class Game {
 		return GamePrinter.toString();
 	}
 	
-	public boolean gameOver() {
-		return player.isAlive();
+	public boolean isGameOver() {
+		if ((player.life == 0) || (ship.getPositionX() == player.UCMShipPositionX()) || destroyerShip.getPositionX() == player.UCMShipPositionX()){
+			return true;
+		}
+		else return false;
 	}
-
-    public boolean isOver(){
-        boolean over = false;
-
-        if(player.life == 0)
-            over = true;
-
-        return over;
-    }
 
     @Override
     public String toString() {
@@ -157,6 +275,10 @@ public class Game {
 		this.missile.active = true;
 	}
 
+	public void moveRegularShips(){
+
+	}
+
 	private void moveDestroyerShip(){
 
 	}
@@ -172,6 +294,11 @@ public class Game {
 	}
 
 	public void list() {
+		System.out.println(" [R]egular ship: Points: 5 - Harm: 0 - Shield: 2" + "\n" +
+				"[D]estroyer ship: Points: 10 - Harm: 1 - Shield: 1" + "\n" +
+				"[O]vni: Points: 25 - Harm: 0 - Shield: 1" + "\n" +
+				"^__^: Harm: 1 - Shield: 3"+ "\n" + "\n");
+
 	}
 
 	public void exit() {
@@ -191,5 +318,9 @@ public class Game {
 
 	public void skip() {
     	this.cycle++;
+	}
+
+	public String selectDifficulty(){
+
 	}
 }

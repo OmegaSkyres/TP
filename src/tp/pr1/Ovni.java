@@ -1,11 +1,12 @@
 package tp.pr1;
 
 public class Ovni {
-    private int file = 0;
+    private int row = 0;
     private int column = 8;
     private int life = 1;
     private Game game;
     private int points = 25;
+    private boolean active;
 
     public Ovni(){
 
@@ -33,5 +34,24 @@ public class Ovni {
         if(this.life > 0){
             this.life = this.life - damage;
         }
+    }
+
+    public int getPositionX(){
+        return row;
+    }
+
+    public int getPositionY(){
+        return column;
+    }
+
+    public boolean isActive() {
+        if(active){
+            return true;
+        }
+        else return false;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

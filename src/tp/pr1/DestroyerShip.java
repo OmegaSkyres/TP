@@ -34,4 +34,12 @@ public class DestroyerShip {
             this.life = this.life - damage;
         }
     }
+
+    public int getPositionX(){
+        return file;
+    }
+
+    public int getPositionY(){
+        return column;
+    }
 }

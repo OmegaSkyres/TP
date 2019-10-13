@@ -5,9 +5,8 @@ public class DestroyerShipList {
     private int contador = 0;
     private DestroyerShip ship = new DestroyerShip();
 
-    public DestroyerShipList(Level level){
-
-
+    public DestroyerShipList(String level){
+        list = new DestroyerShip[8];
 
     }
 

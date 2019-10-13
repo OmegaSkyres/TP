@@ -1,9 +1,14 @@
 package tp.pr1;
 
 public class Bomb {
+    private DestroyerShip ship;
     private boolean active;
     private int positionX;
     private int positionY;
+
+    public Bomb(){
+
+    }
 
     public String toString(){
         String bomb;

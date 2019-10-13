@@ -9,8 +9,8 @@ public class RegularShip {
     private Game game;
     private int points = 5;
 
-    public RegularShip(Level level){
-
+    public RegularShip(){
+        this.column = 4;
     }
 
     public String toString(){
@@ -36,4 +36,13 @@ public class RegularShip {
             this.life = this.life - damage;
         }
     }
+
+    public int getPositionY(){
+        return column;
+    }
+
+    public int getPositionX(){
+        return row;
+    }
+
 }

@@ -15,13 +15,15 @@ public class Controller {
 
 
     public void run(){   
-        while (game.gameOver()) {
+        while (game.isGameOver()) {
             game.update();
         	System.out.println(game);
         	System.out.print("Command > ");
         	String cmd = sc.nextLine().toLowerCase();
         	
         	switch(cmd) {
+                case "move":
+                    //TODO ARREGLAR
                 case "left":
                 case "a":
                     game.moveLeft();
@@ -32,24 +34,31 @@ public class Controller {
                     game.moveRight();
                     break;
                 case "shoot":
+                case "s":
                     game.posibleLaunch();
                     break;
                 case "superpower":
+                case "w":
                     game.shockwave();
                     break;
                 case "reset":
+                case "r":
                     game.reset();
                     break;
                 case "list":
+                case "l":
                     game.list();
                     break;
                 case "exit":
+                case "e":
                     game.exit();
                     break;
                 case "help":
+                case "h":
                     game.help();
                     break;
                 case "none":
+                case "n":
                     game.skip();
                     break;
 
