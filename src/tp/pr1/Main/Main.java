@@ -3,9 +3,7 @@ package tp.pr1.Main;
 import tp.pr1.Controller;
 
 import tp.pr1.Game;
-import tp.pr1.view.GamePrinter;
-
-import java.util.Random;
+import tp.pr1.Level;
 import java.util.Scanner;
 
 public class Main {

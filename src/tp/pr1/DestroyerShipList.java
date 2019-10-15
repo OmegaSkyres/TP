@@ -5,28 +5,27 @@ public class DestroyerShipList {
     private int contador = 0;
     private DestroyerShip ship = new DestroyerShip();
 
-    public DestroyerShipList(String level){
+    public DestroyerShipList(Level level){
         list = new DestroyerShip[8];
         initPosition(level);
     }
 
-    public void initPosition(String level) {
-        if(level == "EASY"){
+    public void initPosition(Level level) {
+        if(level.toString() == "EASY"){
+            for(int i = 0; i < 2; i++){
+                list[i] = new DestroyerShip();
+            }
+        }
+        else if(level.toString() == "HARD"){
+            for(int i = 0; i < 2; i++){
+                list[i] = new DestroyerShip();
+            }
+        }
+        else if (level.toString() == "INSANE") {
             for(int i = 0; i < 4; i++){
                 list[i] = new DestroyerShip();
             }
         }
-        else if(level == "HARD"){
-            for(int i = 0; i < 8; i++){
-                list[i] = new DestroyerShip();
-            }
-        }
-        else if (level == "INSANE") {
-            for(int i = 0; i < 8; i++){
-                list[i] = new DestroyerShip();
-            }
-        }
-
     }
 
     public DestroyerShip getDestroyerShip(int contador){

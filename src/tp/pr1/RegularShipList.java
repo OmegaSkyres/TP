@@ -6,23 +6,23 @@ public class RegularShipList {
     private int contador = 0;
     
     
-    public RegularShipList(String level) {
+    public RegularShipList(Level level) {
     	list = new RegularShip[8];
     	initPosition(level);
     }
     
-    public void initPosition(String level) {
-        if(level == "EASY"){
+    public void initPosition(Level level) {
+        if(level.toString() == "EASY"){
             for(int i = 0; i < 4; i++){
                 list[i] = new RegularShip();
             }
         }
-        else if(level == "HARD"){
+        else if(level.toString() == "HARD"){
             for(int i = 0; i < 8; i++){
                 list[i] = new RegularShip();
             }
         }
-        else if (level == "INSANE") {
+        else if (level.toString() == "INSANE") {
             for(int i = 0; i < 8; i++){
                 list[i] = new RegularShip();
             }

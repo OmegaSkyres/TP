@@ -38,6 +38,7 @@ public class RegularShip {
         }
         else{
             deleteShip();
+            game.reduceNumberEnemies(1);
             game.addPoints(points);
         }
     }

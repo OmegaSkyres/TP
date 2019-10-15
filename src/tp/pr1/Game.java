@@ -27,10 +27,10 @@ public class Game {
     private int numberEnemies;
     private boolean superpower;
     private Random rand;
-    private String level = "EASY";
+    private Level level;
 
     
-    public Game(String difficulty, int seed){
+    public Game(Level difficulty, int seed){
     	this.player = new UCMShip();
     	this.missile = new Missile();
     	this.listRegularShips = new RegularShipList(level);
@@ -62,13 +62,14 @@ public class Game {
 					destroyerShip.recibeDamage(1);
 				}
 			}
-        	if (missile.missilePositionY() == ovni.getPositionY()){
-        		resetMissile();
-        		ovni.recibeDamage(1);
-        		if(!superpower){
-					superpower = true;
+			if(ovni.isActive()){
+				if (missile.missilePositionY() == ovni.getPositionY()){
+					resetMissile();
+					ovni.recibeDamage(1);
+					if(!superpower){
+						superpower = true;
+					}
 				}
-
 			}
 			missile.missileMove();
 		}
@@ -82,7 +83,29 @@ public class Game {
 
     }
 
+	public boolean posibleOvni(Level level){
+		int random = newRandom();
+		boolean generate = false;
+		if(level.toString() == "EASY"){
+			if(random == 2) {
+				generate = true;
+			}
+		}
+		else if(level.toString() == "HARD"){
+			if (random == 3){
+				generate = true;
+			}
+		}
+		else if (level.toString() == "INSANE"){
+			if (random == 1){
+				generate = true;
+			}
+		}
+		return generate;
+	}
+
 	public String position(int numRows, int numCols) {
+    	String string = " ";
 		if (numRows == ROWS - 1) {
 			if (numCols == player.UCMShipPositionY()) {
 				if(player.life == 0){
@@ -92,122 +115,40 @@ public class Game {
 			}
 			else return " ";
 		}
-		else if (missileLaunch) {
+		if (numberEnemies > 0){
+			for(int i = 0; i < listRegularShips) //TODO HACER ESTO
+		}
+		if (missileLaunch) {
 			if (numRows == missile.missilePositionY() && numCols == missile.missilePositionX()) {
 				missile.setEnable();
 				return missile.toString();
-
 			}
 			else return " ";
 		}
-		else if (bombLauch) {
+		if (bombLauch) {
 			if (numRows == bomb.getPositionY() && numCols == bomb.getPositionX()) {
 				bomb.setActive(true);
-				return missile.toString();
+				return bomb.toString();
 
 			}
 			else return " ";
 		}
-		else if (level == "EASY"){
-			if(!ovni.isActive()){
-				if(numeroRandom() == 2){
-					if(numRows == 0){
-						if(numCols == ovni.getPositionY()){
-							return ovni.toString();
-						}
-					}
-				}
-			}
-			if (numRows == ROWS - 8){
-				if(numCols == COLS - 6) {
-					for(int i = 0; i < 4; i++){
-						return ship.toString();
-					}
-				}
-			}
-			if(numRows == ROWS - 7) {
-				if(numCols == COLS - 5) {
-					for (int i = 0; i < 2; i++) {
-						return destroyerShip.toString();
+		if(!ovni.isActive()) {
+			if (posibleOvni(level)) {
+				if (numRows == 0) {
+					if (numCols == ovni.getPositionY()) {
+						return ovni.toString();
 					}
 				}
 			}
 		}
-
-		else if (level == "HARD"){
-			if(!ovni.isActive()) {
-				if (numeroRandom() == 3) {
-					if (numRows == 0) {
-						if (numCols == ovni.getPositionY()) {
-							return ovni.toString();
-						}
-					}
-				}
-			}
-			if (numRows == ROWS - 8){
-				if(numCols == COLS - 6) {
-					for(int i = 0; i < 4; i++){
-						return ship.toString();
-					}
-				}
-			}
-			if(numRows == ROWS - 7) {
-				if(numCols == COLS - 6) {
-					for(int i = 0; i < 4; i++){
-						return ship.toString();
-					}
-				}
-			}
-			if(numRows == ROWS - 6) {
-				if(numCols == COLS - 5) {
-					for (int i = 0; i < 2; i++) {
-						return destroyerShip.toString();
-					}
-				}
-			}
-		}
-
-		else if (level == "INSANE"){
-			if(!ovni.isActive()) {
-				if (numeroRandom() == 1) {
-					if (numRows == 0) {
-						if (numCols == ovni.getPositionY()) {
-							return ovni.toString();
-						}
-					}
-				}
-			}
-			if (numRows == ROWS - 8){
-				if(numCols == COLS - 6) {
-					for(int i = 0; i < 4; i++){
-						return ship.toString();
-					}
-				}
-			}
-			if(numRows == ROWS - 7) {
-				if(numCols == COLS - 6) {
-					for(int i = 0; i < 4; i++){
-						return ship.toString();
-					}
-				}
-			}
-			if(numRows == ROWS - 6) {
-				if(numCols == COLS - 5) {
-					for (int i = 0; i < 4; i++) {
-						return destroyerShip.toString();
-					}
-				}
-			}
-		}
-			return " ";
-
+		return string;
 	}
 
-	
 	public int getPosShip() {
 		return player.UCMShipPositionY();
 	}
-	public int numeroRandom(){
+	public int newRandom(){
 
 		double random = Math.random();// generamos un numero al azar entre 0 y 1
 		if (random < 0.1)// el 10% restante
@@ -227,7 +168,7 @@ public class Game {
 		if(missile.getEnable()) missileLaunch = false; //Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
 		else {
 			missileLaunch = true;
-			missile.x = player.UCMShipPositionY();
+			missile.row = player.UCMShipPositionY();
 		}
 
 	}
@@ -369,7 +310,6 @@ public class Game {
     		if(ovni.isActive()){
     			ovni.recibeDamage(1);
 			}
-
 		}
     	
 	}
@@ -383,6 +323,7 @@ public class Game {
 	}
 
 	public void exit() {
+		System.out.println("Game Over" + "\n" + "\n");
 	}
 
 	public void help() {
