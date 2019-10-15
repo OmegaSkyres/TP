@@ -48,4 +48,7 @@ public class Bomb {
         return active;
     }
 
+    public void reset() {
+
+    }
 }

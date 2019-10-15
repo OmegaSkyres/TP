@@ -13,7 +13,8 @@ public class Main {
         if(args.length > 1){
             seed = Integer.parseInt(args[1]);
         }
-    	Game game = new Game(difficulty,seed);
+        Level level = Level.transform(difficulty);
+    	Game game = new Game(level,seed);
     	Scanner sc = new Scanner(System.in);
         Controller controller = new Controller(game, sc);
         controller.run();

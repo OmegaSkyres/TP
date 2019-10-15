@@ -33,8 +33,8 @@ public class Game {
     public Game(Level difficulty, int seed){
     	this.player = new UCMShip();
     	this.missile = new Missile();
-    	this.listRegularShips = new RegularShipList(level);
-    	this.listDestroyerShips= new DestroyerShipList(level);
+    	this.listRegularShips = new RegularShipList(difficulty);
+    	this.listDestroyerShips= new DestroyerShipList(difficulty);
     	GamePrinter = new GamePrinter(this, ROWS, COLS);
     	setCycle(0);
     	points = 0;
@@ -71,17 +71,27 @@ public class Game {
 					}
 				}
 			}
+			attackbomb(missile.missilePositionX(),missile.missilePositionY(),1);
+
 			missile.missileMove();
 		}
         
         if (missile.missilePositionY() < 0) {
         	resetMissile();
         }
+        if(bomb.getPositionX() < 0){
+        	resetBomb();
+		}
         if(ovni.isActive()){
         	ovni.move();
 		}
 
     }
+
+	private void resetBomb() {
+    	bomb.setActive(false);
+		bomb.reset();
+	}
 
 	public boolean posibleOvni(Level level){
 		int random = newRandom();
@@ -116,7 +126,9 @@ public class Game {
 			else return " ";
 		}
 		if (numberEnemies > 0){
-			for(int i = 0; i < listRegularShips) //TODO HACER ESTO
+			for(int i = 0; i < listRegularShips.list.length; i++){
+					//if(numRows) TODO COMO PONER LAS NAVECITAS
+			}
 		}
 		if (missileLaunch) {
 			if (numRows == missile.missilePositionY() && numCols == missile.missilePositionX()) {

@@ -2,15 +2,15 @@ package tp.pr1;
 
 public enum Level { EASY, HARD, INSANE;
     public static Level transform(String difficulty) {
-        if ("easy".equals(difficulty)) {
+        if ("EASY".equals(difficulty)) {
             return EASY;
         }
 
-        else if ("hard".equals(difficulty)) {
+        else if ("HARD".equals(difficulty)) {
             return HARD;
         }
 
-        else if ("insane".equals(difficulty)){
+        else if ("INSANE".equals(difficulty)){
             return INSANE;
         }
 
