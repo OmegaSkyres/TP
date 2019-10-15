@@ -8,10 +8,15 @@ public class RegularShipList {
     
     public RegularShipList(String level) {
     	list = new RegularShip[8];
-    	ship = new RegularShip();
+    	initPosition(level);
     }
     
-    public void initPosition() {
+    public void initPosition(String level) {
+        if(level == "EASY"){
+            for(int i = 0; i < 4; i++){
+                list[i] = new RegularShip();
+            }
+        }
     	
     }
     

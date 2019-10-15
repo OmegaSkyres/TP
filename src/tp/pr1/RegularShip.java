@@ -5,11 +5,12 @@ public class RegularShip {
     private int currentShips;
     private int row;
     private int column;
-    private int life = 2;
+    private int life = 3;
     private Game game;
     private int points = 5;
 
     public RegularShip(){
+        this.row = 2;
         this.column = 4;
     }
 
@@ -37,7 +38,6 @@ public class RegularShip {
         }
         else{
             deleteShip();
-            game.po
         }
     }
 

@@ -27,7 +27,7 @@ public class Game {
     private int numberEnemies;
     private boolean superpower;
     private Random rand;
-    private String level;
+    private String level = "EASY";
 
     
     public Game(String difficulty, int seed){
@@ -47,15 +47,19 @@ public class Game {
     		System.out.println("Aliens win");
 		}
         if(missile.getEnable()){
-        	if(missile.missilePositionY() == ship.getPositionY()){
-        		resetMissile();
-        		ship.recibeDamage(1);
+        	for(int i = 0; i < listRegularShips.list.length; i++){
+				if(missile.missilePositionY() == listRegularShips.list[i].getPositionY()){
+					resetMissile();
+					ship.recibeDamage(1);
+				}
 			}
-        	else if (missile.missilePositionY() == destroyerShip.getPositionY()){
-        		resetMissile();
-        		destroyerShip.recibeDamage(1);
+			for(int i = 0; i < listDestroyerShips.list.length; i++) {
+        	 	if (missile.missilePositionY() == listDestroyerShips.list[i].getPositionY()) {
+					resetMissile();
+					destroyerShip.recibeDamage(1);
+				}
 			}
-        	else if (missile.missilePositionY() == ovni.getPositionY()){
+        	if (missile.missilePositionY() == ovni.getPositionY()){
         		resetMissile();
         		ovni.recibeDamage(1);
         		if(!superpower){
@@ -111,20 +115,20 @@ public class Game {
 					}
 				}
 			}
-			 if (numRows == ROWS - 8){
-				 if(numCols == COLS - 6) {
+			if (numRows == ROWS - 8){
+				if(numCols == COLS - 6) {
 					for(int i = 0; i < 4; i++){
 						return ship.toString();
 					}
 				}
-			 }
-			 if(numRows == ROWS - 7) {
-				 if(numCols == COLS - 5) {
-					 for (int i = 0; i < 2; i++) {
-						 return destroyerShip.toString();
-					 }
-				 }
-			 }
+			}
+			if(numRows == ROWS - 7) {
+				if(numCols == COLS - 5) {
+					for (int i = 0; i < 2; i++) {
+						return destroyerShip.toString();
+					}
+				}
+			}
 		}
 
 		else if (level == "HARD"){
@@ -192,8 +196,10 @@ public class Game {
 				}
 			}
 		}
-		else return " ";
+			return " ";
+
 	}
+
 	
 	public int getPosShip() {
 		return player.UCMShipPositionY();
@@ -235,13 +241,14 @@ public class Game {
 	}
 	
 	public boolean isGameOver() {
-		if ((player.life == 0) || (ship.getPositionX() == player.UCMShipPositionX()) || destroyerShip.getPositionX() == player.UCMShipPositionX()){
+		if ((player.life == 0) || colisionRegularShip() || colisionDestroyerShip()){
 			return true;
 		}
 		else return false;
 	}
 
-    @Override
+
+	@Override
     public String toString() {
         String game;
 
@@ -254,6 +261,26 @@ public class Game {
         return game;
     }
     
+	public boolean colisionRegularShip() {
+    	boolean ok = false;
+		for (int i = 0; i < listRegularShips.list.length; i++) {
+			if (listRegularShips.list[i].getPositionX() == player.UCMShipPositionX()) {
+				ok = true;
+			}
+		}
+		return ok;
+	}
+
+	public boolean colisionDestroyerShip() {
+    	boolean ok = false;
+		for (int i = 0; i < listRegularShips.list.length; i++) {
+			if (listRegularShips.list[i].getPositionX() == player.UCMShipPositionX()) {
+				ok = true;
+			}
+
+		}
+		return ok;
+	}
 
     public void reset(){
         points = 0;
@@ -357,7 +384,4 @@ public class Game {
     	this.cycle++;
 	}
 
-	public String selectDifficulty(){
-
-	}
 }
