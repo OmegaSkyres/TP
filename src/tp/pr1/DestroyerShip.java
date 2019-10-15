@@ -33,8 +33,17 @@ public class DestroyerShip {
         if(this.life > 0){
             this.life = this.life - damage;
         }
+        else{
+            deleteShip();
+            game.addPoints(points);
+        }
     }
 
+
+    public String deleteShip() {
+        String nave;
+        return " ";
+    }
     public int getPositionX(){
         return file;
     }

@@ -43,6 +43,9 @@ public class Game {
     }
 
 	public void update(){
+    	if(numberEnemies == 0){
+			System.out.println("Players Win");
+		}
     	if(isGameOver()){
     		System.out.println("Aliens win");
 		}
@@ -333,7 +336,21 @@ public class Game {
 		}
 	}
 
+	public int getNumberEnemies() {
+		return numberEnemies;
+	}
 
+	public int getPoints() {
+		return points;
+	}
+
+	public int addPoints(int newpoints){
+    	return points = points + newpoints;
+	}
+
+	public int reduceNumberEnemies(int newNumber){
+    	return numberEnemies = numberEnemies - newNumber;
+	}
 
 	public void attackbomb(int x, int y, int damage){
 		if(player.isOnPosition(x,y)){

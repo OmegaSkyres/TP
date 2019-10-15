@@ -7,7 +7,30 @@ public class DestroyerShipList {
 
     public DestroyerShipList(String level){
         list = new DestroyerShip[8];
+        initPosition(level);
+    }
 
+    public void initPosition(String level) {
+        if(level == "EASY"){
+            for(int i = 0; i < 4; i++){
+                list[i] = new DestroyerShip();
+            }
+        }
+        else if(level == "HARD"){
+            for(int i = 0; i < 8; i++){
+                list[i] = new DestroyerShip();
+            }
+        }
+        else if (level == "INSANE") {
+            for(int i = 0; i < 8; i++){
+                list[i] = new DestroyerShip();
+            }
+        }
+
+    }
+
+    public DestroyerShip getDestroyerShip(int contador){
+        return list[contador];
     }
 
     public void addDestroyerShip(DestroyerShip ship){

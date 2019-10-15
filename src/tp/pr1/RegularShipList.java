@@ -17,6 +17,16 @@ public class RegularShipList {
                 list[i] = new RegularShip();
             }
         }
+        else if(level == "HARD"){
+            for(int i = 0; i < 8; i++){
+                list[i] = new RegularShip();
+            }
+        }
+        else if (level == "INSANE") {
+            for(int i = 0; i < 8; i++){
+                list[i] = new RegularShip();
+            }
+        }
     	
     }
     

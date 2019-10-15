@@ -7,6 +7,10 @@ public class Bomb {
     private int column;
 
     public Bomb(){
+        this.player = new UCMShip();
+        x = player.UCMShipPositionX();
+        y = Game.ROWS - 2;
+        active = false;
 
     }
 
