@@ -1,17 +1,17 @@
 package tp.pr1;
 
 public class RegularShip {
-    private RegularShip[] ships;
     private int currentShips;
     private int row;
     private int column;
     private int life = 3;
     private Game game;
     private int points = 5;
+    private boolean direction = false;
 
-    public RegularShip(){
-        this.row = 2;
-        this.column = 4;
+    public RegularShip(int x, int y){
+        row = x;
+        column = y;
     }
 
     public String toString(){
@@ -26,6 +26,19 @@ public class RegularShip {
     public void moveLeft() {
         if (column > 0) column--;
     }
+    public void move(){
+        if(getPositionY() == 0 || getPositionY() == 8){
+            incrementPositionX();
+            direction = true;
+        }
+        else if(direction){
+            moveRight();
+        }
+        else moveLeft();
+    }
+    public void incrementPositionX(){
+        this.row++;
+    }
 
     public boolean isAlive() {
         if(life == 0) return false;
@@ -37,16 +50,11 @@ public class RegularShip {
             this.life = this.life - damage;
         }
         else{
-            deleteShip();
             game.reduceNumberEnemies(1);
             game.addPoints(points);
         }
     }
 
-    public String deleteShip() {
-        String nave;
-        return " ";
-    }
 
     public int getPositionY(){
         return column;
@@ -55,5 +63,4 @@ public class RegularShip {
     public int getPositionX(){
         return row;
     }
-
 }

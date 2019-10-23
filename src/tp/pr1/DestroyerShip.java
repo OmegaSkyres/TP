@@ -1,14 +1,16 @@
 package tp.pr1;
 
 public class DestroyerShip {
-    private int file;
+    private int row;
     private int column;
     private int life = 1;
     private Game game;
     private int points = 10;
+    private boolean direction = false;
 
-    public DestroyerShip(){
-
+    public DestroyerShip(int x, int y){
+        row = x;
+        column = y;
     }
 
     public String toString(){
@@ -23,6 +25,21 @@ public class DestroyerShip {
     public void moveLeft() {
         if (column > 0) column--;
     }
+
+    public void move(){
+        if(getPositionY() == 0 || getPositionY() == 8){
+            incrementPositionX();
+            direction = true;
+        }
+        else if(direction){
+            moveRight();
+        }
+        else moveLeft();
+    }
+    public void incrementPositionX(){
+        this.row++;
+    }
+
 
     public boolean isAlive() {
         if(life == 0) return false;
@@ -46,7 +63,7 @@ public class DestroyerShip {
         return " ";
     }
     public int getPositionX(){
-        return file;
+        return row;
     }
 
     public int getPositionY(){

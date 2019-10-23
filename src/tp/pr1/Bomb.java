@@ -7,7 +7,7 @@ public class Bomb {
     private int column;
 
     public Bomb(){
-        this.ship = new DestroyerShip();
+        this.ship = new DestroyerShip(row,column);
         row = ship.getPositionX();
         column = Game.ROWS - 2;
         active = false;
@@ -20,7 +20,7 @@ public class Bomb {
     }
 
     public void move() {
-        if (column < Game.COLS - 1) column++;
+        if (row < Game.COLS - 1) row++;
     }
 
 
@@ -48,7 +48,4 @@ public class Bomb {
         return active;
     }
 
-    public void reset() {
-
-    }
 }

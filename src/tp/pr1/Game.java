@@ -17,7 +17,7 @@ public class Game {
     private boolean missileLaunch = false;
     private boolean bombLauch = false;
     private BombList bombList;
-    public GamePrinter GamePrinter;
+    public GamePrinter printer;
     private int seed;
     private int cycle;
     private int points;
@@ -28,42 +28,63 @@ public class Game {
     private boolean superpower;
     private Random rand;
     private Level level;
+    private int initialRowR;
+    private int initialRowD;
+    private int xR;
+    private int xD;
+    private int posList;
+
 
     
     public Game(Level difficulty, int seed){
     	this.player = new UCMShip();
     	this.missile = new Missile();
-    	this.listRegularShips = new RegularShipList(difficulty);
-    	this.listDestroyerShips= new DestroyerShipList(difficulty);
-    	GamePrinter = new GamePrinter(this, ROWS, COLS);
+    	this.bomb = new Bomb();
+    	this.ovni = new Ovni(0,7);
+    	this.rand = new Random();
+    	this.level = difficulty;
+    	this.listRegularShips = new RegularShipList(difficulty,xR,3);
+		this.printer = new GamePrinter(this, ROWS, COLS);
+    	initialRowD = listRegularShips.getX();
+		this.listDestroyerShips= new DestroyerShipList(difficulty,COLS,initialRowD);
+		this.bombList = new BombList();
+    	this.numberEnemies = listRegularShips.getSizeList() + listDestroyerShips.getSizeList();
     	setCycle(0);
-    	points = 0;
-    	lifes = 3;
-
+    	this.points = 0;
+    	this.lifes = 3;
     }
 
 	public void update(){
+		DestroyerShip[] listD = listDestroyerShips.getList();
+		RegularShip[] listR = listRegularShips.getList();
+		Bomb[] listB = bombList.getList();
     	if(numberEnemies == 0){
 			System.out.println("Players Win");
 		}
     	if(isGameOver()){
     		System.out.println("Aliens win");
 		}
-        if(missile.getEnable()){
-        	for(int i = 0; i < listRegularShips.list.length; i++){
-				if(missile.missilePositionY() == listRegularShips.list[i].getPositionY()){
+        if(missile.isEnable()){
+        	for(int i = 0; i < listRegularShips.getSizeList(); i++){
+				if(missile.missilePositionX() - 1 == listR[i].getPositionX()){
 					resetMissile();
-					ship.recibeDamage(1);
+					listR[i].recibeDamage(1);
 				}
 			}
-			for(int i = 0; i < listDestroyerShips.list.length; i++) {
-        	 	if (missile.missilePositionY() == listDestroyerShips.list[i].getPositionY()) {
+			for(int i = 0; i < listDestroyerShips.getSizeList(); i++) {
+        	 	if (missile.missilePositionX() - 1 == listD[i].getPositionX()) {
 					resetMissile();
-					destroyerShip.recibeDamage(1);
+					listD[i].recibeDamage(1);
+				}
+			}
+			for(int i = 0; i < bombList.getSizeList(); i++){
+				if(missile.missilePositionX() - 1 == listB[i].getPositionX()){
+					resetMissile();
+					listB[i].setActive(false);
 				}
 			}
 			if(ovni.isActive()){
-				if (missile.missilePositionY() == ovni.getPositionY()){
+				if (missile.missilePositionX() - 1 == ovni.getPositionX()){
 					resetMissile();
 					ovni.recibeDamage(1);
 					if(!superpower){
@@ -71,12 +92,20 @@ public class Game {
 					}
 				}
 			}
-			attackbomb(missile.missilePositionX(),missile.missilePositionY(),1);
 
 			missile.missileMove();
 		}
+		if(bomb.isActive()){
+			attackbomb(missile.missilePositionX(),missile.missilePositionY(),1);
+		}
+		moveDestroyerShip();
+        moveRegularShips();
+        if(ovni.isActive()){
+        	ovni.move();
+		}
+
         
-        if (missile.missilePositionY() < 0) {
+        if (missile.missilePositionX() < 0) {
         	resetMissile();
         }
         if(bomb.getPositionX() < 0){
@@ -90,32 +119,77 @@ public class Game {
 
 	private void resetBomb() {
     	bomb.setActive(false);
-		bomb.reset();
 	}
 
-	public boolean posibleOvni(Level level){
-		int random = newRandom();
-		boolean generate = false;
+	public boolean posibleBomb(Level level){
+    	boolean generate = false;
 		if(level.toString() == "EASY"){
-			if(random == 2) {
+			if(rand.nextDouble() < 0.1) {
 				generate = true;
 			}
 		}
 		else if(level.toString() == "HARD"){
-			if (random == 3){
+			if (rand.nextDouble() < 0.3){
 				generate = true;
 			}
 		}
 		else if (level.toString() == "INSANE"){
-			if (random == 1){
+			if (rand.nextDouble() < 0.5){
+				generate = true;
+			}
+		}
+		return generate;
+
+	}
+
+	public boolean posibleOvni(Level level){
+		boolean generate = false;
+		if(level.toString() == "EASY"){
+			if(rand.nextDouble() < 0.5) {
+				generate = true;
+			}
+		}
+		else if(level.toString() == "HARD"){
+			if (rand.nextDouble() < 0.2){
+				generate = true;
+			}
+		}
+		else if (level.toString() == "INSANE"){
+			if (rand.nextDouble() < 0.1){
 				generate = true;
 			}
 		}
 		return generate;
 	}
 
+	public int determineSpeed(Level level){
+    	int speed = 0;
+		if(level.toString() == "EASY"){
+			speed = 3;
+		}
+		else if(level.toString() == "HARD"){
+			speed = 2;
+		}
+		else if (level.toString() == "INSANE"){
+			speed = 1;
+		}
+		return speed;
+	}
+
 	public String position(int numRows, int numCols) {
-    	String string = " ";
+		String string = " ";
+    	RegularShip shipE = listRegularShips.getShip(numRows,numCols);
+    	if(shipE != null){
+    		return shipE.toString();
+		}
+    	DestroyerShip shipDestroyer = listDestroyerShips.getDestroyerShip(numRows,numCols);
+    	if(shipDestroyer != null){
+    		return shipDestroyer.toString();
+		}
+    	Bomb bomb = bombList.getBomb(numRows,numCols);
+		if(bomb != null){
+			return bomb.toString();
+		}
 		if (numRows == ROWS - 1) {
 			if (numCols == player.UCMShipPositionY()) {
 				if(player.life == 0){
@@ -123,36 +197,23 @@ public class Game {
 				}
 				else return player.toString();
 			}
-			else return " ";
-		}
-		if (numberEnemies > 0){
-			for(int i = 0; i < listRegularShips.list.length; i++){
-					//if(numRows) TODO COMO PONER LAS NAVECITAS
-			}
 		}
 		if (missileLaunch) {
-			if (numRows == missile.missilePositionY() && numCols == missile.missilePositionX()) {
+			if (numRows == missile.missilePositionX() && numCols == missile.missilePositionY()) {
 				missile.setEnable();
 				return missile.toString();
 			}
-			else return " ";
 		}
-		if (bombLauch) {
-			if (numRows == bomb.getPositionY() && numCols == bomb.getPositionX()) {
-				bomb.setActive(true);
-				return bomb.toString();
-
-			}
-			else return " ";
-		}
-		if(!ovni.isActive()) {
-			if (posibleOvni(level)) {
-				if (numRows == 0) {
-					if (numCols == ovni.getPositionY()) {
-						return ovni.toString();
-					}
+		posibleBomb(level);
+		if (numRows == 0 && numCols == 8) {
+			this.ovni.setActive(false);
+			if(!ovni.isActive()) {
+				if (posibleOvni(level)) {
+					ovni.setActive(true);
+					return ovni.toString();
 				}
 			}
+
 		}
 		return string;
 	}
@@ -160,27 +221,17 @@ public class Game {
 	public int getPosShip() {
 		return player.UCMShipPositionY();
 	}
-	public int newRandom(){
-
-		double random = Math.random();// generamos un numero al azar entre 0 y 1
-		if (random < 0.1)// el 10% restante
-			return 1;
-
-		if(random > 0.1 && random < 0.6)// el 50% de las veces
-			return 2;
-
-		else if(random > 0.6 && random <0.8)// el 20% de las veces
-			return 3;
-
-		else return 0;
-	}
 	
 	public void posibleLaunch() {
 		
-		if(missile.getEnable()) missileLaunch = false; //Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
+		if(missile.isEnable()){
+			System.out.println("!!!Ya hay un misil lanzado!!!");
+			//Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
+		}
 		else {
 			missileLaunch = true;
-			missile.row = player.UCMShipPositionY();
+			missile.setPositionX(player.UCMShipPositionX() - 1);
+			missile.setPositionY(player.UCMShipPositionY());
 		}
 
 	}
@@ -193,11 +244,11 @@ public class Game {
 	}
 	
 	public String toStringBoard() {
-		return GamePrinter.toString();
+		return printer.toString();
 	}
 	
 	public boolean isGameOver() {
-		if ((player.life == 0) || colisionRegularShip() || colisionDestroyerShip()){
+		if (player.life == 0 || colisionRegularShip() || colisionDestroyerShip()){
 			return true;
 		}
 		else return false;
@@ -219,21 +270,18 @@ public class Game {
     
 	public boolean colisionRegularShip() {
     	boolean ok = false;
-		for (int i = 0; i < listRegularShips.list.length; i++) {
-			if (listRegularShips.list[i].getPositionX() == player.UCMShipPositionX()) {
-				ok = true;
-			}
+		RegularShip shipE = listRegularShips.getShip(player.UCMShipPositionX(),player.UCMShipPositionY());
+		if(shipE != null){
+			ok = true;
 		}
 		return ok;
 	}
 
 	public boolean colisionDestroyerShip() {
     	boolean ok = false;
-		for (int i = 0; i < listRegularShips.list.length; i++) {
-			if (listRegularShips.list[i].getPositionX() == player.UCMShipPositionX()) {
-				ok = true;
-			}
-
+		DestroyerShip shipDestroyer = listDestroyerShips.getDestroyerShip(player.UCMShipPositionX(),player.UCMShipPositionY());
+		if(shipDestroyer != null){
+			ok = true;
 		}
 		return ok;
 	}
@@ -249,17 +297,6 @@ public class Game {
 	public void setCycle(int cycle) {
 		this.cycle = cycle;
 	}
-	public int getPosMissileX() {
-		return missile.missilePositionX();
-	}
-	
-	public int getPosMissileY() {
-		return missile.missilePositionY();
-	}
-	
-	public void missileMove() {
-		missile.missileMove();
-	}
 	
 	public void moveLeft() {
 		player.moveLeft();
@@ -268,24 +305,18 @@ public class Game {
 	public void moveRight() {
 		player.moveRight();
 	}
-	
-	public boolean getMissileLaunch() {
-		return missile.getEnable();
-	}
-	
-	public void setMissileLauch() {
-		this.missile.active = true;
-	}
 
 	public void moveRegularShips(){
-		for(int i = 0; i <listRegularShips.list.length; i++){
-			listRegularShips.list[i].moveLeft();
+		RegularShip[] list = listRegularShips.getList();
+		for(int i = 0; i <listRegularShips.getSizeList(); i++){
+			list[i].move();
 		}
 	}
 
 	public void moveDestroyerShip(){
-		for(int i = 0; i <listDestroyerShips.list.length; i++){
-			listRegularShips.list[i].moveLeft();
+		DestroyerShip[] list = listDestroyerShips.getList();
+		for(int i = 0; i <listDestroyerShips.getSizeList(); i++){
+			list[i].move();
 		}
 	}
 
@@ -312,12 +343,14 @@ public class Game {
 	}
 
 	public void shockwave() {
+		RegularShip[] listR = listRegularShips.getList();
+		DestroyerShip[] listD = listDestroyerShips.getList();
     	if(superpower){
-    		for(int i = 0; i <listRegularShips.list.length; i++){
-    			listRegularShips.list[i].recibeDamage(1);
+    		for(int i = 0; i <listRegularShips.getSizeList(); i++){
+    			listR[i].recibeDamage(1);
 			}
-			for(int i = 0; i <listDestroyerShips.list.length; i++){
-				listRegularShips.list[i].recibeDamage(1);
+			for(int i = 0; i <listDestroyerShips.getSizeList(); i++){
+				listD[i].recibeDamage(1);
 			}
     		if(ovni.isActive()){
     			ovni.recibeDamage(1);
@@ -353,5 +386,6 @@ public class Game {
 	public void skip() {
     	this.cycle++;
 	}
+
 
 }

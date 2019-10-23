@@ -1,20 +1,24 @@
 package tp.pr1;
 
 public class Ovni {
-    private int row = 0;
-    private int column = 8;
+    private int row;
+    private int column;
     private int life = 1;
     private Game game;
     private int points = 25;
     private boolean active;
+    private boolean direction;
 
-    public Ovni(){
-
+    public Ovni(int x, int y){
+        row = x;
+        column = y;
+        active = false;
+        direction = false;
     }
 
     public String toString(){
         String nave;
-        return nave = "C[3]";
+        return nave = "O[" + life + "]";
     }
 
     public void moveRight() {
@@ -45,10 +49,7 @@ public class Ovni {
     }
 
     public boolean isActive() {
-        if(active){
-            return true;
-        }
-        else return false;
+        return active;
     }
 
     public void setActive(boolean active) {
@@ -64,11 +65,13 @@ public class Ovni {
     }
 
     public void move(){
-        if(getPositionY() == 0){
-          incrementPositionY();
+        if(getPositionX() == 0){
+          deleteOvni();
         }
-        else{
-            moveLeft();
-        }
+        else moveLeft();
+    }
+
+    private void deleteOvni() {
+        column = 9;
     }
 }

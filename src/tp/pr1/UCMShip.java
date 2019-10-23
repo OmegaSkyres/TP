@@ -3,10 +3,11 @@ package tp.pr1;
 public class UCMShip {
 
     public int life;
-	private static final int row = 7;
+	private int row;
 	private int column;
 	
 	public UCMShip() {
+		row = 7;
 		column = 4;
 		life = 3;
 	}

@@ -2,19 +2,19 @@ package tp.pr1;
 
 public class Missile {
 	private UCMShip player;
-	public int row;
+	private int row;
 	private int column;
 	public boolean active;
 	
 	public Missile() {
 		this.player = new UCMShip();
-		row = player.UCMShipPositionX();
-		column = Game.ROWS - 2;
+		row = player.UCMShipPositionX() - 1;
+		column = player.UCMShipPositionY();
 		active = false;
 	}
 	
 	public int missileMove() {
-		return column--;
+		return row--;
 	}
 
 	public int missilePositionX() {
@@ -23,6 +23,14 @@ public class Missile {
 	
 	public int missilePositionY() {
 		return column;
+	}
+
+	public int setPositionX(int x){
+		return row = x;
+	}
+
+	public int setPositionY(int y){
+		return column = y;
 	}
 	
 	public String toString() {
@@ -33,11 +41,12 @@ public class Missile {
 		active = true;
 	}
 	
-	public boolean getEnable() {
+	public boolean isEnable() {
 		return this.active;
 	}
 	
 	public void reset() {
-		column = Game.ROWS - 2;
+		row = player.UCMShipPositionX() - 1;
+		column = player.UCMShipPositionY();
 	}
 }

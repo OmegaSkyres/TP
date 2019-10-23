@@ -15,8 +15,7 @@ public class Controller {
 
 
     public void run(){   
-        while (game.isGameOver()) {
-            game.update();
+        while (!game.isGameOver()) {
         	System.out.println(game);
         	System.out.print("Command > ");
         	String cmd = sc.nextLine().toLowerCase();
@@ -59,12 +58,17 @@ public class Controller {
                     break;
                 case "none":
                 case "n":
+                case " ":
                     game.skip();
+                    break;
+                default:
+                    System.out.println("Error" );
                     break;
 
             }
         	game.setCycle(game.getCycle() + 1);
-        }       
+            game.update();
+        }
     }
     
 }
