@@ -1,4 +1,4 @@
-package tp.pr1;
+package pr1;
 
 public enum Level { EASY, HARD, INSANE;
     public static Level transform(String difficulty) {

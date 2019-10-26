@@ -1,6 +1,8 @@
-package tp.pr1;
+package pr1;
 
 //import java.util.Random;
+import pr1.Game;
+
 import java.util.Scanner;
 
 public class Controller {

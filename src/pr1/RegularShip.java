@@ -1,13 +1,14 @@
-package tp.pr1;
+package pr1;
+
+import pr1.Game;
 
 public class RegularShip {
-    private int currentShips;
     private int row;
     private int column;
     private int life = 3;
     private Game game;
     private int points = 5;
-    private boolean direction = false;
+
 
     public RegularShip(int x, int y){
         row = x;
@@ -16,7 +17,11 @@ public class RegularShip {
 
     public String toString(){
         String nave;
-        return nave = "C[" + life +"]";
+        if (life == 0){
+            nave = " ";
+        }
+        else nave = "C[" + life +"]";
+        return nave;
     }
 
     public void moveRight() {
@@ -26,21 +31,16 @@ public class RegularShip {
     public void moveLeft() {
         if (column > 0) column--;
     }
-    public void move(){
-        if(getPositionY() == 0 || getPositionY() == 8){
-            incrementPositionX();
-            direction = true;
+    public void move(boolean direction){
+            if(direction){
+                moveRight();
+            }
+            else{
+                moveLeft();
+            }
         }
-        else if(direction){
-            moveRight();
-        }
-        else moveLeft();
-    }
-    public void incrementPositionX(){
-        this.row++;
-    }
 
-    public boolean isAlive() {
+    public boolean isDead() {
         if(life == 0) return false;
         else return true;
     }
@@ -49,10 +49,7 @@ public class RegularShip {
         if(this.life > 0){
             this.life = this.life - damage;
         }
-        else{
-            game.reduceNumberEnemies(1);
-            game.addPoints(points);
-        }
+
     }
 
 
@@ -62,5 +59,13 @@ public class RegularShip {
 
     public int getPositionX(){
         return row;
+    }
+
+    public void incrementPositionX(){
+        this.row++;
+    }
+
+    public int getPoints() {
+        return points;
     }
 }

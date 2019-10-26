@@ -1,4 +1,6 @@
-package tp.pr1;
+package pr1;
+
+import pr1.Game;
 
 public class UCMShip {
 

@@ -1,8 +1,8 @@
-package tp.pr1.view;
-import tp.pr1.Game;
-import tp.pr1.UCMShip;
-import tp.pr1.util.MyStringUtils;
-import tp.pr1.UCMShip;
+package pr1.view;
+import pr1.Game;
+import pr1.UCMShip;
+import pr1.util.MyStringUtils;
+import pr1.UCMShip;
 
 
 

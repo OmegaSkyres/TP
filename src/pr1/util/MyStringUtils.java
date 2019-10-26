@@ -1,4 +1,4 @@
-package tp.pr1.util;
+package pr1.util;
 public class MyStringUtils {
     public static String repeat(String elmnt, int length) {
         String result = "";

@@ -1,14 +1,13 @@
-package tp.pr1;
+package pr1;
 
-import tp.pr1.util.MyStringUtils;
-import tp.pr1.view.GamePrinter;
+import pr1.*;
+import pr1.util.MyStringUtils;
+import pr1.view.GamePrinter;
 
 import java.util.Random;
 
 public class Game {
 	private UCMShip player;
-	private RegularShip ship;
-	private DestroyerShip destroyerShip;
 	private Bomb bomb;
 	private Missile missile;
     private RegularShipList listRegularShips;
@@ -32,7 +31,8 @@ public class Game {
     private int initialRowD;
     private int xR;
     private int xD;
-    private int posList;
+    private boolean edge;
+    private int contador;
 
 
     
@@ -52,12 +52,23 @@ public class Game {
     	setCycle(0);
     	this.points = 0;
     	this.lifes = 3;
+    	edge = false;
     }
 
 	public void update(){
 		DestroyerShip[] listD = listDestroyerShips.getList();
 		RegularShip[] listR = listRegularShips.getList();
 		Bomb[] listB = bombList.getList();
+		int speed = determineSpeed(level);
+		if(contador == speed){
+			moveRegularShips();
+			moveDestroyerShip();
+			contador = 1;
+		}
+		else{
+			contador++;
+		}
+
     	if(numberEnemies == 0){
 			System.out.println("Players Win");
 		}
@@ -65,46 +76,54 @@ public class Game {
     		System.out.println("Aliens win");
 		}
         if(missile.isEnable()){
+			missile.missileMove();
         	for(int i = 0; i < listRegularShips.getSizeList(); i++){
-				if(missile.missilePositionX() - 1 == listR[i].getPositionX()){
+				if(missile.missilePositionX() == listR[i].getPositionX() && missile.missilePositionY() == listR[i].getPositionY()){
 					resetMissile();
 					listR[i].recibeDamage(1);
+					if(listR[i].isDead()){
+						points = points + listR[i].getPoints();
+						numberEnemies = numberEnemies - 1;
+					}
 				}
 			}
 			for(int i = 0; i < listDestroyerShips.getSizeList(); i++) {
-        	 	if (missile.missilePositionX() - 1 == listD[i].getPositionX()) {
+        	 	if (missile.missilePositionX() == listD[i].getPositionX() && missile.missilePositionY() == listD[i].getPositionY()) {
 					resetMissile();
 					listD[i].recibeDamage(1);
+					if(listR[i].isDead()){
+						points = points + listD[i].getPoints();
+						numberEnemies = numberEnemies - 1;
+					}
 				}
 			}
 			for(int i = 0; i < bombList.getSizeList(); i++){
-				if(missile.missilePositionX() - 1 == listB[i].getPositionX()){
+				if(missile.missilePositionX() == listB[i].getPositionX() && missile.missilePositionY() == listB[i].getPositionY()){
 					resetMissile();
 					listB[i].setActive(false);
 				}
 			}
 			if(ovni.isActive()){
-				if (missile.missilePositionX() - 1 == ovni.getPositionX()){
+				if (missile.missilePositionX() == ovni.getPositionX() && missile.missilePositionY() == ovni.getPositionY()){
 					resetMissile();
 					ovni.recibeDamage(1);
-					if(!superpower){
-						superpower = true;
+					if(ovni.isDead()){
+						points = points + ovni.getPoints();
+						if(!superpower){
+							superpower = true;
+						}
 					}
 				}
 			}
-
-			missile.missileMove();
 		}
 		if(bomb.isActive()){
 			attackbomb(missile.missilePositionX(),missile.missilePositionY(),1);
 		}
-		moveDestroyerShip();
-        moveRegularShips();
+
         if(ovni.isActive()){
         	ovni.move();
 		}
 
-        
         if (missile.missilePositionX() < 0) {
         	resetMissile();
         }
@@ -204,7 +223,11 @@ public class Game {
 				return missile.toString();
 			}
 		}
-		posibleBomb(level);
+		if(posibleBomb(level)){
+			for(int i = 0; i < bombList.getSizeList(); i++){
+
+			}
+		}
 		if (numRows == 0 && numCols == 8) {
 			this.ovni.setActive(false);
 			if(!ovni.isActive()) {
@@ -308,16 +331,59 @@ public class Game {
 
 	public void moveRegularShips(){
 		RegularShip[] list = listRegularShips.getList();
-		for(int i = 0; i <listRegularShips.getSizeList(); i++){
-			list[i].move();
-		}
+			if(!bordeR()){
+				for(int i = 0; i < listRegularShips.getSizeList(); i++){
+					list[i].move(listRegularShips.getDirection());
+				}
+			}
+			else{
+				edge = true;
+				listRegularShips.incrementPositionX();
+			}
 	}
 
-	public void moveDestroyerShip(){
+	private boolean bordeR() {
+    	boolean ok = false;
+
+		RegularShip[] list = listRegularShips.getList();
+			if(list[0].getPositionY() == 0 && listRegularShips.getDirection() != true){
+				listRegularShips.setDirection(true);
+				ok = true;
+			}
+			else if (list[listRegularShips.getSizeList()-1].getPositionY() == 8 && listRegularShips.getDirection() != false){
+				listRegularShips.setDirection(false);
+				ok = true;
+			}
+			else ok = false;
+		return ok;
+	}
+
+	private boolean bordeD() {
+		boolean ok = false;
 		DestroyerShip[] list = listDestroyerShips.getList();
-		for(int i = 0; i <listDestroyerShips.getSizeList(); i++){
-			list[i].move();
-		}
+			if(list[0].getPositionY() == 0 && listDestroyerShips.getDirection() != true){
+				listDestroyerShips.setDirection(true);
+				ok = true;
+			}
+			else if (list[listDestroyerShips.getSizeList()-1].getPositionY() == 8 && listDestroyerShips.getDirection() != false){
+				listDestroyerShips.setDirection(false);
+				ok = true;
+			}
+			else ok = false;
+		return ok;
+	}
+
+	public void moveDestroyerShip() {
+		DestroyerShip[] list = listDestroyerShips.getList();
+				if(!bordeD() && !edge){
+					for (int i = 0; i < listDestroyerShips.getSizeList(); i++) {
+						list[i].move(listRegularShips.getDirection());
+					}
+				}
+				else {
+					listDestroyerShips.incrementPositionX();
+					edge = false;
+				}
 	}
 
 	public int getNumberEnemies() {

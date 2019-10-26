@@ -1,4 +1,6 @@
-package tp.pr1;
+package pr1;
+
+import pr1.Game;
 
 public class Ovni {
     private int row;
@@ -18,7 +20,11 @@ public class Ovni {
 
     public String toString(){
         String nave;
-        return nave = "O[" + life + "]";
+        if (life == 0){
+            nave = " ";
+        }
+        else nave = "O[" + life + "]";
+        return nave ;
     }
 
     public void moveRight() {
@@ -29,7 +35,7 @@ public class Ovni {
         if (column > 0) column--;
     }
 
-    public boolean isAlive() {
+    public boolean isDead() {
         if(life == 0) return false;
         else return true;
     }
@@ -38,6 +44,7 @@ public class Ovni {
         if(this.life > 0){
             this.life = this.life - damage;
         }
+
     }
 
     public int getPositionX(){
@@ -56,6 +63,7 @@ public class Ovni {
         this.active = active;
     }
 
+
     public void incrementPositionY(){
         this.column++;
     }
@@ -73,5 +81,9 @@ public class Ovni {
 
     private void deleteOvni() {
         column = 9;
+    }
+
+    public int getPoints() {
+        return points;
     }
 }

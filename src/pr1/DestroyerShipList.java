@@ -1,4 +1,6 @@
-package tp.pr1;
+package pr1;
+
+import pr1.Game;
 
 public class DestroyerShipList {
     private DestroyerShip[] list;
@@ -6,11 +8,13 @@ public class DestroyerShipList {
     private Game game;
     private int x;
     private int y;
+    private boolean direction;
 
     public DestroyerShipList(Level level, int numCols, int initialRow){
         list = new DestroyerShip[4];
         x = initialRow;
         initPosition(level,numCols,x);
+        direction = false;
     }
 
     public void initPosition(Level level,int numCols,int x) {
@@ -25,7 +29,7 @@ public class DestroyerShipList {
         }
         else if (level.toString() == "INSANE") {
             for(int i = 0; i < 4; i++){
-                list[i] = new DestroyerShip(x,col);
+                list[i] = new DestroyerShip(x,col-1);
                 contador++;
                 col++;
             }
@@ -52,5 +56,19 @@ public class DestroyerShipList {
 
     public int getSizeList(){
         return contador;
+    }
+
+    public boolean getDirection(){
+        return direction;
+    }
+
+    public void setDirection(boolean direction) {
+        this.direction = direction;
+    }
+
+    public void incrementPositionX(){
+        for(int i = 0; i < contador; i++){
+            list[i].incrementPositionX();
+        }
     }
 }

@@ -1,4 +1,6 @@
-package tp.pr1;
+package pr1;
+
+import pr1.Game;
 
 public class RegularShipList {
     private RegularShip[] list;
@@ -7,11 +9,13 @@ public class RegularShipList {
     private Game game;
     private int x = 1;
     private int y;
+    private boolean direction;
 
     public RegularShipList(Level level, int x, int initialColum) {
         list = new RegularShip[8];
         y = initialColum;
         initPosition(level,y);
+        direction = false;
 
     }
 
@@ -62,5 +66,19 @@ public class RegularShipList {
             }
         }
         return ship;
+    }
+
+    public boolean getDirection(){
+        return direction;
+    }
+
+    public void setDirection(boolean direction) {
+        this.direction = direction;
+    }
+
+    public void incrementPositionX(){
+        for(int i = 0; i < contador; i++){
+            list[i].incrementPositionX();
+        }
     }
 }

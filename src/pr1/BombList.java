@@ -1,4 +1,4 @@
-package tp.pr1;
+package pr1;
 
 public class BombList {
     private Bomb[] list;

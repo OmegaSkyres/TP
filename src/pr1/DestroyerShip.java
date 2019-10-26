@@ -1,4 +1,6 @@
-package tp.pr1;
+package pr1;
+
+import pr1.Game;
 
 public class DestroyerShip {
     private int row;
@@ -6,7 +8,6 @@ public class DestroyerShip {
     private int life = 1;
     private Game game;
     private int points = 10;
-    private boolean direction = false;
 
     public DestroyerShip(int x, int y){
         row = x;
@@ -15,7 +16,11 @@ public class DestroyerShip {
 
     public String toString(){
         String nave;
-        return nave = "D[" + life +"]";
+        if (life == 0){
+            nave = " ";
+        }
+        else nave = "D[" + life +"]";
+        return nave;
     }
 
     public void moveRight() {
@@ -26,22 +31,20 @@ public class DestroyerShip {
         if (column > 0) column--;
     }
 
-    public void move(){
-        if(getPositionY() == 0 || getPositionY() == 8){
-            incrementPositionX();
-            direction = true;
-        }
-        else if(direction){
+    public void move(boolean direction){
+        if(direction){
             moveRight();
         }
-        else moveLeft();
+        else{
+            moveLeft();
+        }
     }
     public void incrementPositionX(){
         this.row++;
     }
 
 
-    public boolean isAlive() {
+    public boolean isDead() {
         if(life == 0) return false;
         else return true;
     }
@@ -50,23 +53,17 @@ public class DestroyerShip {
         if(this.life > 0){
             this.life = this.life - damage;
         }
-        else{
-            deleteShip();
-            game.reduceNumberEnemies(1);
-            game.addPoints(points);
-        }
     }
 
-
-    public String deleteShip() {
-        String nave;
-        return " ";
-    }
     public int getPositionX(){
         return row;
     }
 
     public int getPositionY(){
         return column;
+    }
+
+    public int getPoints() {
+        return points;
     }
 }

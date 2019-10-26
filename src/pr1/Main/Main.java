@@ -1,9 +1,9 @@
-package tp.pr1.Main;
+package pr1.Main;
 
-import tp.pr1.Controller;
+import pr1.Controller;
 
-import tp.pr1.Game;
-import tp.pr1.Level;
+import pr1.Game;
+import pr1.Level;
 import java.util.Scanner;
 
 public class Main {
