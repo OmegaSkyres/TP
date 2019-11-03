@@ -7,10 +7,12 @@ public class UCMShip {
     public int life;
 	private int row;
 	private int column;
+	private Game game;
 	
-	public UCMShip() {
-		row = 7;
-		column = 4;
+	public UCMShip(Game game, int x, int y) {
+		game = game;
+		row = x;
+		column = y;
 		life = 3;
 	}
 	
@@ -24,15 +26,17 @@ public class UCMShip {
 
     public String toString(){
     	String nave;
-    	return nave = "^__^";
+		if (life == 0) {
+			nave = "!xx!";
+		}
+		else {
+			nave = "^__^";
+		}
+		return nave;
     }
-
-    public String deathString(){
-			return "!xx!";
-	}
     
     public void moveRight() {
-    	if (column < Game.COLS - 1) column++;
+    	if (column < Game.DIM_Y - 1) column++;
     }
     
     public void moveLeft() {
@@ -48,5 +52,12 @@ public class UCMShip {
 		if(this.life > 0){
 			this.life = this.life - damage;
 		}
+	}
+
+	public boolean isAlive() {
+		if(life == 0){
+			return false;
+		}
+		else return true;
 	}
 }

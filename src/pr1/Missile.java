@@ -1,13 +1,15 @@
 package pr1;
 
 public class Missile {
+	private Game game;
 	private UCMShip player;
 	private int row;
 	private int column;
 	public boolean active;
 	
-	public Missile() {
-		this.player = new UCMShip();
+	public Missile(Game game) {
+		game = game;
+		this.player = new UCMShip(game, game.DIM_X / 2, game.DIM_Y - 1);
 		row = player.UCMShipPositionX() - 1;
 		column = player.UCMShipPositionY();
 		active = false;

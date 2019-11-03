@@ -5,36 +5,17 @@ import pr1.Game;
 public class DestroyerShipList {
     private DestroyerShip[] list;
     private int contador = 0;
-    private Game game;
+    public Game game;
     private int x;
     private int y;
     private boolean direction;
 
-    public DestroyerShipList(Level level, int numCols, int initialRow){
+    public DestroyerShipList(Game game){
+        game = game;
         list = new DestroyerShip[4];
-        x = initialRow;
-        initPosition(level,numCols,x);
         direction = false;
     }
 
-    public void initPosition(Level level,int numCols,int x) {
-        x = x + 1;
-        int col = (numCols / 2);
-        if(level.toString() == "EASY" || level.toString() == "HARD"){
-            for(int i = 0; i < 2; i++){
-                list[i] = new DestroyerShip(x,col);
-                contador++;
-                col++;
-            }
-        }
-        else if (level.toString() == "INSANE") {
-            for(int i = 0; i < 4; i++){
-                list[i] = new DestroyerShip(x,col-1);
-                contador++;
-                col++;
-            }
-        }
-    }
     public DestroyerShip getDestroyerShip(int x , int y){
         DestroyerShip ship = null;
         for(int i = 0; i < contador; i++){
@@ -69,6 +50,69 @@ public class DestroyerShipList {
     public void incrementPositionX(){
         for(int i = 0; i < contador; i++){
             list[i].incrementPositionX();
+        }
+    }
+
+    public void reduceContador() {
+        contador--;
+    }
+
+    public void isAttack(int x, int y, Game game) {
+        for(int i = 0; i < contador; i++) {
+            if (x == list[i].getPositionX() && y == list[i].getPositionY() && !list[i].isDead()) {
+                game.resetMissile();
+                list[i].recibeDamage(1);
+                if(list[i].isDead()){
+                    game.points = game.points + list[i].getPoints();
+                    game.numberEnemies = game.numberEnemies - 1;
+                }
+            }
+        }
+    }
+
+    public void shockwave() {
+        for(int i = 0; i < contador; i++){
+            list[i].recibeDamage(1);
+            if(list[i].isDead()){
+                game.points = game.points + list[i].getPoints();
+                game.numberEnemies = game.numberEnemies - 1;
+            }
+        }
+    }
+
+    private boolean bordeD() {
+        boolean ok = false;
+        if(list[0].getPositionY() == 0 && getDirection() != true){
+            setDirection(true);
+            ok = true;
+        }
+        else if (list[getSizeList()-1].getPositionY() == 8 && getDirection() != false){
+            setDirection(false);
+            ok = true;
+        }
+        else ok = false;
+        return ok;
+    }
+
+    public void moveDestroyerShips(Game game) {
+        if(!bordeD() && !game.edge){
+            for (int i = 0; i < contador; i++) {
+                list[i].move(getDirection());
+            }
+        }
+        else {
+            incrementPositionX();
+            changedirection();
+            game.edge = false;
+        }
+    }
+
+    private void changedirection() {
+        if(direction == true){
+            direction = false;
+        }
+        else{
+            direction = true;
         }
     }
 }

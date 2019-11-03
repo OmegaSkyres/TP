@@ -17,7 +17,7 @@ public class Controller {
 
 
     public void run(){   
-        while (!game.isGameOver()) {
+        while (!game.isFinished()) {
         	System.out.println(game);
         	System.out.print("Command > ");
         	String cmd = sc.nextLine().toLowerCase();
@@ -28,7 +28,6 @@ public class Controller {
                 case "left":
                 case "a":
                     game.moveLeft();
-                    //System.out.println(game.getPosShip());
                     break;
                 case "right":
                 case "d":
@@ -71,6 +70,7 @@ public class Controller {
         	game.setCycle(game.getCycle() + 1);
             game.update();
         }
+        game.getWinnerMessage();
     }
     
 }

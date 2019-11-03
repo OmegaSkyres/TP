@@ -9,13 +9,12 @@ public class Ovni {
     private Game game;
     private int points = 25;
     private boolean active;
-    private boolean direction;
 
-    public Ovni(int x, int y){
-        row = x;
-        column = y;
+    public Ovni(Game game){
+        game = game;
+        row = 0;
+        column = 8;
         active = false;
-        direction = false;
     }
 
     public String toString(){
@@ -27,17 +26,13 @@ public class Ovni {
         return nave ;
     }
 
-    public void moveRight() {
-        if (column < Game.COLS - 1) column++;
-    }
-
     public void moveLeft() {
         if (column > 0) column--;
     }
 
     public boolean isDead() {
-        if(life == 0) return false;
-        else return true;
+        if(life == 0) return true;
+        else return false;
     }
 
     public void recibeDamage(int damage){
@@ -49,10 +44,6 @@ public class Ovni {
 
     public int getPositionX(){
         return row;
-    }
-
-    public int getPositionY(){
-        return column;
     }
 
     public boolean isActive() {
@@ -68,22 +59,46 @@ public class Ovni {
         this.column++;
     }
 
-    public void incrementPositionX(){
-        this.row++;
-    }
-
     public void move(){
-        if(getPositionX() == 0){
+        if(getPositionY() == 0){
           deleteOvni();
+          
         }
-        else moveLeft();
+        else {
+        	moveLeft();
+        	System.out.println(column);
+        }
     }
 
-    private void deleteOvni() {
-        column = 9;
+    public void deleteOvni() {
+        row = 0;
+        column = 8;
+        active = false;
+        life = 1;
     }
 
     public int getPoints() {
         return points;
     }
+
+    public int getPositionY() {
+        return column;
+    }
+
+    public void isAttack(int missilePositionX, int missilePositionY, Game game) {
+        if(isActive()){
+            if (missilePositionX == row && missilePositionY == column && !isDead()){
+                game.resetMissile();
+                recibeDamage(1);
+                if(isDead()){
+                    game.points = game.points + getPoints();
+                    deleteOvni();
+                    if(!game.superpower){
+                        game.superpower = true;
+                    }
+                }
+            }
+        }
+    }
+
 }

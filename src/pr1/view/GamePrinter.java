@@ -1,8 +1,7 @@
 package pr1.view;
 import pr1.Game;
-import pr1.UCMShip;
 import pr1.util.MyStringUtils;
-import pr1.UCMShip;
+
 
 
 
@@ -13,7 +12,6 @@ public class GamePrinter {
     int numRows;
     int numCols;
     final String space = " ";
-    UCMShip ship = new UCMShip();
 
     public GamePrinter (Game game, int rows, int cols) {
         this.game = game;

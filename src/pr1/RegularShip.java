@@ -25,7 +25,7 @@ public class RegularShip {
     }
 
     public void moveRight() {
-        if (column < Game.COLS - 1) column++;
+        if (column < Game.DIM_Y - 1) column++;
     }
 
     public void moveLeft() {
@@ -41,15 +41,14 @@ public class RegularShip {
         }
 
     public boolean isDead() {
-        if(life == 0) return false;
-        else return true;
+        if(life == 0) return true;
+        else return false;
     }
 
     public void recibeDamage(int damage){
         if(this.life > 0){
             this.life = this.life - damage;
         }
-
     }
 
 

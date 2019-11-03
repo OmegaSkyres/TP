@@ -3,31 +3,32 @@ package pr1;
 import pr1.Game;
 
 public class Bomb {
-    private DestroyerShip ship;
-    private boolean active;
     private int row;
     private int column;
+    private boolean active;
+    private DestroyerShip ship;
 
-    public Bomb(){
-        this.ship = new DestroyerShip(row,column);
-        row = ship.getPositionX();
-        column = Game.ROWS - 2;
-        active = false;
+    public Bomb(int x, int y, DestroyerShip newShip){
+        row = x + 1;
+        column = y;
+        active = true;
+        ship = newShip;
 
     }
 
     public String toString(){
-        String bomb;
-        return bomb = ".";
+        String bomb = " ";
+        if(active){
+            bomb = ".";
+        }
+        else {
+            bomb = " ";
+        }
+        return bomb;
     }
 
     public void move() {
-        if (row < Game.COLS - 1) row++;
-    }
-
-
-    public void setActive(boolean active) {
-        this.active = active;
+        row++;
     }
 
     public int getPositionX() {
@@ -46,8 +47,12 @@ public class Bomb {
         this.column = positionY;
     }
 
+
     public boolean isActive() {
         return active;
     }
 
+    public void resetBomb() {
+        active = false;
+    }
 }

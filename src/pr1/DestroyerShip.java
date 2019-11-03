@@ -8,11 +8,13 @@ public class DestroyerShip {
     private int life = 1;
     private Game game;
     private int points = 10;
+    private boolean launch;
 
     public DestroyerShip(int x, int y){
         row = x;
         column = y;
     }
+
 
     public String toString(){
         String nave;
@@ -24,7 +26,7 @@ public class DestroyerShip {
     }
 
     public void moveRight() {
-        if (column < Game.COLS - 1) column++;
+        if (column < Game.DIM_Y - 1) column++;
     }
 
     public void moveLeft() {
@@ -45,8 +47,8 @@ public class DestroyerShip {
 
 
     public boolean isDead() {
-        if(life == 0) return false;
-        else return true;
+        if(life == 0) return true;
+        else return false;
     }
 
     public void recibeDamage(int damage){
@@ -66,4 +68,14 @@ public class DestroyerShip {
     public int getPoints() {
         return points;
     }
+
+    public boolean bombLaunch() {
+        return launch;
+    }
+
+
+    public void setBombLaunch(boolean effect){
+        launch = effect;
+    }
+
 }

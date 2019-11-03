@@ -11,46 +11,25 @@ public class RegularShipList {
     private int y;
     private boolean direction;
 
-    public RegularShipList(Level level, int x, int initialColum) {
+    public RegularShipList(Game game) {
+        game = game;
         list = new RegularShip[8];
-        y = initialColum;
-        initPosition(level,y);
         direction = false;
 
     }
 
-    public void initPosition(Level level, int y) {
 
-        if(level.toString() == "EASY"){
-            for(int i = 0; i < 4; i++){
-                list[i] = new RegularShip(x,y);
-                contador++;
-                y++;
-            }
-        }
-        else if(level.toString() == "HARD" || level.toString() == "INSANE"){
-            for(int i = 0; i < 8; i++){
-                if(i == 4){
-                    x++;
-                    y = 3;
-                }
-                list[i] = new RegularShip(x,y);
-                contador++;
-                y++;
-            }
-        }
-    }
-    
+
     public void addShip(RegularShip ship) {
-    	list[contador] = ship;
-    	contador++;
+        list[contador] = ship;
+        contador++;
     }
 
     public RegularShip[] getList() {
         return list;
     }
 
-    public int getSizeList(){
+    public int getSizeList() {
         return contador;
     }
 
@@ -58,17 +37,17 @@ public class RegularShipList {
         return x;
     }
 
-    public RegularShip getShip(int x, int y){
+    public RegularShip getShip(int x, int y) {
         RegularShip ship = null;
-        for(int i = 0; i < contador; i++){
-            if(x == list[i].getPositionX() && y == list[i].getPositionY()){
-               ship = list[i];
+        for (int i = 0; i < contador; i++) {
+            if (x == list[i].getPositionX() && y == list[i].getPositionY()) {
+                ship = list[i];
             }
         }
         return ship;
     }
 
-    public boolean getDirection(){
+    public boolean getDirection() {
         return direction;
     }
 
@@ -76,9 +55,58 @@ public class RegularShipList {
         this.direction = direction;
     }
 
-    public void incrementPositionX(){
-        for(int i = 0; i < contador; i++){
+    public void incrementPositionX() {
+        for (int i = 0; i < contador; i++) {
             list[i].incrementPositionX();
         }
+    }
+
+    public void isAttack(int x, int y, Game game) {
+        for (int i = 0; i < contador; i++) {
+            if (x == list[i].getPositionX() && y == list[i].getPositionY() && !list[i].isDead()) {
+                game.resetMissile();
+                list[i].recibeDamage(1);
+                if (list[i].isDead()) {
+                    game.points = game.points + list[i].getPoints();
+                    game.numberEnemies = game.numberEnemies - 1;
+                }
+            }
+        }
+    }
+
+    public void shockwave() {
+        for(int i = 0; i < contador; i++){
+            list[i].recibeDamage(1);
+            if(list[i].isDead()){
+                game.points = game.points + list[i].getPoints();
+                game.numberEnemies = game.numberEnemies - 1;
+            }
+        }
+    }
+
+    public void moveRegularShips(Game game){
+        if(!bordeR()){
+            for(int i = 0; i < contador; i++){
+                list[i].move(getDirection());
+            }
+        }
+        else{
+            game.edge = true;
+            incrementPositionX();
+        }
+    }
+
+    private boolean bordeR() {
+        boolean ok = false;
+        if(list[0].getPositionY() == 0 && getDirection() != true){
+            setDirection(true);
+            ok = true;
+        }
+        else if (list[getSizeList()-1].getPositionY() == 8 && getDirection() != false){
+            setDirection(false);
+            ok = true;
+        }
+        else ok = false;
+        return ok;
     }
 }
