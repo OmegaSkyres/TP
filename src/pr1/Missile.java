@@ -1,6 +1,6 @@
 package pr1;
 
-public class Missile {
+public class Missile extends Weapon{
 	private Game game;
 	private UCMShip player;
 	private int row;
@@ -8,6 +8,7 @@ public class Missile {
 	public boolean active;
 	
 	public Missile(Game game) {
+		super(game,x,y,1);
 		game = game;
 		this.player = new UCMShip(game, game.DIM_X / 2, game.DIM_Y - 1);
 		row = player.UCMShipPositionX() - 1;

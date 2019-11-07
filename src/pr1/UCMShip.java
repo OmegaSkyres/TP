@@ -2,7 +2,7 @@ package pr1;
 
 import pr1.Game;
 
-public class UCMShip {
+public class UCMShip extends Ship {
 
     public int life;
 	private int row;
@@ -10,10 +10,7 @@ public class UCMShip {
 	private Game game;
 	
 	public UCMShip(Game game, int x, int y) {
-		game = game;
-		row = x;
-		column = y;
-		life = 3;
+		super(game,x,y,3);
 	}
 	
 	public int UCMShipPositionY() {
@@ -46,6 +43,21 @@ public class UCMShip {
     public boolean isOnPosition(int x, int y){
 		if(x == row && y == column) return true;
 		else return false;
+	}
+
+	@Override
+	public void computerAction() {
+
+	}
+
+	@Override
+	public void onDelete() {
+
+	}
+
+	@Override
+	public void move() {
+
 	}
 
 	public void recibeDamage(int damage){

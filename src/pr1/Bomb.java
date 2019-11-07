@@ -2,13 +2,14 @@ package pr1;
 
 import pr1.Game;
 
-public class Bomb {
+public class Bomb extends Weapon {
     private int row;
     private int column;
     private boolean active;
     private DestroyerShip ship;
 
     public Bomb(int x, int y, DestroyerShip newShip){
+        super(game,x,y,1);
         row = x + 1;
         column = y;
         active = true;

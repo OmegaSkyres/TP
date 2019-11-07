@@ -3,22 +3,25 @@ package pr1;
 import pr1.util.MyStringUtils;
 import pr1.view.GamePrinter;
 
+import java.util.Random;
 
 
-public class Game {
-	public final static int DIM_X = 8;
-	public final static int DIM_Y = 9;
+public class Game implements IPlayerController {
+	public final static int DIM_X = 9;
+	public final static int DIM_Y = 8;
 	public GamePrinter printer;
+	GameObjectBoard board;
 	private UCMShip player;
 	private Bomb bomb;
 	private Missile missile;
 	private Ovni ovni;
+	private BoardInitializer initializer;
     private RegularShipList listRegularShips;
     private DestroyerShipList listDestroyerShips;
 	private BombList listBombs;
     private boolean missileLaunch = false;
     private int seed;
-    private int cycle;
+    private int currentCycle;
     private boolean doExit;
     public int points;
     public int numberEnemies;
@@ -26,61 +29,40 @@ public class Game {
     private Level level;
     public boolean edge;
     private int contador;
+    private Random rand;
 
 
     
-    public Game(Level difficulty, int seed){
-		this.player = new UCMShip(this, DIM_X - 1, DIM_Y / 2);
+    public Game(Level level, Random random){
+		this.rand = random;
+		this.level = level;
+		initializer = new BoardInitializer();
+		initGame();
     	this.missile = new Missile(this);
-    	this.ovni = new Ovni(this);
-    	this.level = difficulty;
 		this.edge = false;
 		this.printer = new GamePrinter(this, DIM_X, DIM_Y);
-    	this.listRegularShips = new RegularShipList(this);
-		this.listDestroyerShips= new DestroyerShipList(this);
-		initPositionR(1,((DIM_Y/2) - (level.getNumberPerRowRegular()/2))+1);
-		initPositionD(level.getNumberRowRegular() + 1, ((DIM_Y/2)  - (level.getNumberPerRowDestroyer()/2))+1);
 		this.listBombs = new BombList(this);
     	this.numberEnemies = listRegularShips.getSizeList() + listDestroyerShips.getSizeList();
     	this.points = 0;
-    	this.contador = 1;
 		setCycle(0);
     }
 
+	public void initGame () {
+		currentCycle = 0;
+		board = initializer.initialize(this, level);
+		player = new UCMShip(this, DIM_X / 2, DIM_Y - 1);
+		board.add(player);
+	}
+
 	public void update() {
-		int speed = determineSpeed(level);
-		if (contador == speed) {
-			listRegularShips.moveRegularShips(this);
-			listDestroyerShips.moveDestroyerShips(this);
-			contador = 1;
-		} else {
-			contador++;
-		}
-		listBombs.moveBombs();
+		board.computerAction();
+		board.update();
+		currentCycle += 1;
 
-		if (ovni.isActive()) {
-			ovni.move();
-		} else {
-			if (level.posibleOvni()) {
-				ovni.setActive(true);
-			}
-		}
-		if (missileLaunch) {
-			missile.missileMove();
-			listRegularShips.isAttack(missile.missilePositionX(), missile.missilePositionY(),this);
-			listDestroyerShips.isAttack(missile.missilePositionX(), missile.missilePositionY(),this);
-			listBombs.isAttack(missile.missilePositionX(), missile.missilePositionY(),this);
-			ovni.isAttack(missile.missilePositionX(), missile.missilePositionY(),this);
-
-			if (missile.missilePositionX() < 0) {
-				resetMissile();
-			}
-		}
-		//listDestroyerShips.newBombs(); //TODO GENERAR LAS NUEVAS BOMBAS
 	}
 
 	public void initPositionR(int x, int y) {
-			for (int i = 0; i < level.getNumberRegular(); i++) {
+			for (int i = 0; i < level.getNumRegularAliens(); i++) {
 				if (i == 4) {
 					x++;
 					y = 3;
@@ -91,7 +73,7 @@ public class Game {
 	}
 
 	public void initPositionD(int x,int y) {
-			for(int i = 0; i < level.getNumberDestroyer(); i++){
+			for(int i = 0; i < level.getNumDestroyerAliens(); i++){
 				listDestroyerShips.addDestroyerShip(new DestroyerShip(x,y));
 				y++;
 			}
@@ -138,20 +120,6 @@ public class Game {
 		game += "Superpower: " + MyStringUtils.centre(Boolean.toString(superpower), 5)  + "\n";
 		game += toStringBoard();
 		return game;
-	}
-
-	public int determineSpeed(Level level){
-    	int speed = 0;
-		if(level.toString() == "EASY"){
-			speed = 3;
-		}
-		else if(level.toString() == "HARD"){
-			speed = 2;
-		}
-		else if (level.toString() == "INSANE"){
-			speed = 1;
-		}
-		return speed;
 	}
 
 	public String position(int numRows, int numCols) {
@@ -231,16 +199,12 @@ public class Game {
 		return ok;
 	}
 
-    public void reset(){
-        points = 0;
-    }
-
 	public int getCycle() {
-		return cycle;
+		return currentCycle;
 	}
 
 	public void setCycle(int cycle) {
-		this.cycle = cycle;
+		this.currentCycle = cycle;
 	}
 	
 	public void moveLeft() {
@@ -315,8 +279,49 @@ public class Game {
 	}
 
 	public void skip() {
-    	this.cycle++;
+    	this.currentCycle++;
 	}
 
 
+	public Random getRandom() {
+		return rand;
+	}
+
+	public Level getLevel() {
+		return level;
+	}
+
+	public void reset() {
+		initGame();
+	}
+
+	@Override
+	public boolean move(int numCells) {
+		return false;
+	}
+
+	@Override
+	public boolean shootLaser() {
+		return false;
+	}
+
+	@Override
+	public boolean shockWave() {
+		return false;
+	}
+
+	@Override
+	public void receivePoints(int points) {
+
+	}
+
+	@Override
+	public void enableShockWave() {
+
+	}
+
+	@Override
+	public void enableMissile() {
+
+	}
 }

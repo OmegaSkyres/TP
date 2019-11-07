@@ -2,7 +2,7 @@ package pr1;
 
 import pr1.Game;
 
-public class RegularShip {
+public class RegularShip extends AlienShip {
     private int row;
     private int column;
     private int life = 3;
@@ -11,6 +11,7 @@ public class RegularShip {
 
 
     public RegularShip(int x, int y){
+        super(game,x,y,3);
         row = x;
         column = y;
     }

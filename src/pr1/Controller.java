@@ -7,22 +7,31 @@ import java.util.Scanner;
 
 public class Controller {
     private Game game;
-    private Scanner sc;
+    private Scanner in;
     private int x = 25;;
 
-    public Controller(Game game, Scanner sc) {
+    public Controller(Game game, Scanner in) {
         this.game = game;
-        this.sc = sc;
+        this.in = in;
     }
 
 
     public void run(){   
         while (!game.isFinished()) {
         	System.out.println(game);
-        	System.out.print("Command > ");
-        	String cmd = sc.nextLine().toLowerCase();
+            String[] words = in.nextLine().toLowerCase().trim().split ("\\s+");
+            Command command = CommandGenerator.parse(words);
+            if (command != null) {
+                if (command.execute(game))
+                    System.out.println(game);
+            }
+            else {
+                System.out.format(unknownCommandMsg);
+            }
+
+            System.out.print("Command > ");
         	
-        	switch(cmd) {
+        	switch(words[0]) {
                 case "move":
                     //TODO ARREGLAR
                 case "left":

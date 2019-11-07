@@ -115,4 +115,8 @@ public class DestroyerShipList {
             direction = true;
         }
     }
+
+    public void newBombs() {
+
+    }
 }

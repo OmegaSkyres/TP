@@ -2,7 +2,7 @@ package pr1;
 
 import pr1.Game;
 
-public class DestroyerShip {
+public class DestroyerShip extends AlienShip{
     private int row;
     private int column;
     private int life = 1;
@@ -11,6 +11,7 @@ public class DestroyerShip {
     private boolean launch;
 
     public DestroyerShip(int x, int y){
+        super(game,x,y,1);
         row = x;
         column = y;
     }

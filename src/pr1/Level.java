@@ -1,117 +1,87 @@
 package pr1;
 
-import java.util.Random;
+public enum Level {
 
-public enum Level { EASY, HARD, INSANE;
-    Random rand = new Random();
-    public static Level transform(String difficulty) {
-        if ("EASY".equals(difficulty)) {
-            return EASY;
-        }
+    EASY(4, 2, 0.2, 3, 0.5, 1),
+    HARD(8, 4, 0.3, 2, 0.2, 2),
+    INSANE(12, 4, 0.5, 1, 0.1, 3);
 
-        else if ("HARD".equals(difficulty)) {
-            return HARD;
-        }
+    private int numRegularAliens;
+    private int numDestroyerAliens;
+    private int numCyclesToMoveOneCell;
+    private double ovniFrequency;
+    private double shootFrequency;
+    private int numRowsOfRegularAliens;
 
-        else if ("INSANE".equals(difficulty)){
-            return INSANE;
-        }
-
-        else {
-            System.out.println("Wrong Difficulty.");
-            return null;
-        }
+    private Level(
+            int numRegularAliens,
+            int numDestroyerAliens,
+            double shootFrequency,
+            int numCyclesToMoveOneCell,
+            double ovniFrequency,
+            int numRowsOfRegularAliens)
+    {
+        this.numRegularAliens = numRegularAliens;
+        this.numDestroyerAliens = numDestroyerAliens;
+        this.shootFrequency = shootFrequency;
+        this.numCyclesToMoveOneCell = numCyclesToMoveOneCell;
+        this.ovniFrequency = ovniFrequency;
+        this.numRowsOfRegularAliens = numRowsOfRegularAliens;
     }
 
-    public boolean posibleBomb(){
-        boolean generate = false;
-        if(toString() == "EASY"){
-            if(rand.nextDouble() < 0.1) {
-                generate = true;
-            }
-        }
-        else if(toString() == "HARD"){
-            if (rand.nextDouble() < 0.3){
-                generate = true;
-            }
-        }
-        else if (toString() == "INSANE"){
-            if (rand.nextDouble() < 0.5){
-                generate = true;
-            }
-        }
-        return generate;
 
+    public int getNumRegularAliens() {
+        return numRegularAliens;
     }
 
-    public boolean posibleOvni(){
-        boolean generate = false;
-        if(toString() == "EASY"){
-            if(rand.nextDouble() < 0.5) {
-                generate = true;
-            }
-        }
-        else if(toString() == "HARD"){
-            if (rand.nextDouble() < 0.2){
-                generate = true;
-            }
-        }
-        else if (toString() == "INSANE"){
-            if (rand.nextDouble() < 0.1){
-                generate = true;
-            }
-        }
-        return generate;
-    }
-    public int getNumberPerRowRegular(){
-        int number = 4;
-        return number;
-
+    public int getNumDestroyerAliens() {
+        return numDestroyerAliens;
     }
 
-    public int getNumberPerRowDestroyer(){
-        int number = 0;
-        if(toString() == "EASY" || toString() == "HARD"){
-            number = 2;
-        }
-        else number = 4;
-        return number;
-
+    public Double getShootFrequency() {
+        return shootFrequency;
     }
 
-    public int getNumberRowRegular(){
-        int number = 0;
-        if(toString() == "HARD" || toString() == "INSANE"){
-            number = 2;
-        }
-        else {
-            number = 1;
-        }
-        return number;
+    public int getNumCyclesToMoveOneCell() {
+        return numCyclesToMoveOneCell;
     }
 
-    public int getNumberRegular(){
-        int number = 0;
-        if(toString() == "EASY"){
-            number = 4;
-        }
-        else if (toString() == "HARD" || toString() == "INSANE"){
-            number = 8;
-        }
-        return number;
-
+    public Double getOvniFrequency() {
+        return ovniFrequency;
+    }
+    public int getNumRowsOfRegularAliens() {
+        return numRowsOfRegularAliens;
     }
 
-    public int getNumberDestroyer(){
-        int number = 0;
-        if(toString() == "EASY" || toString() == "HARD"){
-            number = 2;
-        }
-        else if (toString() == "INSANE"){
-            number = 4;
-        }
-        return number;
-
+    public int getNumRegularAliensPerRow() {
+        return numRegularAliens / numRowsOfRegularAliens;
     }
 
+    public int  getNumDestroyerAliensPerRow() {
+        return getNumDestroyerAliens();
+    }
+
+    public static Level fromParam(String param) {
+        for (Level level : Level.values())
+            if (level.name().equalsIgnoreCase(param)) return level;
+        return EASY;
+    }
+
+    public Double getTurnExplodeFreq(){
+        return 0.05;
+    }
+
+    public int determineSpeed(Level level){
+        int speed = 0;
+        if(level.toString() == "EASY"){
+            speed = 3;
+        }
+        else if(level.toString() == "HARD"){
+            speed = 2;
+        }
+        else if (level.toString() == "INSANE"){
+            speed = 1;
+        }
+        return speed;
+    }
 }
