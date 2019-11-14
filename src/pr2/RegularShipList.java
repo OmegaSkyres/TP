@@ -82,29 +82,5 @@ public class RegularShipList {
         }
     }
 
-    public void moveRegularShips(Game game){
-        if(!bordeR()){
-            for(int i = 0; i < contador; i++){
-                list[i].move(getDirection());
-            }
-        }
-        else{
-            game.edge = true;
-            incrementPositionX();
-        }
-    }
 
-    private boolean bordeR() {
-        boolean ok = false;
-        if(list[0].getPositionY() == 0 && getDirection() != true){
-            setDirection(true);
-            ok = true;
-        }
-        else if (list[getSizeList()-1].getPositionY() == 8 && getDirection() != false){
-            setDirection(false);
-            ok = true;
-        }
-        else ok = false;
-        return ok;
-    }
 }

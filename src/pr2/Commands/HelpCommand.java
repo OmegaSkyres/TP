@@ -3,12 +3,12 @@ package pr2.Commands;
 import pr2.Game;
 
 public class HelpCommand extends Command {
-    public HelpCommand(String name, String shortcut, String details, String help) {
-        super(name, shortcut, details, help);
+    public HelpCommand() {
+        super("help","h","","");
     }
-
     @Override
-    public boolean execute(Game game) { return false; }
+    public boolean execute(Game game) { game.help();
+    return false;} //TODO INVOCA A COMMANDHELP
 
     @Override
     public Command parse(String[] commandWords) {

@@ -3,12 +3,13 @@ package pr2.Commands;
 import pr2.Game;
 
 public class UpdateCommand extends Command {
-    public UpdateCommand(String name, String shortcut, String details, String help) {
-        super(name, shortcut, details, help);
+    public UpdateCommand(){
+        super("update","u","","");
     }
 
     @Override
     public boolean execute(Game game) {
+        game.update();
         return false;
     }
 

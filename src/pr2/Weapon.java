@@ -1,6 +1,8 @@
 package pr2;
 
-public class Weapon extends GameObject {
+public abstract class Weapon extends GameObject {
+    private Object Bomb;
+
     public Weapon(Game game, int x, int y, int live) {
         super(game, x, y, live);
     }
@@ -13,15 +15,5 @@ public class Weapon extends GameObject {
     @Override
     public void onDelete() {
 
-    }
-
-    @Override
-    public void move() {
-
-    }
-
-    @Override
-    public String toString() {
-        return null;
     }
 }

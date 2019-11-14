@@ -3,8 +3,9 @@ package pr2.Commands;
 import pr2.Game;
 
 public class ListCommand extends Command {
-    public ListCommand(String name, String shortcut, String details, String help) {
-        super(name, shortcut, details, help);
+    public ListCommand(){ //TODO PREGUNTAR POR SI NECESITAN 2 CONSTRUCTORES CADA COMANDO
+        super("list","l","","");
+
     }
 
     @Override

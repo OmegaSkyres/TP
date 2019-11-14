@@ -92,27 +92,7 @@ public class DestroyerShipList {
         return ok;
     }
 
-    public void moveDestroyerShips(Game game) {
-        if(!bordeD() && !game.edge){
-            for (int i = 0; i < contador; i++) {
-                list[i].move(getDirection());
-            }
-        }
-        else {
-            incrementPositionX();
-            changedirection();
-            game.edge = false;
-        }
-    }
 
-    private void changedirection() {
-        if(direction == true){
-            direction = false;
-        }
-        else{
-            direction = true;
-        }
-    }
 
     public void newBombs() {
 

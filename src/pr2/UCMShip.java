@@ -4,11 +4,13 @@ public class UCMShip extends Ship {
 
     public int life;
 	private int row;
+	private int points;
 	private int column;
 	private Game game;
 	
 	public UCMShip(Game game, int x, int y) {
 		super(game,x,y,3);
+		points = 0;
 	}
 	
 	public int UCMShipPositionY() {
@@ -70,4 +72,9 @@ public class UCMShip extends Ship {
 		}
 		else return true;
 	}
+
+    public String stateToString() {
+		return "Lifes: " + life + "\n" + "Points: " + points + "\n";
+
+    }
 }

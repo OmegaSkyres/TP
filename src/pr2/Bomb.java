@@ -14,7 +14,7 @@ public class Bomb extends Weapon {
         ship = newShip;
 
     }
-
+    @Override
     public String toString(){
         String bomb = " ";
         if(active){
@@ -25,7 +25,7 @@ public class Bomb extends Weapon {
         }
         return bomb;
     }
-
+    @Override
     public void move() {
         row++;
     }

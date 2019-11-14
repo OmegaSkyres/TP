@@ -3,13 +3,17 @@ package pr2.Commands;
 import pr2.Game;
 
 public class ResetCommand extends Command {
-    public ResetCommand(String name, String shortcut, String details, String help) {
-        super(name, shortcut, details, help);
+    public ResetCommand(){
+        super("reset","r","","");
     }
 
     @Override
     public boolean execute(Game game) {
+        game.reset();
+        System.out.println("The game has been RESET \n");
+        System.out.print(game);
         return false;
+
     }
 
     @Override

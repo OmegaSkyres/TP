@@ -4,12 +4,8 @@ import pr2.Game;
 
 public class ExitCommand extends Command {
     public ExitCommand(){
-        super();
+        super("exit","e"," "," ");
     }
-    public ExitCommand(String name, String shortcut, String details, String help) {
-        super(name, shortcut, details, help);
-    }
-
     @Override
     public boolean execute(Game game) {
         game.exit();

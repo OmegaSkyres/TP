@@ -3,14 +3,13 @@ package pr2;
 public class GameObjectBoard {
     private GameObject[] objects;
     private int currentObjects;
-    private int contador;
 
     public GameObjectBoard (int width, int height) {
-        contador = 1;
+        currentObjects = 1;
     }
 
     private int getCurrentObjects () {
-        // TODO implement
+        return currentObjects;
     }
 
     public void add (GameObject object) {
@@ -19,16 +18,38 @@ public class GameObjectBoard {
     }
 
     private GameObject getObjectInPosition (int x, int y) {
-        objects[currentObjects];
+        GameObject object = null;
+        for(int i = 0; i < currentObjects; i++){
+            if(x == objects[i].x && y == objects[i].y){
+                object = objects[i];
+            }
+        }
+        return object;
     }
 
     private int getIndex(int x, int y) {
-        // TODO implement
+        int index = 0;
+        for(int i = 0; i < currentObjects; i++){
+            if(x == objects[i].x && y == objects[i].y){
+                index = i;
+            }
+        }
+        return index;
     }
 
     private void remove (GameObject object) {
-        // TODO implement
+        int i = 0;
+        while(objects[i] != object && i < currentObjects){
+            i++;
+            if(objects[i] == object){
+                for(int j = i; i < currentObjects - 1; j++){
+                    objects[j] = objects[j+1];
+                }
+                currentObjects--;
+            }
+        }
     }
+
 
     public void update() {
         int speed = determineSpeed(level);
@@ -71,11 +92,23 @@ public class GameObjectBoard {
     }
 
     private void removeDead() {
-        // TODO implement
+        for(int i = currentObjects; i >= 0; i--){
+            if(objects[i].live == 0){
+                remove(objects[i]);
+            }
+        }
     }
 
     public String toString(int x, int y) {
-        // TODO implement
+        String chain;
+        GameObject object = getObjectInPosition(x,y);
+        if (object == null){
+            chain = " ";
+        }
+        else{
+            chain = object.toString();
+        }
+        return chain;
     }
 
 }

@@ -9,26 +9,13 @@ import java.util.Random;
 public class Game implements IPlayerController {
 	public final static int DIM_X = 9;
 	public final static int DIM_Y = 8;
-	public GamePrinter printer;
 	GameObjectBoard board;
 	private UCMShip player;
-	private Bomb bomb;
-	private Missile missile;
-	private Ovni ovni;
 	private BoardInitializer initializer;
-    private RegularShipList listRegularShips;
-    private DestroyerShipList listDestroyerShips;
-	private BombList listBombs;
-    private boolean missileLaunch = false;
-    private int seed;
     private int currentCycle;
     private boolean doExit;
-    public int points;
-    public int numberEnemies;
-    public boolean superpower;
     private Level level;
     public boolean edge;
-    private int contador;
     private Random rand;
 
 
@@ -38,13 +25,8 @@ public class Game implements IPlayerController {
 		this.level = level;
 		initializer = new BoardInitializer();
 		initGame();
-    	this.missile = new Missile(this);
 		this.edge = false;
-		this.printer = new GamePrinter(this, DIM_X, DIM_Y);
-		this.listBombs = new BombList(this);
-    	this.numberEnemies = listRegularShips.getSizeList() + listDestroyerShips.getSizeList();
-    	this.points = 0;
-		setCycle(0);
+		currentCycle = 0;
     }
 
 	public void initGame () {
@@ -61,6 +43,22 @@ public class Game implements IPlayerController {
 
 	}
 
+	public Random getRandom() {
+		return rand;
+	}
+	public Level getLevel() {
+		return level;
+	}
+	public void reset() {
+		initGame();
+	}
+	public void addObject(GameObject object) {
+		board.add(object);
+	}
+	public String positionToString(int x, int y) {
+		return board.toString(x, y);
+	}
+
 	public boolean isFinished() {
 		return playerWin() || aliensWin() || doExit;
 	}
@@ -70,10 +68,7 @@ public class Game implements IPlayerController {
 	}
 
 	private boolean playerWin () {
-		if(numberEnemies == 0){
-			return true;
-		}
-		else return false;
+		return AlienShip.allDead();
 	}
 
 	public void exit() {
@@ -87,67 +82,17 @@ public class Game implements IPlayerController {
 		else return "This should not happen";
 	}
 
-
-
-
-	@Override
-	public String toString() {
-		String game;
-
-		game = "Life: " + MyStringUtils.centre(Integer.toString(this.player.life), 5)  + "\n";
-		game += "Number of cycles: " + MyStringUtils.centre(Integer.toString(getCycle()), 5)  + "\n";
-		game += "Points: " + MyStringUtils.centre(Integer.toString(points), 5)  + "\n";
-		game += "Remaining aliens: " + MyStringUtils.centre(Integer.toString(numberEnemies), 5)  + "\n";
-		game += "Superpower: " + MyStringUtils.centre(Boolean.toString(superpower), 5)  + "\n";
-		game += toStringBoard();
-		return game;
+	public boolean isOnBoard(int x, int y) {
+		return x >= 0 && y >= 0 && x < DIM_X && y < DIM_Y;
 	}
 
-	public String position(int numRows, int numCols) {
-		String string = " ";
-    	RegularShip shipE = listRegularShips.getShip(numRows,numCols);
-    	if(shipE != null){
-    		return shipE.toString();
-		}
-    	DestroyerShip shipDestroyer = listDestroyerShips.getDestroyerShip(numRows,numCols);
-    	if(shipDestroyer != null){
-    		return shipDestroyer.toString();
-		}
-    	bomb = listBombs.getBomb(numRows,numCols);
-		if(bomb != null && bomb.isActive()){
-			return bomb.toString();
-		}
-		if (numRows == DIM_X - 1) {
-			if (numCols == player.UCMShipPositionY()) {
-				return player.toString();
-			}
-		}
-		if (missileLaunch) {
-			if (numRows == missile.missilePositionX() && numCols == missile.missilePositionY()) {
-				missile.setEnable();
-				return missile.toString();
-			}
-		}
-		if (numRows == ovni.getPositionX() && numCols == ovni.getPositionY()) {
-			if(ovni.isActive()) {
-				return ovni.toString();
-			}
 
-		}
-		return string;
+	public String position(int numRows, int numCols) {
+
 	}
 	
 	public void posibleLaunch() {
 		
-		if(missile.isEnable()){
-			System.out.println("!!!Ya hay un misil lanzado!!!");
-			//Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
-		}
-		else {
-			missileLaunch = true;
-			missile.setPositionX(player.UCMShipPositionX());
-			missile.setPositionY(player.UCMShipPositionY());
-		}
 
 	}
 	
@@ -157,10 +102,7 @@ public class Game implements IPlayerController {
 			missile.reset();
 		
 	}
-	
-	public String toStringBoard() {
-		return printer.toString();
-	}
+
 
 	public boolean colisionRegularShip() {
     	boolean ok = false;
@@ -178,38 +120,6 @@ public class Game implements IPlayerController {
 			ok = true;
 		}
 		return ok;
-	}
-
-	public int getCycle() {
-		return currentCycle;
-	}
-
-	public void setCycle(int cycle) {
-		this.currentCycle = cycle;
-	}
-	
-	public void moveLeft() {
-		player.moveLeft();
-	}
-	
-	public void moveRight() {
-		player.moveRight();
-	}
-
-	public int getNumberEnemies() {
-		return numberEnemies;
-	}
-
-	public int getPoints() {
-		return points;
-	}
-
-	public int addPoints(int newpoints){
-    	return points = points + newpoints;
-	}
-
-	public int reduceNumberEnemies(int newNumber){
-    	return numberEnemies = numberEnemies - newNumber;
 	}
 
 	public boolean attackbomb(int x, int y, int damage){
@@ -239,6 +149,13 @@ public class Game implements IPlayerController {
     	
 	}
 
+	public String infoToString() {
+		return "Cycles: " + currentCycle + "\n" +
+				player.stateToString() +
+				"Remaining aliens: " + (AlienShip.getRemainingAliens()) + "\n";
+	}
+
+
 	public void list() {
 		System.out.println(" [R]egular ship: Points: 5 - Harm: 0 - Shield: 2" + "\n" +
 				"[D]estroyer ship: Points: 10 - Harm: 1 - Shield: 1" + "\n" +
@@ -263,22 +180,9 @@ public class Game implements IPlayerController {
     	this.currentCycle++;
 	}
 
-
-	public Random getRandom() {
-		return rand;
-	}
-
-	public Level getLevel() {
-		return level;
-	}
-
-	public void reset() {
-		initGame();
-	}
-
 	@Override
 	public boolean move(int numCells) {
-		return false;
+		//TODO COMO HACER ESTE MOVE PARA LOS OBJETOS DEL TABLERO
 	}
 
 	@Override
@@ -294,15 +198,31 @@ public class Game implements IPlayerController {
 	@Override
 	public void receivePoints(int points) {
 
+    	points += points; //TODO DE DONDE SALEN ESTOS POINTS QUIEN LLEVA ESTE ATRIBUTO
 	}
 
 	@Override
 	public void enableShockWave() {
+    	Shockwave shockwave = new Shockwave(this,) {
+
+		}
+    	//TODO COMO ACTIVO EL SHOCKWABE SI HA MUERTO EL OVNI Y DEBO MIRAR DE SI YA TENGO UNO??
 
 	}
 
 	@Override
 	public void enableMissile() {
+    	Missile missile = new Missile(this,player.UCMShipPositionX()+1,player.UCMShipPositionY());
+		if(missile.isEnable()){
+			System.out.println("!!!Ya hay un misil lanzado!!!");
+			//Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
+		}
+		else {
+			missile.active = true;
+			missile.setPositionX(player.UCMShipPositionX());
+			missile.setPositionY(player.UCMShipPositionY());
+		}
 
 	}
+
 }
