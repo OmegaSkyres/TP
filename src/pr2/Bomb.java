@@ -25,6 +25,12 @@ public class Bomb extends Weapon {
         }
         return bomb;
     }
+
+    @Override
+    public void computerAction() {
+        cangenerate //Mirar csi puede generar la bomba
+    }
+
     @Override
     public void move() {
         row++;

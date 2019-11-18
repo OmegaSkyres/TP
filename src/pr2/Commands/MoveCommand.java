@@ -5,7 +5,7 @@ import pr2.Game;
 public class MoveCommand extends Command {
     int numCells; //Hay que guardar el valor del parseador
     public MoveCommand(){
-        super("move","m","",""); //TODO PREGUNTAR SI LLEVA UN ATRIBUTO MAS NUMCELLS
+        super("move","m","","Moves UCM-Ship to the indicated direction."); //TODO PREGUNTAR SI LLEVA UN ATRIBUTO MAS NUMCELLS
     }
 
     @Override

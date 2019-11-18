@@ -4,7 +4,7 @@ import pr2.Game;
 
 public class HelpCommand extends Command {
     public HelpCommand() {
-        super("help","h","","");
+        super("help","h","","Prints this help message.");
     }
     @Override
     public boolean execute(Game game) { game.help();

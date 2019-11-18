@@ -33,6 +33,11 @@ public class Missile extends Weapon{
 	}
 
 	@Override
+	public void computerAction() { //Missile no lleva computer action
+
+	}
+
+	@Override
 	public void move() {
 		row--;
 	}
@@ -54,3 +59,4 @@ public class Missile extends Weapon{
 		column = player.UCMShipPositionY();
 	}
 }
+ //TODO HAY QUE IMPLEMENTAR EN CADA OBJETO LAS FUNCIONES DE IATTACK??

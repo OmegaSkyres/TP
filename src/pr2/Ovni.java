@@ -1,18 +1,20 @@
 package pr2;
 
-public class Ovni {
+public class Ovni extends EnemyShip {
     private int row;
     private int column;
-    private int life = 1;
+    private int life;
     private Game game;
     private int points = 25;
     private boolean active;
 
-    public Ovni(Game game){
+    public Ovni(Game game, int x, int y, int life){
+        super(game,x,y,life);
         game = game;
-        row = 0;
-        column = 8;
-        active = false;
+        row = x;
+        column = y;
+        life = life;
+        active = true;
     }
 
     public String toString(){

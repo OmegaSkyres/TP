@@ -7,10 +7,6 @@ public abstract class Weapon extends GameObject {
         super(game, x, y, live);
     }
 
-    @Override
-    public void computerAction() {
-
-    }
 
     @Override
     public void onDelete() {

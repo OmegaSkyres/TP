@@ -4,7 +4,7 @@ import pr2.Game;
 
 public class UpdateCommand extends Command {
     public UpdateCommand(){
-        super("update","u","","");
+        super("update","u","","Update the game.");
     }
 
     @Override

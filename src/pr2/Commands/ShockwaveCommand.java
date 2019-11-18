@@ -3,9 +3,12 @@ package pr2.Commands;
 import pr2.Game;
 
 public class ShockwaveCommand extends Command {
-    public ShockwaveCommand(String name, String shortcut, String details, String help) {
-        super(name, shortcut, details, help);
+
+    public ShockwaveCommand(){
+        super("ShockWave","s","","UCM-Ship releases a shock wave.");
     }
+
+
 
     @Override
     public boolean execute(Game game) {

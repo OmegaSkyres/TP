@@ -4,7 +4,7 @@ import pr2.Game;
 
 public class ResetCommand extends Command {
     public ResetCommand(){
-        super("reset","r","","");
+        super("reset","r","","Starts a new game.");
     }
 
     @Override

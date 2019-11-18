@@ -87,23 +87,6 @@ public class Game implements IPlayerController {
 	}
 
 
-	public String position(int numRows, int numCols) {
-
-	}
-	
-	public void posibleLaunch() {
-		
-
-	}
-	
-	public void resetMissile() {
-			missile.active = false;
-			missileLaunch = false;
-			missile.reset();
-		
-	}
-
-
 	public boolean colisionRegularShip() {
     	boolean ok = false;
 		RegularShip shipE = listRegularShips.getShip(player.UCMShipPositionX(),player.UCMShipPositionY());
@@ -132,23 +115,6 @@ public class Game implements IPlayerController {
 		return ok;
 	}
 
-	public void shockwave() {
-
-    	if(superpower){
-    		listRegularShips.shockwave();
-    		listDestroyerShips.shockwave();
-    		if(ovni.isActive()){
-    			ovni.recibeDamage(1);
-				if(ovni.isDead()) {
-					points = points + ovni.getPoints();
-					ovni.deleteOvni();
-				}
-			}
-    		superpower = false;
-		}
-    	
-	}
-
 	public String infoToString() {
 		return "Cycles: " + currentCycle + "\n" +
 				player.stateToString() +
@@ -156,43 +122,37 @@ public class Game implements IPlayerController {
 	}
 
 
-	public void list() {
-		System.out.println(" [R]egular ship: Points: 5 - Harm: 0 - Shield: 2" + "\n" +
-				"[D]estroyer ship: Points: 10 - Harm: 1 - Shield: 1" + "\n" +
-				"[O]vni: Points: 25 - Harm: 0 - Shield: 1" + "\n" +
-				"^__^: Harm: 1 - Shield: 3"+ "\n" + "\n");
-
-	}
-
-	public void help() {
-    	System.out.println("move <left|right><1|2>: Moves UCM-Ship to the indicated direction." + "\n" +
-				"shoot: UCM-Ship launches a missile." + "\n" +
-		"shockWave: UCM-Ship releases a shock wave. " + "\n" +
-		"list: Prints the list of available ships. " + "\n" +
-		"reset: Starts a new game." + "\n" +
-		"help: Prints this help message." + "\n" +
-		"exit: Terminates the program." + "\n" +
-	    "[none]: Skips one cycle."+ "\n" + "\n");
-
-	}
-
 	public void skip() {
     	this.currentCycle++;
 	}
 
 	@Override
 	public boolean move(int numCells) {
-		//TODO COMO HACER ESTE MOVE PARA LOS OBJETOS DEL TABLERO
+		for(GameObjectBoard object : board) //Mirar si el move mueve todos los objetos de la lista o llama a update y alli ya mueve.
+			board.update();
 	}
 
 	@Override
 	public boolean shootLaser() {
 		return false;
-	}
+	} //Laser es el misil???
 
 	@Override
 	public boolean shockWave() {
-		return false;
+		if(superpower){
+			listRegularShips.shockwave();
+			listDestroyerShips.shockwave();
+			if(ovni.isActive()){
+				ovni.recibeDamage(1);
+				if(ovni.isDead()) {
+					points = points + ovni.getPoints();
+					ovni.deleteOvni();
+				}
+			}
+			superpower = false;
+		}
+
+    	return false;
 	}
 
 	@Override
@@ -203,7 +163,7 @@ public class Game implements IPlayerController {
 
 	@Override
 	public void enableShockWave() {
-    	Shockwave shockwave = new Shockwave(this,) {
+    	Shockwave shockwave = new Shockwave(this,) { // Se añade el ShockWabe al board???
 
 		}
     	//TODO COMO ACTIVO EL SHOCKWABE SI HA MUERTO EL OVNI Y DEBO MIRAR DE SI YA TENGO UNO??
@@ -213,13 +173,14 @@ public class Game implements IPlayerController {
 	@Override
 	public void enableMissile() {
     	Missile missile = new Missile(this,player.UCMShipPositionX()+1,player.UCMShipPositionY());
+    	board.add(missile);
 		if(missile.isEnable()){
 			System.out.println("!!!Ya hay un misil lanzado!!!");
 			//Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
 		}
 		else {
 			missile.active = true;
-			missile.setPositionX(player.UCMShipPositionX());
+			missile.setPositionX(player.UCMShipPositionX()+1);
 			missile.setPositionY(player.UCMShipPositionY());
 		}
 
