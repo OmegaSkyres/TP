@@ -45,7 +45,12 @@ public class Missile extends Weapon{
 	public String toString() {
 		return "oo";
 	}
-	
+
+	@Override
+	public void onDelete() {
+		game.enableMissile();
+	}
+
 	public void setEnable() {
 		active = true;
 	}
@@ -59,4 +64,3 @@ public class Missile extends Weapon{
 		column = player.UCMShipPositionY();
 	}
 }
- //TODO HAY QUE IMPLEMENTAR EN CADA OBJETO LAS FUNCIONES DE IATTACK??

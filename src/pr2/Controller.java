@@ -4,6 +4,7 @@ package pr2;
 
 import pr2.Commands.Command;
 import pr2.Commands.CommandGenerator;
+import pr2.view.GamePrinter;
 
 import java.util.Scanner;
 
@@ -11,10 +12,12 @@ public class Controller {
     private Game game;
     private Scanner in;
     private String unknownCommandMsg = "Unknown Command" + "\n";
+    GamePrinter printer;
 
     public Controller(Game game, Scanner in) {
         this.game = game;
         this.in = in;
+        printer
     }
 
 

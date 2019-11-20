@@ -25,7 +25,7 @@ public class BoardInitializer {
     private void initializeRegularAliens () {
         for(int i = 0; i < level.getNumRowsOfRegularAliens(); i++){
             for(int j = 0; j < level.getNumRegularAliens(); j++) {
-                board.add(new RegularShip(game,positionIni,i));
+                board.add(new RegularShip(game,positionIni,i,3));
                 positionIni++;
             }
         }
@@ -33,7 +33,7 @@ public class BoardInitializer {
 
     private void initializeDestroyerAliens() {
         for(int i = 0; i < level.getNumRegularAliens(); i++) {
-            board.add(new DestroyerShip(game,positionIni+1,i));
+            board.add(new DestroyerShip(game,positionIni+1,i,1)); //Mirar si le ponemos un atributo vida
             positionIni++;
         }
     }

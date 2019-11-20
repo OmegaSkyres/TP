@@ -1,9 +1,13 @@
 package pr2;
 
 public abstract class Ship extends GameObject {
-    public Ship(Game game, int x, int y, int live) {
-        super(game, x, y, live);
+    private int life;
+    public Ship(Game game, int x, int y, int life)
+    {
+        super(game, x, y, life);
+        life = life;
     }
+
 
     @Override
     public void computerAction() {
@@ -12,6 +16,33 @@ public abstract class Ship extends GameObject {
 
     @Override
     public void onDelete() {
+
+    }
+
+    @Override
+    public boolean receiveMissileAttack(int damage) { //Preguntar si esta bien implementar aqui recieveMissileAttack
+        boolean ok;
+        if(life > 0){
+            life = life - damage;
+            ok = true;
+        }
+        else{
+            ok = false;
+        }
+        return ok;
+    }
+
+    @Override
+    public boolean receiveShockWaveAttack(int damage) {
+        boolean ok;
+        if(life > 0){
+            life = life - damage;
+            ok = true;
+        }
+        else{
+            ok = false;
+        }
+        return ok;
 
     }
 }

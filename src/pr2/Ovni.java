@@ -1,6 +1,6 @@
 package pr2;
 
-public class Ovni extends EnemyShip {
+public class Ovni extends EnemyShip implements IExecuteRandomActions {
     private int row;
     private int column;
     private int life;
@@ -70,13 +70,6 @@ public class Ovni extends EnemyShip {
         }
     }
 
-    public void deleteOvni() {
-        row = 0;
-        column = 8;
-        active = false;
-        life = 1;
-    }
-
     public int getPoints() {
         return points;
     }
@@ -85,20 +78,20 @@ public class Ovni extends EnemyShip {
         return column;
     }
 
-    public void isAttack(int missilePositionX, int missilePositionY, Game game) {
-        if(isActive()){
-            if (missilePositionX == row && missilePositionY == column && !isDead()){
-                game.resetMissile();
-                recibeDamage(1);
-                if(isDead()){
-                    game.points = game.points + getPoints();
-                    deleteOvni();
-                    if(!game.superpower){
-                        game.superpower = true;
-                    }
-                }
-            }
-        }
+    @Override
+    public void computerAction() {
+        if(IExecuteRandomActions.canGenerateRandomOvni(game)){
+            active = true;
+        }; //Preguntar si esto se hace asi
     }
 
+    @Override
+    public void onDelete() {
+        row = 0;
+        column = 8;
+        active = false;
+        life = 1;
+        game.enableShockWave();
+        game.receivePoints(points);
+    }
 }

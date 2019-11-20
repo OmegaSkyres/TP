@@ -4,9 +4,10 @@ public class UCMShip extends Ship {
 
     public int life;
 	private int row;
-	private int points;
+	public int points;
 	private int column;
 	private Game game;
+	private boolean shockwave;
 	
 	public UCMShip(Game game, int x, int y) {
 		super(game,x,y,3);
@@ -46,24 +47,27 @@ public class UCMShip extends Ship {
 	}
 
 	@Override
-	public void computerAction() {
-
-	}
-
-	@Override
-	public void onDelete() {
-
-	}
-
-	@Override
 	public void move() {
 
 	}
 
-	public void recibeDamage(int damage){
+	@Override
+	public void onDelete() { //Que hace realmente??
+
+	}
+
+	@Override
+	public boolean receiveBombAttack(int damage) {
+		boolean ok = false;
 		if(this.life > 0){
-			this.life = this.life - damage;
+			ok = true;
+			recibeDamage(damage);
 		}
+		return ok;
+	}
+
+	public void recibeDamage(int damage){
+		this.life = this.life - damage;
 	}
 
 	public boolean isAlive() {
@@ -75,6 +79,10 @@ public class UCMShip extends Ship {
 
     public String stateToString() {
 		return "Lifes: " + life + "\n" + "Points: " + points + "\n";
-
     }
+
+    public void setShockwave(boolean active){
+		shockwave = active;
+	}
+
 }

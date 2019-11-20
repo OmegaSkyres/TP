@@ -52,43 +52,25 @@ public class GameObjectBoard {
 
 
     public void update() {
-        int speed = determineSpeed(level);
-        if (contador == speed) {
-            listRegularShips.moveRegularShips(this);
-            listDestroyerShips.moveDestroyerShips(this);
-            contador = 1;
-        } else {
-            contador++;
+        for (int i = 0; i < currentObjects; i++) {
+            objects[i].move();
+            checkAttacks(objects[i]);
         }
-        listBombs.moveBombs();
-
-        if (ovni.isActive()) {
-            ovni.move();
-        } else {
-            if (level.posibleOvni()) { //TODO CAMBIAR POR canGenarateRandomOvni
-                ovni.setActive(true);
-            }
-        }
-        if (missileLaunch) {
-            missile.missileMove();
-            listRegularShips.isAttack(missile.missilePositionX(), missile.missilePositionY(),this);
-            listDestroyerShips.isAttack(missile.missilePositionX(), missile.missilePositionY(),this);
-            listBombs.isAttack(missile.missilePositionX(), missile.missilePositionY(),this);
-            ovni.isAttack(missile.missilePositionX(), missile.missilePositionY(),this);
-
-            if (missile.missilePositionX() < 0) {
-                resetMissile();
-            }
-        }
-        listDestroyerShips.newBombs(); //TODO GENERAR LAS NUEVAS BOMBAS
+        removeDead();
     }
 
     private void checkAttacks(GameObject object) {
-        // TODO implement
+        for(GameObject object1 : objects){
+            //Que hace esta funcion??
+        }
+
     }
 
     public void computerAction() {
-        // TODO implement
+        for(GameObject object : objects){
+            object.computerAction(); //Si ese objeto no tiene definida la funcion computerAction peta???
+        }
+
     }
 
     private void removeDead() {

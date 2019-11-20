@@ -15,7 +15,6 @@ public class Game implements IPlayerController {
     private int currentCycle;
     private boolean doExit;
     private Level level;
-    public boolean edge;
     private Random rand;
 
 
@@ -25,7 +24,6 @@ public class Game implements IPlayerController {
 		this.level = level;
 		initializer = new BoardInitializer();
 		initGame();
-		this.edge = false;
 		currentCycle = 0;
     }
 
@@ -128,52 +126,14 @@ public class Game implements IPlayerController {
 
 	@Override
 	public boolean move(int numCells) {
-		for(GameObjectBoard object : board) //Mirar si el move mueve todos los objetos de la lista o llama a update y alli ya mueve.
-			board.update();
+    	boolean ok = true;
+    	for(int i = 0; i < numCells; i++){
+			player.move();
+		}
 	}
 
 	@Override
 	public boolean shootLaser() {
-		return false;
-	} //Laser es el misil???
-
-	@Override
-	public boolean shockWave() {
-		if(superpower){
-			listRegularShips.shockwave();
-			listDestroyerShips.shockwave();
-			if(ovni.isActive()){
-				ovni.recibeDamage(1);
-				if(ovni.isDead()) {
-					points = points + ovni.getPoints();
-					ovni.deleteOvni();
-				}
-			}
-			superpower = false;
-		}
-
-    	return false;
-	}
-
-	@Override
-	public void receivePoints(int points) {
-
-    	points += points; //TODO DE DONDE SALEN ESTOS POINTS QUIEN LLEVA ESTE ATRIBUTO
-	}
-
-	@Override
-	public void enableShockWave() {
-    	Shockwave shockwave = new Shockwave(this,) { // Se añade el ShockWabe al board???
-
-		}
-    	//TODO COMO ACTIVO EL SHOCKWABE SI HA MUERTO EL OVNI Y DEBO MIRAR DE SI YA TENGO UNO??
-
-	}
-
-	@Override
-	public void enableMissile() {
-    	Missile missile = new Missile(this,player.UCMShipPositionX()+1,player.UCMShipPositionY());
-    	board.add(missile);
 		if(missile.isEnable()){
 			System.out.println("!!!Ya hay un misil lanzado!!!");
 			//Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
@@ -183,7 +143,34 @@ public class Game implements IPlayerController {
 			missile.setPositionX(player.UCMShipPositionX()+1);
 			missile.setPositionY(player.UCMShipPositionY());
 		}
+		return false;
+	}
+
+	@Override
+	public boolean shockWave() {
+    	return false;
+	}
+
+	@Override
+	public void receivePoints(int points) {
+    	player.points += points; //Preguntar si el atributo points de player es public
+	}
+
+	@Override
+	public void enableShockWave() {
+    	player.setShockwave(true);
+	}
+
+	@Override
+	public void enableMissile() {
+    	Missile missile = new Missile(this,player.UCMShipPositionX()+1,player.UCMShipPositionY()); //Cuando generamos el objeto missile y donde
+    	board.add(missile);
 
 	}
 
+	public void store() { //El store
+	}
+
+	public void load(String filename) {
+	}
 }

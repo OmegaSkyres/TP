@@ -1,15 +1,17 @@
 package pr2;
 
-public class Bomb extends Weapon {
+public class Bomb extends Weapon implements IExecuteRandomActions {
     private int row;
     private int column;
     private boolean active;
+    private int life;
     private DestroyerShip ship;
 
-    public Bomb(Game game, int x, int y, DestroyerShip newShip){
+    public Bomb(Game game, int x, int y, int life, DestroyerShip newShip){
         super(game,x,y,1);
         row = x + 1;
         column = y;
+        life = life;
         active = true;
         ship = newShip;
 
@@ -26,14 +28,23 @@ public class Bomb extends Weapon {
         return bomb;
     }
 
-    @Override
-    public void computerAction() {
-        cangenerate //Mirar csi puede generar la bomba
-    }
 
     @Override
     public void move() {
         row++;
+    }
+
+
+    @Override
+    public void computerAction() {
+        if(IExecuteRandomActions.canGenerateRandomBomb(game)){
+            active = true;
+        };
+    }
+
+    @Override
+    public void onDelete() {
+
     }
 
     public int getPositionX() {

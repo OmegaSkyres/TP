@@ -3,10 +3,12 @@ package pr2;
 public abstract class AlienShip extends EnemyShip {
     private static int numberEnemies;
     private boolean direction;
-    public AlienShip(Game game, int x, int y, int live) {
-        super(game, x, y, live);
+    private int life;
+    public AlienShip(Game game, int x, int y, int life) {
+        super(game, x, y, life);
         numberEnemies = 0;
         direction = false;
+        life = life;
     }
 
     public static int getRemainingAliens() {
@@ -55,4 +57,5 @@ public abstract class AlienShip extends EnemyShip {
         else ok = false;
         return ok;
     }
+
 }

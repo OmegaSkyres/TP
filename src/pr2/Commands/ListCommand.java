@@ -3,7 +3,7 @@ package pr2.Commands;
 import pr2.Game;
 
 public class ListCommand extends Command {
-    public ListCommand(){ //TODO PREGUNTAR POR SI NECESITAN 2 CONSTRUCTORES CADA COMANDO
+    public ListCommand(){
         super("list","l","","Prints the list of available ships.");
     }
 

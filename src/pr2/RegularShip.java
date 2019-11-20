@@ -3,15 +3,17 @@ package pr2;
 public class RegularShip extends AlienShip {
     private int row;
     private int column;
-    private int life = 3;
+    private int life;
     private Game game;
     private int points = 5;
+    //private static String cadena = "[R]egular ship: Points: 5 - Harm: 0 - Shield: 2";
 
 
-    public RegularShip(Game game, int x, int y){
-        super(game,x,y,3);
+    public RegularShip(Game game, int x, int y, int life){
+        super(game,x,y,life);
         row = x;
         column = y;
+        life = life;
     }
 
     public String toString(){

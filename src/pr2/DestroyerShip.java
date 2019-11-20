@@ -3,15 +3,16 @@ package pr2;
 public class DestroyerShip extends AlienShip{
     private int row;
     private int column;
-    private int life = 1;
+    private static int life = 1;
     private Game game;
-    private int points = 10;
-    private boolean launch;
+    private static int points = 10;
+    private boolean bomb;
 
-    public DestroyerShip(Game game, int x, int y){
+    public DestroyerShip(Game game, int x, int y, int life){
         super(game,x,y,1);
         row = x;
         column = y;
+        life = life;
     }
 
 
@@ -68,13 +69,30 @@ public class DestroyerShip extends AlienShip{
         return points;
     }
 
+    @Override
+    public void onDelete() {
+        game.receivePoints(points);
+    }
+
+    @Override
+    public boolean receiveShockWaveAttack(int damage) {
+        recibeDamage(1);
+    }
+
+    @Override
+    public void computerAction() {
+
+    }
+
     public boolean bombLaunch() {
-        return launch;
+        return bomb;
     }
 
 
-    public void setBombLaunch(boolean effect){
-        launch = effect;
+    public void setBombLaunch(boolean active){
+        bomb = active;
     }
+
+
 
 }
