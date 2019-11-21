@@ -3,10 +3,10 @@ package pr2;
 public abstract class GameObject implements IAttack {
     protected int x;
     protected int y;
-    protected int live;
+    protected int life;
     protected Game game;
 
-    public GameObject( Game game, int x, int y, int live) {
+    public GameObject( Game game, int x, int y, int life) {
         this.x = x;
         this.y = y;
         this.game = game;

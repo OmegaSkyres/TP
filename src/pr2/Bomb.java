@@ -38,7 +38,9 @@ public class Bomb extends Weapon implements IExecuteRandomActions {
     @Override
     public void computerAction() {
         if(IExecuteRandomActions.canGenerateRandomBomb(game)){
-            active = true;
+            if(!active){
+                active = true;
+            }
         };
     }
 

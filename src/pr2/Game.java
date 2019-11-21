@@ -127,9 +127,10 @@ public class Game implements IPlayerController {
 	@Override
 	public boolean move(int numCells) {
     	boolean ok = true;
-    	for(int i = 0; i < numCells; i++){
+    	if(){ //Comprabar que se sale excepcción
 			player.move();
 		}
+
 	}
 
 	@Override
@@ -153,7 +154,7 @@ public class Game implements IPlayerController {
 
 	@Override
 	public void receivePoints(int points) {
-    	player.points += points; //Preguntar si el atributo points de player es public
+    	player.setPoints(points);
 	}
 
 	@Override
@@ -163,9 +164,13 @@ public class Game implements IPlayerController {
 
 	@Override
 	public void enableMissile() {
-    	Missile missile = new Missile(this,player.UCMShipPositionX()+1,player.UCMShipPositionY()); //Cuando generamos el objeto missile y donde
-    	board.add(missile);
+    	player.enableMissile();
 
+	}
+
+	@Override
+	public String toString() {
+		return infoToString() + controller.;
 	}
 
 	public void store() { //El store

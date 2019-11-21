@@ -3,7 +3,7 @@ package pr2;
 public class Ovni extends EnemyShip implements IExecuteRandomActions {
     private int row;
     private int column;
-    private int life;
+    private static int life;
     private Game game;
     private int points = 25;
     private boolean active;
@@ -14,7 +14,7 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
         row = x;
         column = y;
         life = life;
-        active = true;
+        active = false;
     }
 
     public String toString(){
@@ -81,8 +81,10 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
     @Override
     public void computerAction() {
         if(IExecuteRandomActions.canGenerateRandomOvni(game)){
-            active = true;
-        }; //Preguntar si esto se hace asi
+            if(!active){
+                active = true;
+            }
+        }
     }
 
     @Override

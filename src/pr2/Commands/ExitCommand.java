@@ -3,8 +3,9 @@ package pr2.Commands;
 import pr2.Game;
 
 public class ExitCommand extends Command {
+    static final String helpMessage = "Terminates the program.";
     public ExitCommand(){
-        super("exit","e"," ","Terminates the program.");
+        super("exit","e"," ",helpMessage);
     }
     @Override
     public boolean execute(Game game) {

@@ -4,14 +4,18 @@ public class UCMShip extends Ship {
 
     public int life;
 	private int row;
-	public int points;
+	private int points;
 	private int column;
 	private Game game;
 	private boolean shockwave;
+	private Missile missile;
 	
 	public UCMShip(Game game, int x, int y) {
 		super(game,x,y,3);
 		points = 0;
+		missile = new Missile(game,x,y);
+		game.addObject(missile);
+
 	}
 	
 	public int UCMShipPositionY() {
@@ -51,8 +55,17 @@ public class UCMShip extends Ship {
 
 	}
 
+	public void move(int numCells){
+		column = column + numCells;
+	}
+
 	@Override
-	public void onDelete() { //Que hace realmente??
+	public void onDelete() { //no hace nada
+
+	}
+
+	@Override
+	public void computerAction() { //No hace nada
 
 	}
 
@@ -85,4 +98,11 @@ public class UCMShip extends Ship {
 		shockwave = active;
 	}
 
+	public void setPoints(int points) {
+		points += points;
+	}
+
+	public void enableMissile() {
+		missile.setEnable();
+	}
 }

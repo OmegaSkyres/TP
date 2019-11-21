@@ -10,9 +10,8 @@ public class Missile extends Weapon{
 	public Missile(Game game, int x, int y) {
 		super(game,x,y,1);
 		game = game;
-		this.player = new UCMShip(game, game.DIM_X / 2, game.DIM_Y - 1);
-		row = player.UCMShipPositionX() - 1;
-		column = player.UCMShipPositionY();
+		row = x;
+		column = y;
 		active = false;
 	}
 
@@ -33,7 +32,7 @@ public class Missile extends Weapon{
 	}
 
 	@Override
-	public void computerAction() { //Missile no lleva computer action
+	public void computerAction() { //No hace nada
 
 	}
 
@@ -50,6 +49,8 @@ public class Missile extends Weapon{
 	public void onDelete() {
 		game.enableMissile();
 	}
+
+	pubççç
 
 	public void setEnable() {
 		active = true;

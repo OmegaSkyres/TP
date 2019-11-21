@@ -3,8 +3,9 @@ package pr2.Commands;
 import pr2.Game;
 
 public class UpdateCommand extends Command {
+    static final String helpMessage = "Update the game.";
     public UpdateCommand(){
-        super("update","u","","Update the game.");
+        super("update","u","", helpMessage);
     }
 
     @Override

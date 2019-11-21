@@ -8,11 +8,10 @@ public class DestroyerShip extends AlienShip{
     private static int points = 10;
     private boolean bomb;
 
-    public DestroyerShip(Game game, int x, int y, int life){
+    public DestroyerShip(Game game, int x, int y){
         super(game,x,y,1);
         row = x;
         column = y;
-        life = life;
     }
 
 

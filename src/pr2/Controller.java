@@ -29,7 +29,7 @@ public class Controller {
                 Command command = CommandGenerator.parse(words);
                 if (command != null) {
                     if (command.execute(game))
-                        System.out.println(game);
+                        System.out.println(printer.toString(game));
                 } else {
                     System.out.format(unknownCommandMsg);
                 }

@@ -3,13 +3,15 @@ package pr2.Commands;
 import pr2.Game;
 
 public class HelpCommand extends Command {
+    static final String helpMessage = "Prints this help message.";
     public HelpCommand() {
-        super("help","h","","Prints this help message.");
+        super("help","h","", helpMessage);
     }
     @Override
     public boolean execute(Game game) {
+        CommandGenerator.commandHelp();
     return false;
-    } //TODO INVOCA A COMMANDHELP
+    }
 
     @Override
     public Command parse(String[] commandWords) {

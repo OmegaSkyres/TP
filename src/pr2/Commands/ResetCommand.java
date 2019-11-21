@@ -3,8 +3,9 @@ package pr2.Commands;
 import pr2.Game;
 
 public class ResetCommand extends Command {
+    static final String helpMessage = "Starts a new game.";
     public ResetCommand(){
-        super("reset","r","","Starts a new game.");
+        super("reset","r","",helpMessage);
     }
 
     @Override

@@ -1,10 +1,12 @@
 package pr2.Commands;
 
 import pr2.Game;
+import pr2.GameObject;
 
 public class ListCommand extends Command {
+    static final String helpMessage = "Prints the list of available ships.";
     public ListCommand(){
-        super("list","l","","Prints the list of available ships.");
+        super("list","l","", helpMessage);
     }
 
     @Override

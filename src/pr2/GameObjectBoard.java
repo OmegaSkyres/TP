@@ -60,15 +60,15 @@ public class GameObjectBoard {
     }
 
     private void checkAttacks(GameObject object) {
-        for(GameObject object1 : objects){
-            //Que hace esta funcion??
+        for(GameObject object1 : objects){ //Mira colisiones con el objeto
+
         }
 
     }
 
     public void computerAction() {
         for(GameObject object : objects){
-            object.computerAction(); //Si ese objeto no tiene definida la funcion computerAction peta???
+            object.computerAction();
         }
 
     }

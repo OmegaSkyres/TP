@@ -1,7 +1,6 @@
 package pr2;
 
 public abstract class Ship extends GameObject {
-    private int life;
     public Ship(Game game, int x, int y, int life)
     {
         super(game, x, y, life);
@@ -20,7 +19,7 @@ public abstract class Ship extends GameObject {
     }
 
     @Override
-    public boolean receiveMissileAttack(int damage) { //Preguntar si esta bien implementar aqui recieveMissileAttack
+    public boolean receiveMissileAttack(int damage) {
         boolean ok;
         if(life > 0){
             life = life - damage;
