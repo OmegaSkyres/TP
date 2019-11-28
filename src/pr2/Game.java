@@ -71,7 +71,7 @@ public class Game implements IPlayerController {
 	}
 
 	public boolean aliensWin() {
-		return !player.isAlive() || //Colosiones??
+		return !player.isAlive() || AlienShip.onTheFloor();
 	}
 
 	private boolean playerWin() {

@@ -6,6 +6,7 @@ public class RegularShip extends AlienShip {
     private static int life = 1;
     private Game game;
     private int points = 5;
+    private static boolean floor;
     //private static String cadena = "[R]egular ship: Points: 5 - Harm: 0 - Shield: 2";
 
 
@@ -14,6 +15,7 @@ public class RegularShip extends AlienShip {
         row = x;
         column = y;
         life = life;
+        floor = false;
     }
 
     @Override
@@ -78,5 +80,9 @@ public class RegularShip extends AlienShip {
 
     public int getPoints() {
         return points;
+    }
+
+    public boolean getOnTheFloor(){
+        return floor;
     }
 }

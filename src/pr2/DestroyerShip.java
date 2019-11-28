@@ -7,11 +7,13 @@ public class DestroyerShip extends AlienShip{
     private Game game;
     private static int points = 10;
     private boolean bomb;
+    private static boolean floor;
 
     public DestroyerShip(Game game, int x, int y){
         super(game,x,y,1);
         row = x;
         column = y;
+        floor = false;
     }
 
 
@@ -92,6 +94,10 @@ public class DestroyerShip extends AlienShip{
 
     public void enableBomb(){
         bomb = true;
+    }
+
+    public boolean getOnTheFloor(){
+        return floor;
     }
 
 

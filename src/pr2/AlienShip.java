@@ -58,4 +58,8 @@ public abstract class AlienShip extends EnemyShip {
         return ok;
     }
 
+    public static boolean onTheFloor(){
+
+    }
+
 }
