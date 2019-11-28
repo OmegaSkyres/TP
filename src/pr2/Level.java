@@ -2,9 +2,9 @@ package pr2;
 
 public enum Level {
 
-    EASY(4, 2, 0.2, 3, 0.5, 1),
-    HARD(8, 4, 0.3, 2, 0.2, 2),
-    INSANE(12, 4, 0.5, 1, 0.1, 3);
+    EASY(4, 2, 0.2, 3, 0.5, 1, 0.05),
+    HARD(8, 4, 0.3, 2, 0.2, 2, 0.05),
+    INSANE(12, 4, 0.5, 1, 0.1, 3, 0.05);
 
     private int numRegularAliens;
     private int numDestroyerAliens;
@@ -12,6 +12,7 @@ public enum Level {
     private double ovniFrequency;
     private double shootFrequency;
     private int numRowsOfRegularAliens;
+    private double transPosibility;
 
     private Level(
             int numRegularAliens,
@@ -19,7 +20,8 @@ public enum Level {
             double shootFrequency,
             int numCyclesToMoveOneCell,
             double ovniFrequency,
-            int numRowsOfRegularAliens)
+            int numRowsOfRegularAliens,
+            double transPosibility)
     {
         this.numRegularAliens = numRegularAliens;
         this.numDestroyerAliens = numDestroyerAliens;
@@ -27,6 +29,11 @@ public enum Level {
         this.numCyclesToMoveOneCell = numCyclesToMoveOneCell;
         this.ovniFrequency = ovniFrequency;
         this.numRowsOfRegularAliens = numRowsOfRegularAliens;
+        this.transPosibility = transPosibility;
+    }
+
+    public static Level parse(String word) {
+        return null; //Implementar.
     }
 
 
@@ -83,5 +90,9 @@ public enum Level {
             speed = 1;
         }
         return speed;
+    }
+    
+    public Double getTraPos() {
+        return transPosibility;
     }
 }

@@ -5,31 +5,10 @@ public abstract class Weapon extends GameObject {
         super(game, x, y, live);
     }
 
-
     @Override
-    public boolean receiveMissileAttack(int damage) { //Preguntar si esta bien implementar aqui recieveMissileAttack y poner un atributo life
-        boolean ok;
-        if(life > 0){
-            life = life - damage;
-            ok = true;
+    public boolean performAttack(GameObject other) {
+        if(isAlive() || other.isAlive()){
+            return false;
         }
-        else{
-            ok = false;
-        }
-        return ok;
-    }
-
-    @Override
-    public boolean receiveShockWaveAttack(int damage) {
-        boolean ok;
-        if(life > 0){
-            life = life - damage;
-            ok = true;
-        }
-        else{
-            ok = false;
-        }
-        return ok;
-
     }
 }

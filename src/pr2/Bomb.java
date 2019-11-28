@@ -37,16 +37,47 @@ public class Bomb extends Weapon implements IExecuteRandomActions {
 
     @Override
     public void computerAction() {
-        if(IExecuteRandomActions.canGenerateRandomBomb(game)){
-            if(!active){
+        if(!active){
+            if(IExecuteRandomActions.canGenerateRandomBomb(game)){
                 active = true;
             }
-        };
+        }
     }
 
     @Override
     public void onDelete() {
+        ship.enableBomb();
+    }
 
+    @Override
+    public boolean receiveShockWaveAttack(int damage) {
+        boolean ok;
+        if(life > 0){
+            life = life - damage;
+            ok = true;
+        }
+        else{
+            ok = false;
+        }
+        return ok;
+    }
+
+    @Override
+    public boolean receiveMissileAttack(int damage) {
+        boolean ok;
+        if(life > 0){
+            life = life - damage;
+            ok = true;
+        }
+        else{
+            ok = false;
+        }
+        return ok;
+    }
+
+    @Override
+    public boolean performAttack(GameObject other) {
+        return other.receiveBombAttack(1);
     }
 
     public int getPositionX() {

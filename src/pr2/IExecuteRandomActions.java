@@ -9,6 +9,10 @@ public interface IExecuteRandomActions {
     static boolean  canGenerateRandomBomb(Game game){
         return game.getRandom().nextDouble() < game.getLevel().getShootFrequency();
     }
+    
+    static boolean canGenerateTransPos(Game game) {
+    	return game.getRandom().nextDouble() < game.getLevel().getTraPos();
+    }
 
 }
 

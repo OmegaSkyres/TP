@@ -19,7 +19,7 @@ public class BoardInitializer {
     }
 
     private void initializeOvni () {
-        board.add(new Ovni(game,0,8,1)); //Mirar si antes tengo que mirar si lo puedo generar
+        board.add(new Ovni(game,0,8)); //Mirar si antes tengo que mirar si lo puedo generar
     }
 
     private void initializeRegularAliens () {

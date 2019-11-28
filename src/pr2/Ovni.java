@@ -3,12 +3,12 @@ package pr2;
 public class Ovni extends EnemyShip implements IExecuteRandomActions {
     private int row;
     private int column;
-    private static int life;
+    private static int life = 1;
     private Game game;
     private int points = 25;
     private boolean active;
 
-    public Ovni(Game game, int x, int y, int life){
+    public Ovni(Game game, int x, int y){
         super(game,x,y,life);
         game = game;
         row = x;
@@ -30,17 +30,6 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
         if (column > 0) column--;
     }
 
-    public boolean isDead() {
-        if(life == 0) return true;
-        else return false;
-    }
-
-    public void recibeDamage(int damage){
-        if(this.life > 0){
-            this.life = this.life - damage;
-        }
-
-    }
 
     public int getPositionX(){
         return row;
@@ -60,9 +49,8 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
     }
 
     public void move(){
-        if(getPositionY() == 0){
+        if(column == 0){
           deleteOvni();
-          
         }
         else {
         	moveLeft();
@@ -70,18 +58,18 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
         }
     }
 
-    public int getPoints() {
-        return points;
+    private void deleteOvni() {
+        row = 0;
+        column = 8;
+        active = false;
+        life = 1;
     }
 
-    public int getPositionY() {
-        return column;
-    }
 
     @Override
     public void computerAction() {
-        if(IExecuteRandomActions.canGenerateRandomOvni(game)){
-            if(!active){
+        if(!active){
+            if(IExecuteRandomActions.canGenerateRandomOvni(game)){
                 active = true;
             }
         }
@@ -89,10 +77,7 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
 
     @Override
     public void onDelete() {
-        row = 0;
-        column = 8;
-        active = false;
-        life = 1;
+        deleteOvni();
         game.enableShockWave();
         game.receivePoints(points);
     }

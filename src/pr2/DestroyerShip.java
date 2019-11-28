@@ -44,16 +44,8 @@ public class DestroyerShip extends AlienShip{
         this.row++;
     }
 
-
-    public boolean isDead() {
-        if(life == 0) return true;
-        else return false;
-    }
-
     public void recibeDamage(int damage){
-        if(this.life > 0){
-            this.life = this.life - damage;
-        }
+        this.life = this.life - damage;
     }
 
     public int getPositionX(){
@@ -75,7 +67,12 @@ public class DestroyerShip extends AlienShip{
 
     @Override
     public boolean receiveShockWaveAttack(int damage) {
-        recibeDamage(1);
+        boolean ok = false;
+        if(this.life > 0) {
+            recibeDamage(1);
+            ok = true;
+        }
+        return ok;
     }
 
     @Override
@@ -90,6 +87,11 @@ public class DestroyerShip extends AlienShip{
 
     public void setBombLaunch(boolean active){
         bomb = active;
+    }
+
+
+    public void enableBomb(){
+        bomb = true;
     }
 
 

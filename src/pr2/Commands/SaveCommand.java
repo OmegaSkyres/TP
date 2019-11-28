@@ -4,7 +4,9 @@ import pr2.Controller;
 import pr2.Game;
 import pr2.util.MyStringUtils;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -15,31 +17,43 @@ public class SaveCommand extends Command {
     static final String helpMessage = "save one class of a game.";
 
     public SaveCommand(String commandName, String helpInfo) {
-        super(commandName,"s"," ", helpMessage);
+        super(commandName, "s", " ", helpMessage);
     }
 
     public SaveCommand() {
-        super("save", "s","", helpMessage);
+        super("save", "s", "", helpMessage);
     }
 
-    public void execute(Game game, Controller controller) throws IOException {
-        game.store();
-        controller.printGame();
+
+    @Override
+    public boolean execute(Game game) throws IOException {
+        BufferedWriter outChars = null;
+        try {
+            outChars = new BufferedWriter(new FileWriter("chars.dat"));
+            //game.store(outChars);
+            System.out.println("Game successfully saved in file: " + Filename + ".dat. Use the load command to reload it");
+        } catch (IOException e) {
+            System.out.println("Invalid File");
+        } finally {
+            if (outChars != null) {
+                outChars.close();
+            }
+        }
+        return false;
     }
 
-    public Command parse(String[] commandWords, Controller controller) {
-        if("save".equals(commandWords[0])){
+    @Override
+    public Command parse(String[] commandWords) {
+        if ("save".equals(commandWords[0])) {
             Filename = commandWords[1];
             Scanner in = new Scanner(System.in);
             try {
                 confirmFileNameStringForWrite(Filename, in);
-            }
-            catch(IOException ex) {
+            } catch (IOException ex) {
                 System.out.println(ex.getMessage());
             }
             return new SaveCommand(Filename, helpMessage);
-        }
-        else{
+        } else {
             return null;
         }
     }
@@ -49,7 +63,7 @@ public class SaveCommand extends Command {
         filename_confirmed = false;
         while (!filename_confirmed) {
             if (MyStringUtils.validFileName(loadName)) {
-                File file = new File(loadName);
+                File file = new File(loadName + ".dat");
                 if (!file.exists())
                     filename_confirmed = true;
                 else {
@@ -81,15 +95,16 @@ public class SaveCommand extends Command {
                         System.out.println("Please answer 'Y' / 'N' ");
                         // ADD SOME CODE HERE
                 }
-            }
-            else {
-                if (responseYorN.length == 0){
+            } else {
+                if (responseYorN.length == 0) {
                     throw new IOException("save must be followed by a filename");
-                }
-                else{
+                } else {
                     throw new IOException("Invalid filename: the filename contains spaces");
                 }
             }
         }
         return newFilename;
     }
+
+
+}

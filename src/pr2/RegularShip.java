@@ -16,6 +16,17 @@ public class RegularShip extends AlienShip {
         life = life;
     }
 
+    @Override
+    public void computerAction() {
+
+    }
+
+    @Override
+    public void onDelete() {
+        game.receivePoints(points);
+
+    }
+
     public String toString(){
         String nave;
         if (life == 0){

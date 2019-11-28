@@ -1,5 +1,7 @@
 package pr2;
 
+import pr2.Exceptions.MissileInflightException;
+
 public class UCMShip extends Ship {
 
     public int life;
@@ -7,17 +9,20 @@ public class UCMShip extends Ship {
 	private int points;
 	private int column;
 	private Game game;
-	private boolean shockwave;
+	private boolean posibilityshockwave;
 	private Missile missile;
+
 	
 	public UCMShip(Game game, int x, int y) {
 		super(game,x,y,3);
 		points = 0;
+		posibilityshockwave = false;
 		missile = new Missile(game,x,y);
 		game.addObject(missile);
+		}
 
-	}
-	
+
+
 	public int UCMShipPositionY() {
 		return column;
 	}
@@ -55,8 +60,15 @@ public class UCMShip extends Ship {
 
 	}
 
-	public void move(int numCells){
-		column = column + numCells;
+	public boolean move(int numCells){
+		boolean ok = true;
+		if(column + numCells < 0 || column + numCells > 9){
+			ok = false;
+		}
+		else{
+			column = column + numCells;
+		}
+		return ok;
 	}
 
 	@Override
@@ -79,6 +91,26 @@ public class UCMShip extends Ship {
 		return ok;
 	}
 
+	public boolean shockWave(){
+		boolean ok = false;
+		if(posibilityshockwave) {
+			executeShockwave();
+			ok = true;
+		}
+		return ok;
+	}
+
+	public void executeShockwave(){
+		Shockwave s = new Shockwave(game,0,0,1);
+		game.addObject(s);
+
+	}
+
+
+	public void shootMissile() throws MissileInflightException {
+		missile.shoot();
+	}
+
 	public void recibeDamage(int damage){
 		this.life = this.life - damage;
 	}
@@ -95,7 +127,7 @@ public class UCMShip extends Ship {
     }
 
     public void setShockwave(boolean active){
-		shockwave = active;
+		posibilityshockwave = active;
 	}
 
 	public void setPoints(int points) {
@@ -105,4 +137,6 @@ public class UCMShip extends Ship {
 	public void enableMissile() {
 		missile.setEnable();
 	}
+
+
 }

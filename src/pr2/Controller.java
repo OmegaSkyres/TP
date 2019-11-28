@@ -17,7 +17,6 @@ public class Controller {
     public Controller(Game game, Scanner in) {
         this.game = game;
         this.in = in;
-        printer
     }
 
 

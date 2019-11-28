@@ -48,9 +48,9 @@ public class Missile extends Weapon{
 	@Override
 	public void onDelete() {
 		game.enableMissile();
+		reset();
 	}
 
-	pubççç
 
 	public void setEnable() {
 		active = true;
@@ -63,5 +63,33 @@ public class Missile extends Weapon{
 	public void reset() {
 		row = player.UCMShipPositionX() - 1;
 		column = player.UCMShipPositionY();
+	}
+
+	public void shoot() {
+		if (isEnable()) {
+			System.out.println("!!!Ya hay un misil lanzado!!!");
+			//Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
+		} else {
+			setPositionX(player.UCMShipPositionX() + 1);
+			setPositionY(player.UCMShipPositionY());
+		}
+	}
+
+	@Override
+	public boolean receiveBombAttack(int damage) {
+		boolean ok;
+		if(life > 0){
+			life = life - damage;
+			ok = true;
+		}
+		else{
+			ok = false;
+		}
+		return ok;
+	}
+
+	@Override
+	public boolean performAttack(GameObject other) {
+		return (other.receiveMissileAttack(1));
 	}
 }

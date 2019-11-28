@@ -16,6 +16,9 @@ public class Main {
         if(args.length > 1){
             seed = Integer.parseInt(args[1]);
         }
+        else {
+            seed = new Random(System.currentTimeMillis()).nextInt();
+        }
         rand = new Random(seed);
         Level level = Level.fromParam(difficulty);
     	Game game = new Game(level,rand);

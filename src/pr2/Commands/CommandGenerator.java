@@ -11,7 +11,10 @@ public class CommandGenerator {
             new ListCommand(),
             new UpdateCommand(),
             new MoveCommand(),
-            new ShockwaveCommand()
+            new ShockwaveCommand(),
+            new LoadCommand(),
+            new SaveCommand(),
+            new ShootCommand()
     };
 
     public static Command parse(String[] words) {

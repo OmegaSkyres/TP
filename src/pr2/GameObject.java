@@ -10,7 +10,7 @@ public abstract class GameObject implements IAttack {
         this.x = x;
         this.y = y;
         this.game = game;
-        this.live = live;
+        this.life = life;
     }
 
     public int getX() {
@@ -22,11 +22,11 @@ public abstract class GameObject implements IAttack {
     }
 
     public boolean isAlive() {
-        return this.live > 0;
+        return this.life > 0;
     }
 
     public int getLive() {
-        return this.live;
+        return this.life;
     }
 
     public boolean isOnPosition(int x, int y) {
@@ -34,7 +34,7 @@ public abstract class GameObject implements IAttack {
     }
 
     public void getDamage (int damage) {
-        this.live = damage >= this.live ? 0 : this.live - damage;
+        this.life = damage >= this.life ? 0 : this.life - damage;
     }
 
     public boolean isOut() {

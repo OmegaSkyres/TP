@@ -61,7 +61,9 @@ public class GameObjectBoard {
 
     private void checkAttacks(GameObject object) {
         for(GameObject object1 : objects){ //Mira colisiones con el objeto
-
+            if(object1 != object){
+                if(object.performAttack(object1)) return;
+            }
         }
 
     }
@@ -75,7 +77,8 @@ public class GameObjectBoard {
 
     private void removeDead() {
         for(int i = currentObjects; i >= 0; i--){
-            if(objects[i].live == 0){
+            if(objects[i].isAlive()){
+                objects[i].onDelete(); //Revisar ya que que dos objetos impacten no significa que lo tengas que borrar.
                 remove(objects[i]);
             }
         }

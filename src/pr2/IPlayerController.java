@@ -1,9 +1,11 @@
 package pr2;
 
+import pr2.Exceptions.MissileInflightException;
+
 public interface IPlayerController {
     // PLAYER ACTIONS
     public boolean move(int numCells);
-    public boolean shootLaser();
+    public boolean shootLaser() throws MissileInflightException;
     public boolean shockWave();
 
     // CALLBACKS

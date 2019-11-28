@@ -1,14 +1,9 @@
-package pr2;
+package pr2.view;
 
-import pr2.view.GamePrinter;
+import pr2.Game;
 
-public class Serializer extends GamePrinter {
-    public Serializer(Game game, int rows, int cols) {
-        super(game, rows, cols);
-    }
-
-    public Serializer(){
-        super()
+public class BoardPrinter implements GamePrinter {
+    public BoardPrinter(int dimX, int dimY) {
     }
 
     @Override

@@ -1,6 +1,10 @@
 package pr2.Commands;
 
+import pr2.Exceptions.CommandExecuteException;
+import pr2.Exceptions.MissileInflightException;
 import pr2.Game;
+
+import java.io.IOException;
 
 public abstract class Command {
     protected final String name;
@@ -18,7 +22,7 @@ public abstract class Command {
         this.help = help;
     }
 
-    public abstract boolean execute(Game game);
+    public abstract boolean execute(Game game) throws IOException, CommandExecuteException, MissileInflightException;
 
     public abstract Command parse(String[] commandWords);
 
