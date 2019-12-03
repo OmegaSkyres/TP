@@ -3,6 +3,7 @@ package pr2;
 import pr2.Exceptions.FileContentsException;
 import pr2.Exceptions.MissileInflightException;
 import pr2.util.MyStringUtils;
+import pr2.view.BoardPrinter;
 import pr2.view.GamePrinter;
 
 import java.io.BufferedReader;
@@ -150,7 +151,7 @@ public class Game implements IPlayerController {
 
 	@Override
 	public String toString() {
-		return infoToString() + board.toString();
+		return infoToString();
 	}
 	/*
 	public void store(BufferedWriter outChars) { //El store

@@ -1,5 +1,5 @@
 package pr2;
-
+/*
 import pr2.Exceptions.FileContentsException;
 
 public class GameObjectGenerator {
@@ -23,4 +23,7 @@ public class GameObjectGenerator {
         }
         return gameObject;
     }
+
+
 }
+*/

@@ -3,7 +3,7 @@ package pr2;
 public class RegularShip extends AlienShip {
     private int row;
     private int column;
-    private static int life = 1;
+    private static int life = 3;
     private Game game;
     private int points = 5;
     private static boolean floor;
@@ -82,7 +82,7 @@ public class RegularShip extends AlienShip {
         return points;
     }
 
-    public boolean getOnTheFloor(){
+    public static boolean getOnTheFloor(){
         return floor;
     }
 }

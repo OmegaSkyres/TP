@@ -1,9 +1,7 @@
-package pr2;
+package pr2.view;
 
 import pr2.Game;
 import pr2.Serializer;
-import pr2.view.BoardPrinter;
-import pr2.view.GamePrinter;
 
 
 public enum PrinterTypes {

@@ -1,14 +1,15 @@
 package pr2;
 
 public abstract class AlienShip extends EnemyShip {
-    private static int numberEnemies;
+    private static int numberEnemies = 0;
     private boolean direction;
     private int life;
+    private boolean floor;
     public AlienShip(Game game, int x, int y, int life) {
         super(game, x, y, life);
-        numberEnemies = 0;
         direction = false;
         life = life;
+        floor = false;
     }
 
     public static int getRemainingAliens() {
@@ -59,7 +60,12 @@ public abstract class AlienShip extends EnemyShip {
     }
 
     public static boolean onTheFloor(){
+        return DestroyerShip.getOnTheFloor() || RegularShip.getOnTheFloor();
 
+    }
+
+    public static int setRemaingAliens(int number){
+       return numberEnemies += number;
     }
 
 }

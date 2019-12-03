@@ -10,5 +10,8 @@ public abstract class Weapon extends GameObject {
         if(isAlive() || other.isAlive()){
             return false;
         }
+        else{
+            return true; //Revisar
+        }
     }
 }

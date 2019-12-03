@@ -6,6 +6,7 @@ public class GameObjectBoard {
 
     public GameObjectBoard (int width, int height) {
         currentObjects = 1;
+        objects = new GameObject[width * height];
     }
 
     private int getCurrentObjects () {
@@ -19,7 +20,7 @@ public class GameObjectBoard {
 
     private GameObject getObjectInPosition (int x, int y) {
         GameObject object = null;
-        for(int i = 0; i < currentObjects; i++){
+        for(int i = 1; i < currentObjects; i++){
             if(x == objects[i].x && y == objects[i].y){
                 object = objects[i];
             }
@@ -29,7 +30,7 @@ public class GameObjectBoard {
 
     private int getIndex(int x, int y) {
         int index = 0;
-        for(int i = 0; i < currentObjects; i++){
+        for(int i = 1; i < currentObjects; i++){
             if(x == objects[i].x && y == objects[i].y){
                 index = i;
             }

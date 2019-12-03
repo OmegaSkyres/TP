@@ -42,7 +42,12 @@ public class Missile extends Weapon{
 	}
 	@Override
 	public String toString() {
-		return "oo";
+		if(active){
+			return "oo";
+		}
+		else{
+			return " ";
+		}
 	}
 
 	@Override
@@ -61,8 +66,8 @@ public class Missile extends Weapon{
 	}
 	
 	public void reset() {
-		row = player.UCMShipPositionX() - 1;
-		column = player.UCMShipPositionY();
+		row = setPositionX(y);
+		column = setPositionY(x + 1);
 	}
 
 	public void shoot() {
@@ -70,8 +75,9 @@ public class Missile extends Weapon{
 			System.out.println("!!!Ya hay un misil lanzado!!!");
 			//Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
 		} else {
-			setPositionX(player.UCMShipPositionX() + 1);
-			setPositionY(player.UCMShipPositionY());
+			active = true;
+			setPositionX(y);
+			setPositionY(x - 1);
 		}
 	}
 

@@ -14,10 +14,13 @@ public class UCMShip extends Ship {
 
 	
 	public UCMShip(Game game, int x, int y) {
-		super(game,x,y,3);
+		super(game,y,x,3);
+		row = y;
+		column = x;
 		points = 0;
+		life = 3;
 		posibilityshockwave = false;
-		missile = new Missile(game,x,y);
+		missile = new Missile(game,y-1,x);
 		game.addObject(missile);
 		}
 

@@ -6,12 +6,16 @@ public class Shockwave extends Weapon {
         super(game, x, y, life);
     }
     @Override
-    public boolean performAttack(GameObject other) {
+    public boolean performAttack(GameObject other) { //Revisar
         if(isAlive()){
             return false;
         }
-        if(other.receiveShockWaveAttack(1)){
+        else if(other.receiveShockWaveAttack(1)){
             life = 0;
+            return true;
+        }
+        else{
+            return true;
         }
     }
 

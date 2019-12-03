@@ -96,7 +96,7 @@ public class DestroyerShip extends AlienShip{
         bomb = true;
     }
 
-    public boolean getOnTheFloor(){
+    public static boolean getOnTheFloor(){
         return floor;
     }
 

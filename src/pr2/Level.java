@@ -77,20 +77,6 @@ public enum Level {
     public Double getTurnExplodeFreq(){
         return 0.05;
     }
-
-    public int determineSpeed(Level level){
-        int speed = 0;
-        if(level.toString() == "EASY"){
-            speed = 3;
-        }
-        else if(level.toString() == "HARD"){
-            speed = 2;
-        }
-        else if (level.toString() == "INSANE"){
-            speed = 1;
-        }
-        return speed;
-    }
     
     public Double getTraPos() {
         return transPosibility;
