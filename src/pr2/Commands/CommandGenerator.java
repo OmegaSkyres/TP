@@ -21,6 +21,7 @@ public class CommandGenerator {
         Command command = null;
         for(int i = 0; i < availableCommands.length; i++){
             command = availableCommands[i].parse(words);
+            if(command != null) break;
         }
         return command;
     }

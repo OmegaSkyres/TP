@@ -31,7 +31,9 @@ public class Bomb extends Weapon implements IExecuteRandomActions {
 
     @Override
     public void move() {
-        row++;
+        if(active){
+            row++;
+        }
     }
 
 

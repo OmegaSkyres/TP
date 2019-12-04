@@ -3,8 +3,8 @@ package pr2;
 public enum Level {
 
     EASY(4, 2, 0.2, 3, 0.5, 1, 0.05),
-    HARD(8, 4, 0.3, 2, 0.2, 2, 0.05),
-    INSANE(12, 4, 0.5, 1, 0.1, 3, 0.05);
+    HARD(8, 2, 0.3, 2, 0.2, 2, 0.05),
+    INSANE(8, 4, 0.5, 1, 0.1, 2, 0.05);
 
     private int numRegularAliens;
     private int numDestroyerAliens;

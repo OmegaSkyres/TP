@@ -41,7 +41,7 @@ public class Game implements IPlayerController {
 	}
 
 	public void update() {
-		board.computerAction();
+		board.computerAction(); //Como primero los genero los genero una posicion anterior para despues moverlos
 		board.update();
 		currentCycle += 1;
 

@@ -24,27 +24,27 @@ public class BoardInitializer {
     }
 
     private void initializeOvni() {
-        board.add(new Ovni(game, 0, 8));
+        board.add(new Ovni(game, 0, 9));
     }
 
     private void initializeRegularAliens() {
-        for (int i = 0; i < level.getNumRowsOfRegularAliens(); i++) {
-            for (int j = 0; j < level.getNumRegularAliens(); j++) {
-                board.add(new RegularShip(game, i + 1, positionIni));
+        for (int i = 1; i <= level.getNumRowsOfRegularAliens(); i++) {
+            for (int j = 0; j < level.getNumRegularAliensPerRow(); j++) {
+                board.add(new RegularShip(game, i, positionIni));
                 AlienShip.setRemaingAliens(1);
                 positionIni++;
-
             }
-            positionXD = i + 1;
+            positionIni = (game.DIM_X / 2) - (level.getNumRegularAliensPerRow() / 2);
+            positionXD = i;
         }
 
     }
 
     private void initializeDestroyerAliens() {
         for (int i = 0 ; i < level.getNumDestroyerAliens(); i++) {
-                board.add(new DestroyerShip(game, positionXD + 1, positionIniD));
-                AlienShip.setRemaingAliens(1);
-                positionIniD++;
+            board.add(new DestroyerShip(game, positionXD + 1, positionIniD));
+            AlienShip.setRemaingAliens(1);
+            positionIniD++;
         }
     }
 }

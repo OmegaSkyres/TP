@@ -5,9 +5,7 @@ import pr2.Exceptions.MissileInflightException;
 public class UCMShip extends Ship {
 
     public int life;
-	private int row;
 	private int points;
-	private int column;
 	private Game game;
 	private boolean posibilityshockwave;
 	private Missile missile;
@@ -15,24 +13,13 @@ public class UCMShip extends Ship {
 	
 	public UCMShip(Game game, int x, int y) {
 		super(game,y,x,3);
-		row = y;
-		column = x;
 		points = 0;
 		life = 3;
 		posibilityshockwave = false;
-		missile = new Missile(game,y-1,x);
+		missile = new Missile(game,y,x);
 		game.addObject(missile);
 		}
 
-
-
-	public int UCMShipPositionY() {
-		return column;
-	}
-
-	public int UCMShipPositionX(){
-		return row;
-	}
 
     public String toString(){
     	String nave;
@@ -46,15 +33,15 @@ public class UCMShip extends Ship {
     }
     
     public void moveRight() {
-    	if (column < Game.DIM_Y - 1) column++;
+    	if (y < Game.DIM_Y - 1) y++;
     }
     
     public void moveLeft() {
-    	if (column > 0) column--;
+    	if (y > 0) y--;
     }
 
-    public boolean isOnPosition(int x, int y){
-		if(x == row && y == column) return true;
+    public boolean isOnPosition(int newx, int newy){
+		if(newx == x && newy == y) return true;
 		else return false;
 	}
 
@@ -65,11 +52,11 @@ public class UCMShip extends Ship {
 
 	public boolean move(int numCells){
 		boolean ok = true;
-		if(column + numCells < 0 || column + numCells > 9){
+		if(y + numCells < 0 || y + numCells > 8){
 			ok = false;
 		}
 		else{
-			column = column + numCells;
+			y = y + numCells;
 		}
 		return ok;
 	}

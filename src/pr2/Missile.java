@@ -1,34 +1,17 @@
 package pr2;
 
+import static pr2.Game.DIM_Y;
+
 public class Missile extends Weapon{
 	private Game game;
 	private UCMShip player;
-	private int row;
-	private int column;
 	public boolean active;
 	
 	public Missile(Game game, int x, int y) {
 		super(game,x,y,1);
 		game = game;
-		row = x;
-		column = y;
+
 		active = false;
-	}
-
-	public int missilePositionX() {
-		return row;
-	}
-	
-	public int missilePositionY() {
-		return column;
-	}
-
-	public int setPositionX(int x){
-		return row = x;
-	}
-
-	public int setPositionY(int y){
-		return column = y;
 	}
 
 	@Override
@@ -38,7 +21,9 @@ public class Missile extends Weapon{
 
 	@Override
 	public void move() {
-		row--;
+		if(active){
+			x--;
+		}
 	}
 	@Override
 	public String toString() {
@@ -66,8 +51,8 @@ public class Missile extends Weapon{
 	}
 	
 	public void reset() {
-		row = setPositionX(y);
-		column = setPositionY(x + 1);
+		x = game.DIM_X / 2;
+		y = DIM_Y - 1;
 	}
 
 	public void shoot() {
@@ -76,8 +61,6 @@ public class Missile extends Weapon{
 			//Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
 		} else {
 			active = true;
-			setPositionX(y);
-			setPositionY(x - 1);
 		}
 	}
 
@@ -95,7 +78,11 @@ public class Missile extends Weapon{
 	}
 
 	@Override
-	public boolean performAttack(GameObject other) {
-		return (other.receiveMissileAttack(1));
+	public boolean performAttack(GameObject other)
+	{
+		if(other.x == x && other.y == y){
+			return (other.receiveMissileAttack(1));
+		}
+		else return false;
 	}
 }

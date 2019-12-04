@@ -11,11 +11,11 @@ public class RegularShip extends AlienShip {
 
 
     public RegularShip(Game game, int x, int y){
-        super(game,x,y,life);
+        super(game,x,y,3);
         row = x;
         column = y;
-        life = life;
         floor = false;
+        this.game = game;
     }
 
     @Override
@@ -26,7 +26,6 @@ public class RegularShip extends AlienShip {
     @Override
     public void onDelete() {
         game.receivePoints(points);
-
     }
 
     public String toString(){

@@ -4,12 +4,14 @@ public abstract class AlienShip extends EnemyShip {
     private static int numberEnemies = 0;
     private boolean direction;
     private int life;
+    private int numCycles;
     private boolean floor;
     public AlienShip(Game game, int x, int y, int life) {
         super(game, x, y, life);
         direction = false;
         life = life;
         floor = false;
+        numCycles = 1;
     }
 
     public static int getRemainingAliens() {
@@ -25,15 +27,19 @@ public abstract class AlienShip extends EnemyShip {
     }
 
     public void move(){ //TODO COMO MIRO AHORA SI HAY UN BORDE O NO YA QUE DEBO COMPROBAR POR EL MOVIMIENTO EN COMUN
-        if(!border() && direction == false){
-            x++;
+        if (numCycles == game.getLevel().getNumCyclesToMoveOneCell()) {
+            if (!border() && direction == false) {
+                y--;
+            } else if (!border() && direction == true) {
+                y++;
+            } else {
+                x++;
+                changedirection();
+            }
+            numCycles = 1;
         }
-        else if (!border() && direction == true){
-            x--;
-        }
-        else {
-            y++;
-            changedirection();
+        else{
+            numCycles++;
         }
     }
     private void changedirection() {

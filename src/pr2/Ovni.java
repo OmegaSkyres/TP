@@ -10,16 +10,13 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
 
     public Ovni(Game game, int x, int y){
         super(game,x,y,life);
-        game = game;
-        row = x;
-        column = y;
-        life = life;
+        this.game = game;
         active = false;
     }
 
     public String toString(){
         String nave;
-        if (life == 0){
+        if (life == 0 || !active){
             nave = " ";
         }
         else nave = "O[" + life + "]";
@@ -27,7 +24,7 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
     }
 
     public void moveLeft() {
-        if (column > 0) column--;
+        if (y > 0) y--;
     }
 
 
@@ -49,18 +46,19 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
     }
 
     public void move(){
-        if(column == 0){
-          deleteOvni();
-        }
-        else {
-        	moveLeft();
-        	System.out.println(column);
+        if(active){
+            if(y == 0){
+                deleteOvni();
+            }
+            else {
+                moveLeft();
+            }
         }
     }
 
     private void deleteOvni() {
-        row = 0;
-        column = 8;
+        x = 0;
+        y = 9;
         active = false;
         life = 1;
     }

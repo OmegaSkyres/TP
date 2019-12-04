@@ -1,5 +1,7 @@
 package pr2;
 
+import pr2.Commands.Command;
+
 public class GameObjectBoard {
     private GameObject[] objects;
     private int currentObjects;
@@ -40,13 +42,15 @@ public class GameObjectBoard {
 
     private void remove (GameObject object) {
         int i = 0;
-        while(objects[i] != object && i < currentObjects){
-            i++;
-            if(objects[i] == object){
-                for(int j = i; i < currentObjects - 1; j++){
-                    objects[j] = objects[j+1];
+        while (objects[i] != object && i < currentObjects) {
+            if (objects[i] != null) {
+                i++;
+                if (objects[i] == object) {
+                    for (int j = i; i < currentObjects - 1; j++) {
+                        objects[j] = objects[j + 1];
+                    }
+                    currentObjects--;
                 }
-                currentObjects--;
             }
         }
     }
@@ -54,16 +58,20 @@ public class GameObjectBoard {
 
     public void update() {
         for (int i = 0; i < currentObjects; i++) {
-            objects[i].move();
-            checkAttacks(objects[i]);
+            if(objects[i] != null){
+                objects[i].move();
+                checkAttacks(objects[i]);
+            }
         }
         removeDead();
     }
 
     private void checkAttacks(GameObject object) {
         for(GameObject object1 : objects){ //Mira colisiones con el objeto
-            if(object1 != object){
-                if(object.performAttack(object1)) return;
+            if(object1 != null) {
+                if (object1 != object) {
+                    if (object.performAttack(object1)) return;
+                }
             }
         }
 
@@ -71,16 +79,19 @@ public class GameObjectBoard {
 
     public void computerAction() {
         for(GameObject object : objects){
-            object.computerAction();
+            if(object != null)
+                object.computerAction();
         }
 
     }
 
     private void removeDead() {
         for(int i = currentObjects; i >= 0; i--){
-            if(objects[i].isAlive()){
-                objects[i].onDelete(); //Revisar ya que que dos objetos impacten no significa que lo tengas que borrar.
-                remove(objects[i]);
+            if(objects[i] != null){
+                if(!objects[i].isAlive()){
+                    objects[i].onDelete(); //Revisar ya que que dos objetos impacten no significa que lo tengas que borrar.
+                    remove(objects[i]);
+                }
             }
         }
     }
