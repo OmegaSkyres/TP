@@ -23,7 +23,7 @@ public class ShootCommand extends Command {
 
     @Override
     public Command parse(String[] commandWords) {
-        if("shoot".equals(commandWords[0])) {
+        if("shoot".equals(commandWords[0]) || "s".equals(commandWords[0])) {
             return new ShootCommand();
         }
         else {

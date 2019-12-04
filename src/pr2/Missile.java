@@ -10,8 +10,14 @@ public class Missile extends Weapon{
 	public Missile(Game game, int x, int y) {
 		super(game,x,y,1);
 		game = game;
-
 		active = false;
+	}
+
+	public Missile(Game game, int x, int y, UCMShip ship){
+		super(game,x,y,1);
+		game = game;
+		active = false;
+		player = ship;
 	}
 
 	@Override
@@ -61,6 +67,7 @@ public class Missile extends Weapon{
 			//Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
 		} else {
 			active = true;
+			y = player.y;
 		}
 	}
 

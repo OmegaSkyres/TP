@@ -22,7 +22,7 @@ public class MoveCommand extends Command {
 
     @Override
     public Command parse(String[] commandWords) {
-        if("move".equals(commandWords[0])) {
+        if("move".equals(commandWords[0]) || "m".equals(commandWords[0])) {
             if("left".equals(commandWords[1])){
                 if(commandWords.length == 2){
                     numCells = -1;
@@ -43,7 +43,6 @@ public class MoveCommand extends Command {
 
             return new MoveCommand(numCells);
         }
-
         return null;
     }
 }

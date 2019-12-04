@@ -20,7 +20,7 @@ public class ListCommand extends Command {
 
     @Override
     public Command parse(String[] commandWords) {
-        if("list".equals(commandWords[0])) {
+        if("list".equals(commandWords[0]) || "l".equals(commandWords[0])) {
             return new ListCommand();
         }
 

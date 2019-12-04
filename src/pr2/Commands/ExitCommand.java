@@ -15,7 +15,7 @@ public class ExitCommand extends Command {
 
     @Override
     public Command parse(String[] commandWords) {
-        if("exit".equals(commandWords[0])) {
+        if("exit".equals(commandWords[0]) || "e".equals(commandWords[0])) {
             return new ExitCommand();
         }
 

@@ -18,7 +18,7 @@ public class ShockwaveCommand extends Command {
 
     @Override
     public Command parse(String[] commandWords) {
-        if("shockwave".equals(commandWords[0])) {
+        if("shockwave".equals(commandWords[0]) || "w".equals(commandWords[0])) {
             return new ShockwaveCommand();
         }
 

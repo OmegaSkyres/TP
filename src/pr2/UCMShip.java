@@ -16,7 +16,7 @@ public class UCMShip extends Ship {
 		points = 0;
 		life = 3;
 		posibilityshockwave = false;
-		missile = new Missile(game,y,x);
+		missile = new Missile(game,y,x,this);
 		game.addObject(missile);
 		}
 
@@ -113,7 +113,7 @@ public class UCMShip extends Ship {
 	}
 
     public String stateToString() {
-		return "Lifes: " + life + "\n" + "Points: " + points + "\n";
+		return "Lifes: " + life + "\n" + "Points: " + points + "\n" + "Superpower: " + posibilityshockwave + "\n";
     }
 
     public void setShockwave(boolean active){
@@ -121,7 +121,7 @@ public class UCMShip extends Ship {
 	}
 
 	public void setPoints(int points) {
-		points += points;
+		this.points += points;
 	}
 
 	public void enableMissile() {

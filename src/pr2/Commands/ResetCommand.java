@@ -19,7 +19,7 @@ public class ResetCommand extends Command {
 
     @Override
     public Command parse(String[] commandWords) {
-        if("reset".equals(commandWords[0])) {
+        if("reset".equals(commandWords[0]) || "r".equals(commandWords[0])) {
             return new ResetCommand();
         }
 

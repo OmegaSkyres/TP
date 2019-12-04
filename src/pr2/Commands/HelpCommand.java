@@ -16,7 +16,7 @@ public class HelpCommand extends Command {
 
     @Override
     public Command parse(String[] commandWords) {
-        if("help".equals(commandWords[0])) {
+        if("help".equals(commandWords[0]) || "h".equals(commandWords[0])) {
             return new HelpCommand();
         }
 
