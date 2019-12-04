@@ -1,5 +1,7 @@
 package pr2;
 
+import pr2.Exceptions.MissileInflightException;
+
 import static pr2.Game.DIM_Y;
 
 public class Missile extends Weapon{
@@ -62,11 +64,12 @@ public class Missile extends Weapon{
 	}
 
 	public void shoot() {
-		if (isEnable()) {
+		if (isEnable() && !isOut()) {
 			System.out.println("!!!Ya hay un misil lanzado!!!");
 			//Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
 		} else {
 			active = true;
+			x = player.x;
 			y = player.y;
 		}
 	}
