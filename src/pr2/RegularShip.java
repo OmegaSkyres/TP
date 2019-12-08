@@ -1,9 +1,6 @@
 package pr2;
 
 public class RegularShip extends AlienShip {
-    private int row;
-    private int column;
-    private static int life = 3;
     private Game game;
     private int points = 5;
     private static boolean floor;
@@ -42,19 +39,4 @@ public class RegularShip extends AlienShip {
         return nave;
     }
 
-    public boolean isDead() {
-        if(life == 0) return true;
-        else return false;
-    }
-
-    public void recibeDamage(int damage){
-        if(this.life > 0){
-            this.life = this.life - damage;
-        }
-    }
-
-
-    public static boolean getOnTheFloor(){
-        return floor;
-    }
 }

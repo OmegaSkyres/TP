@@ -16,7 +16,7 @@ public class UCMShip extends Ship {
 		super(game,y,x,3);
 		points = 0;
 		life = 3;
-		posibilityshockwave = true;
+		posibilityshockwave = false;
 		numSuperMissile = 0;
 		this.game = game;
 		}
@@ -92,7 +92,7 @@ public class UCMShip extends Ship {
 	}
 
 	public void executeShockwave(){
-		s = new Shockwave(game,0,0,1);
+		s = new Shockwave(game,0,0,AlienShip.getRemainingAliens());
 		game.addObject(s);
 
 	}

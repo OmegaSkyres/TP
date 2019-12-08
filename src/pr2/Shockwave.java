@@ -1,7 +1,6 @@
 package pr2;
 
 public class Shockwave extends Weapon {
-    private boolean a;
     public Shockwave(Game game, int x, int y, int life) {
         super(game, x, y, life);
     }
@@ -13,21 +12,20 @@ public class Shockwave extends Weapon {
 
     @Override
     public boolean performAttack(GameObject other) { //Revisar
-        if(isAlive()){
+        if(!isAlive()){
             return false;
         }
         else if(other.receiveShockWaveAttack(1)){
-            life = 0;
+            life--;
             return true;
         }
-        else{
+        else {
             return true;
         }
+
     }
     public void onDelete() {
         game.enableShockWave();
-        game.delete(x, y);
-
     }
 
     @Override

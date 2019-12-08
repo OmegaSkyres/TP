@@ -124,8 +124,6 @@ public class Game implements IPlayerController {
 	public boolean shockWave() {
 		boolean ok = false;
 		if(player.shockWave()){
-
-			//board.damageAll();//Ver como disparo el Shockwave
 			ok = true;
 		}
 		return  ok;
@@ -138,7 +136,7 @@ public class Game implements IPlayerController {
 
 	@Override
 	public void enableShockWave() {
-		player.setShockwave(true);
+		player.setShockwave(false);
 	}
 
 	@Override
@@ -154,15 +152,6 @@ public class Game implements IPlayerController {
 	public void damageNearbyObjects(int x, int y) {
 
 	}
-
-	public void delete(int X, int Y) {
-		board.delete(X, Y);
-	}
-
-	public int getCycle() {
-		return currentCycle;
-	}
-
 	/*
 	public void store(BufferedWriter outChars) { //El store
 		outChars.write();

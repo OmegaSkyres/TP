@@ -66,7 +66,12 @@ public class GameObjectBoard {
         for(GameObject object1 : objects){ //Mira colisiones con el objeto
             if(object1 != null) {
                 if (object1 != object) {
-                    if (object.performAttack(object1)) return;
+                    if  (object instanceof Shockwave ){
+                        object.performAttack(object1);
+                    }
+                    else if (object.performAttack(object1)){
+                        return;
+                    }
                 }
             }
         }
@@ -105,16 +110,6 @@ public class GameObjectBoard {
         }
     }
 
-    public boolean haveLanded() {
-        for (GameObject go : objects) {
-            if (go instanceof AlienShip && go.x == Game.DIM_X -2)
-                return true;
-        }
-
-
-        return false;
-    }
-
     // explode
     public void explode(int x, int y) {
         for (int i = 0; i < 3; i++)
@@ -124,7 +119,6 @@ public class GameObjectBoard {
                 }
             }
     }
-
 
     public String toString(int x, int y) {
         String chain;
@@ -138,17 +132,4 @@ public class GameObjectBoard {
         return chain;
     }
 
-    public void delete(int x, int y) {
-        this.remove(this.getObjectInPosition(x, y));
-    }
-
-    public void damageAll() {
-        for (int i = 0; i < currentObjects; i++) {
-            objects[i].getDamage(1);
-            if (!objects[i].isAlive()) {
-                remove(objects[i]);
-                i--;
-            }
-        }
-    }
 }
