@@ -41,6 +41,7 @@ public class Controller {
                 }
 
         }
+        System.out.print(game.getWinnerMessage());
 
     }
 }

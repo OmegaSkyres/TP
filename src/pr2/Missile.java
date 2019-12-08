@@ -17,7 +17,7 @@ public class Missile extends Weapon{
 
 	public Missile(Game game, int x, int y, UCMShip ship){
 		super(game,x,y,1);
-		game = game;
+		this.game = game;
 		active = false;
 		player = ship;
 	}
@@ -31,6 +31,9 @@ public class Missile extends Weapon{
 	public void move() {
 		if(active){
 			x--;
+			if(x < 0){
+				life = 0;
+			}
 		}
 	}
 	@Override
@@ -45,7 +48,6 @@ public class Missile extends Weapon{
 
 	@Override
 	public void onDelete() {
-		game.enableMissile();
 		reset();
 	}
 
@@ -59,25 +61,26 @@ public class Missile extends Weapon{
 	}
 	
 	public void reset() {
-		x = game.DIM_X / 2;
-		y = DIM_Y - 1;
+		active = false;
 	}
 
-	public void shoot() {
+	public boolean shoot() throws MissileInflightException {
+		boolean ok = false;
 		if (isEnable() && !isOut()) {
-			System.out.println("!!!Ya hay un misil lanzado!!!");
-			//Si ya hay un misil lanzado no se puede lanzar otro, pero si no se hay niguno lo lanzamos
+			throw new MissileInflightException("Ya hay un misil lanzado");
 		} else {
 			active = true;
 			x = player.x;
 			y = player.y;
+			ok = true;
 		}
+		return ok;
 	}
 
 	@Override
 	public boolean receiveBombAttack(int damage) {
 		boolean ok;
-		if(life > 0){
+		if(life > 0 && active){
 			life = life - damage;
 			ok = true;
 		}
@@ -90,9 +93,13 @@ public class Missile extends Weapon{
 	@Override
 	public boolean performAttack(GameObject other)
 	{
-		if(other.x == x && other.y == y){
-			return (other.receiveMissileAttack(1));
+		boolean ok = false;
+		if(other.x == x && other.y == y && active){
+			 if(other.receiveMissileAttack(1)){
+				 life = 0;
+				 ok = true;
+			 }
 		}
-		else return false;
+		return ok;
 	}
 }

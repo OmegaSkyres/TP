@@ -1,19 +1,16 @@
 package pr2;
 
 public class DestroyerShip extends AlienShip{
-    private int row;
-    private int column;
-    private static int life = 1;
     private Game game;
     private static int points = 10;
     private boolean bomb;
     private static boolean floor;
+    private Bomb b;
 
     public DestroyerShip(Game game, int x, int y){
         super(game,x,y,1);
-        row = x;
-        column = y;
         floor = false;
+        this.game = game;
     }
 
 
@@ -26,45 +23,14 @@ public class DestroyerShip extends AlienShip{
         return nave;
     }
 
-    public void moveRight() {
-        if (column < Game.DIM_Y - 1) column++;
-    }
-
-    public void moveLeft() {
-        if (column > 0) column--;
-    }
-
-    public void move(boolean direction){
-        if(direction){
-            moveRight();
-        }
-        else{
-            moveLeft();
-        }
-    }
-    public void incrementPositionX(){
-        this.row++;
-    }
-
     public void recibeDamage(int damage){
         this.life = this.life - damage;
-    }
-
-    public int getPositionX(){
-        return row;
-    }
-
-    public int getPositionY(){
-        return column;
-    }
-
-    public int getPoints() {
-        return points;
     }
 
     @Override
     public void onDelete() {
         game.receivePoints(points);
+        AlienShip.setterRemaingAliens(AlienShip.getRemainingAliens()-1);
     }
 
     @Override
@@ -79,25 +45,21 @@ public class DestroyerShip extends AlienShip{
 
     @Override
     public void computerAction() {
-
+        if(IExecuteRandomActions.canGenerateRandomBomb(game) && !bomb){
+            b = new Bomb(game,x,y,1,this);
+            game.addObject(b);
+            bomb = true;
+        }
     }
 
-    public boolean bombLaunch() {
-        return bomb;
-    }
-
-
-    public void setBombLaunch(boolean active){
-        bomb = active;
+    @Override
+    public boolean performAttack(GameObject other) {
+        return false;
     }
 
 
     public void enableBomb(){
-        bomb = true;
-    }
-
-    public static boolean getOnTheFloor(){
-        return floor;
+        bomb = false;
     }
 
 

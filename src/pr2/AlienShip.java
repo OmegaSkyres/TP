@@ -2,16 +2,21 @@ package pr2;
 
 public abstract class AlienShip extends EnemyShip {
     private static int numberEnemies = 0;
-    private boolean direction;
-    private int life;
+    private static int numShips;
     private int numCycles;
-    private boolean floor;
+    private static boolean floor;
+    static boolean isLeft;
+    static boolean moveDown;
     public AlienShip(Game game, int x, int y, int life) {
         super(game, x, y, life);
-        direction = false;
-        life = life;
+        this.life = life;
+        this.game = game;
         floor = false;
         numCycles = 1;
+        isLeft = true;
+        moveDown = false;
+        numShips = 0;
+
     }
 
     public static int getRemainingAliens() {
@@ -25,53 +30,66 @@ public abstract class AlienShip extends EnemyShip {
         }
         return ok;
     }
-
-    public void move(){ //TODO COMO MIRO AHORA SI HAY UN BORDE O NO YA QUE DEBO COMPROBAR POR EL MOVIMIENTO EN COMUN
+    @Override
+    public void move() {
         if (numCycles == game.getLevel().getNumCyclesToMoveOneCell()) {
-            if (!border() && direction == false) {
-                y--;
-            } else if (!border() && direction == true) {
-                y++;
-            } else {
+            if (numShips > 0 && moveDown) {
                 x++;
-                changedirection();
+                numShips--;
+                if (numShips == 0) {
+                    isLeft = !isLeft;
+                    moveDown = false;
+                }
+            }
+            else {
+                if (isLeft == true)
+                    y--;
+                else
+                    y++;
+                numShips++;
+                if(numShips == numberEnemies){
+                    if(shipsCanMove()){
+                        moveDown = true;
+                    }
+                    else{
+                        numShips = 0;
+                    }
+
+                }
             }
             numCycles = 1;
         }
-        else{
+        else {
             numCycles++;
         }
-    }
-    private void changedirection() {
-        if(direction == true){
-            direction = false;
-        }
-        else{
-            direction = true;
+        if (x == game.DIM_Y - 1) {
+            floor = true;
         }
     }
 
-    private boolean border() {
-        boolean ok = false;
-        if(x == 0){
-            direction = true;
-            ok = true;
+    public boolean onBorder() {
+        if(!isLeft && y==game.DIM_X-1) return true;
+        else if(isLeft && y== 0) return true;
+        return false;
+    }
+
+    public boolean shipsCanMove(){
+        if(game.board.checkAnyOnBorder()){
+            return true;
         }
-        else if (x == game.DIM_X){
-            direction = false;
-            ok = true;
-        }
-        else ok = false;
-        return ok;
+        else return false;
     }
 
     public static boolean onTheFloor(){
-        return DestroyerShip.getOnTheFloor() || RegularShip.getOnTheFloor();
-
+      return floor;
     }
 
     public static int setRemaingAliens(int number){
        return numberEnemies += number;
+    }
+
+    public static void setterRemaingAliens(int number){
+        numberEnemies = number;
     }
 
 }

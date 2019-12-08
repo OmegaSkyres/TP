@@ -40,10 +40,15 @@ public abstract class GameObject implements IAttack {
     public boolean isOut() {
         return !game.isOnBoard(x, y);
     }
+    public boolean receiveExplosionAttack(int damage) {
+        getDamage(damage);
+        return true;
+    }
 
     public abstract void computerAction();
     public abstract void onDelete();
     public abstract void move();
     public abstract String toString();
+
 }
 

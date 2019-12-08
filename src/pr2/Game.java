@@ -94,15 +94,6 @@ public class Game implements IPlayerController {
 		return x >= 0 && y >= 0 && x < DIM_X && y < DIM_Y;
 	}
 
-	public boolean attackbomb(int x, int y, int damage) {
-		boolean ok = false;
-		if (player.isOnPosition(x, y)) {
-			player.recibeDamage(damage);
-			ok = true;
-		} else ok = false;
-		return ok;
-	}
-
 	public String infoToString() {
 		return "Cycles: " + currentCycle + "\n" +
 				player.stateToString() +
@@ -125,13 +116,19 @@ public class Game implements IPlayerController {
 
 	@Override
 	public boolean shootLaser() throws MissileInflightException {
-		player.shootMissile();
-		return false;
+		return player.shootMissile();
+
 	}
 
 	@Override
 	public boolean shockWave() {
-		return player.shockWave(); //Ver como disparo el Shockwave
+		boolean ok = false;
+		if(player.shockWave()){
+
+			//board.damageAll();//Ver como disparo el Shockwave
+			ok = true;
+		}
+		return  ok;
 	}
 
 	@Override
@@ -153,6 +150,19 @@ public class Game implements IPlayerController {
 	public String toString() {
 		return infoToString();
 	}
+
+	public void damageNearbyObjects(int x, int y) {
+
+	}
+
+	public void delete(int X, int Y) {
+		board.delete(X, Y);
+	}
+
+	public int getCycle() {
+		return currentCycle;
+	}
+
 	/*
 	public void store(BufferedWriter outChars) { //El store
 		outChars.write();

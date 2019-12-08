@@ -17,7 +17,11 @@ public class ShootCommand extends Command {
 
     @Override
     public boolean execute(Game game) throws IOException, MissileInflightException {
-        game.shootLaser();
+        try {
+            game.shootLaser();
+        }catch (MissileInflightException m){
+            System.out.println("!!!Ya hay un misil lanzado!!!");
+        }
         return false;
     }
 

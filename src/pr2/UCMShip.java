@@ -3,21 +3,22 @@ package pr2;
 import pr2.Exceptions.MissileInflightException;
 
 public class UCMShip extends Ship {
-
-    public int life;
 	private int points;
 	private Game game;
 	private boolean posibilityshockwave;
 	private Missile missile;
+	private SuperMissile superMissile;
+	private Shockwave s;
+	private int numSuperMissile;
 
 	
 	public UCMShip(Game game, int x, int y) {
 		super(game,y,x,3);
 		points = 0;
 		life = 3;
-		posibilityshockwave = false;
-		missile = new Missile(game,y,x,this);
-		game.addObject(missile);
+		posibilityshockwave = true;
+		numSuperMissile = 0;
+		this.game = game;
 		}
 
 
@@ -74,10 +75,10 @@ public class UCMShip extends Ship {
 	@Override
 	public boolean receiveBombAttack(int damage) {
 		boolean ok = false;
-		if(this.life > 0){
-			ok = true;
-			recibeDamage(damage);
-		}
+			if(this.life > 0){
+				ok = true;
+				recibeDamage(damage);
+			}
 		return ok;
 	}
 
@@ -91,25 +92,21 @@ public class UCMShip extends Ship {
 	}
 
 	public void executeShockwave(){
-		Shockwave s = new Shockwave(game,0,0,1);
+		s = new Shockwave(game,0,0,1);
 		game.addObject(s);
 
 	}
 
 
-	public void shootMissile() throws MissileInflightException {
-		missile.shoot();
+	public boolean shootMissile() throws MissileInflightException {
+		missile = new Missile(game,y-1,x,this);
+		game.addObject(missile);
+		return missile.shoot();
 	}
+
 
 	public void recibeDamage(int damage){
 		this.life = this.life - damage;
-	}
-
-	public boolean isAlive() {
-		if(life == 0){
-			return false;
-		}
-		else return true;
 	}
 
     public String stateToString() {
@@ -128,5 +125,39 @@ public class UCMShip extends Ship {
 		missile.setEnable();
 	}
 
+	public void buySuperMissile() {
 
+		if (points >= 20) {
+			System.out.println(" Missile acquired");
+			superMissile = new SuperMissile(game,y-1,x,this);
+			game.addObject(superMissile);
+			points -= 20;
+		}
+
+		else
+			System.out.println("  Not enough points");
+
+	}
+
+
+	public int getNumSupermissiles() {
+		return numSuperMissile;
+	}
+
+	public boolean shootSuperMissile() throws MissileInflightException {
+		if (!missile.active)
+			return false;
+
+		else {
+			superMissile.shoot();
+			points--;
+			substractMissile();
+			return true;
+		}
+
+	}
+
+	private void substractMissile() {
+		numSuperMissile--;
+	}
 }

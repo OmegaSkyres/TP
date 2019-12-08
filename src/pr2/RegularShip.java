@@ -12,20 +12,25 @@ public class RegularShip extends AlienShip {
 
     public RegularShip(Game game, int x, int y){
         super(game,x,y,3);
-        row = x;
-        column = y;
         floor = false;
         this.game = game;
     }
 
     @Override
     public void computerAction() {
+       /* if(IExecuteRandomActions.canGenerateTransPos(game)){
+            ExplosiveShip explosiveShip = new ExplosiveShip(game,x,y,3);
+            game.addObject(explosiveShip);
+            life = 0;
 
+        }
+        */
     }
 
     @Override
     public void onDelete() {
         game.receivePoints(points);
+        AlienShip.setterRemaingAliens(AlienShip.getRemainingAliens()-1);
     }
 
     public String toString(){
@@ -36,22 +41,6 @@ public class RegularShip extends AlienShip {
         else nave = "C[" + life +"]";
         return nave;
     }
-
-    public void moveRight() {
-        if (column < Game.DIM_Y - 1) column++;
-    }
-
-    public void moveLeft() {
-        if (column > 0) column--;
-    }
-    public void move(boolean direction){
-            if(direction){
-                moveRight();
-            }
-            else{
-                moveLeft();
-            }
-        }
 
     public boolean isDead() {
         if(life == 0) return true;
@@ -64,22 +53,6 @@ public class RegularShip extends AlienShip {
         }
     }
 
-
-    public int getPositionY(){
-        return column;
-    }
-
-    public int getPositionX(){
-        return row;
-    }
-
-    public void incrementPositionX(){
-        this.row++;
-    }
-
-    public int getPoints() {
-        return points;
-    }
 
     public static boolean getOnTheFloor(){
         return floor;

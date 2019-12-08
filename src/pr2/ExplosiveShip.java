@@ -1,26 +1,27 @@
 package pr2;
 
 public class ExplosiveShip extends AlienShip{
-	private int row;
-	private int column;
-	private int life = 1;
-	private int points = 0;
+	private int life;
+    private int points = 5;
 	private boolean active;
 
-	public ExplosiveShip(Game game, int x, int y, int live) {
-		super(game, x, y, 1);
-		// TODO Auto-generated constructor stub
-		row = x;
-		column = y;
+	public ExplosiveShip(Game game, int x, int y, int life) {
+		super(game, x, y, 3);
+		this.life = life;
 		active = false;
 	}
-	
+
+    @Override
+    public void computerAction() {
+
+    }
+
     public void moveRight() {
-        if (column < Game.DIM_Y - 1) column++;
+        if (y < Game.DIM_Y - 1) y++;
     }
 
     public void moveLeft() {
-        if (column > 0) column--;
+        if (y > 0) y--;
     }
     public void move(boolean direction){
             if(direction){
@@ -31,33 +32,11 @@ public class ExplosiveShip extends AlienShip{
             }
         }
 
-    public boolean isDead() {
-        if(life == 0) return true;
-        else return false;
-    }
-
     public void recibeDamage(int damage){
         if(this.life > 0){
             this.life = this.life - damage;
         }
     }
-
-    public int getPositionY(){
-        return column;
-    }
-
-    public int getPositionX(){
-        return row;
-    }
-
-    public void incrementPositionX(){
-        this.row++;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-	
 	
 	public String toString() {
 		String nave;
@@ -67,15 +46,14 @@ public class ExplosiveShip extends AlienShip{
         else nave = "E[" + life +"]";
         return nave;
 	}
-	
-	public void computerAction() {
-		if(IExecuteRandomActions.canGenerateTransPos(game)) {
-			if(!active) active = true;
-		}
-	}
 
     @Override
     public void onDelete() {
+        if (active) {
+            this.game.damageNearbyObjects(x, y);
+            AlienShip.setterRemaingAliens(AlienShip.getRemainingAliens()-1);
+        }
+
 
     }
 

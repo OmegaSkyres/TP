@@ -42,17 +42,12 @@ public class GameObjectBoard {
 
     private void remove (GameObject object) {
         int i = 0;
-        while (objects[i] != object && i < currentObjects) {
-            if (objects[i] != null) {
-                i++;
-                if (objects[i] == object) {
-                    for (int j = i; i < currentObjects - 1; j++) {
-                        objects[j] = objects[j + 1];
-                    }
-                    currentObjects--;
-                }
-            }
+        i = getIndex(object.x, object.y);
+        while ( i < currentObjects) {
+            objects[i] = objects[i+1];
+            i++;
         }
+        currentObjects--;
     }
 
 
@@ -62,9 +57,10 @@ public class GameObjectBoard {
                 objects[i].move();
                 checkAttacks(objects[i]);
             }
+            removeDead();
         }
-        removeDead();
     }
+
 
     private void checkAttacks(GameObject object) {
         for(GameObject object1 : objects){ //Mira colisiones con el objeto
@@ -75,6 +71,19 @@ public class GameObjectBoard {
             }
         }
 
+    }
+
+    public boolean checkAnyOnBorder(){
+        boolean ok = false;
+        for(GameObject object1 : objects) {
+            if (object1 != null && object1 instanceof AlienShip) {
+                if (object1.y == 0 || object1.y == 8) {
+                    ok = true;
+                    break;
+                }
+            }
+        }
+        return ok;
     }
 
     public void computerAction() {
@@ -96,6 +105,27 @@ public class GameObjectBoard {
         }
     }
 
+    public boolean haveLanded() {
+        for (GameObject go : objects) {
+            if (go instanceof AlienShip && go.x == Game.DIM_X -2)
+                return true;
+        }
+
+
+        return false;
+    }
+
+    // explode
+    public void explode(int x, int y) {
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++) {
+                if (getObjectInPosition(x -1 +i, y -1 +j) != null) {
+                    getObjectInPosition(x -1 +i, y -1 +j).receiveExplosionAttack(1);
+                }
+            }
+    }
+
+
     public String toString(int x, int y) {
         String chain;
         GameObject object = getObjectInPosition(x,y);
@@ -108,4 +138,17 @@ public class GameObjectBoard {
         return chain;
     }
 
+    public void delete(int x, int y) {
+        this.remove(this.getObjectInPosition(x, y));
+    }
+
+    public void damageAll() {
+        for (int i = 0; i < currentObjects; i++) {
+            objects[i].getDamage(1);
+            if (!objects[i].isAlive()) {
+                remove(objects[i]);
+                i--;
+            }
+        }
+    }
 }

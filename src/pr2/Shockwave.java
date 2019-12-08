@@ -5,6 +5,12 @@ public class Shockwave extends Weapon {
     public Shockwave(Game game, int x, int y, int life) {
         super(game, x, y, life);
     }
+
+    @Override
+    public void computerAction() {
+
+    }
+
     @Override
     public boolean performAttack(GameObject other) { //Revisar
         if(isAlive()){
@@ -18,26 +24,25 @@ public class Shockwave extends Weapon {
             return true;
         }
     }
-
-    @Override
-    public void computerAction() {
-
-    }
-
-    @Override
     public void onDelete() {
+        game.enableShockWave();
+        game.delete(x, y);
 
     }
 
     @Override
     public void move() {
+        // TODO Auto-generated method stub
 
     }
+    public boolean performAttack() {
+        //game.damageAllShips();
+        return true;
 
+    }
     @Override
     public String toString() {
+        // TODO Auto-generated method stub
         return null;
     }
-
-
 }

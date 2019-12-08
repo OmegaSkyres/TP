@@ -1,17 +1,11 @@
 package pr2;
 
 public class Bomb extends Weapon implements IExecuteRandomActions {
-    private int row;
-    private int column;
     private boolean active;
-    private int life;
     private DestroyerShip ship;
 
     public Bomb(Game game, int x, int y, int life, DestroyerShip newShip){
         super(game,x,y,1);
-        row = x + 1;
-        column = y;
-        life = life;
         active = true;
         ship = newShip;
 
@@ -19,7 +13,7 @@ public class Bomb extends Weapon implements IExecuteRandomActions {
     @Override
     public String toString(){
         String bomb = " ";
-        if(active){
+        if(active && life > 0){
             bomb = ".";
         }
         else {
@@ -32,18 +26,17 @@ public class Bomb extends Weapon implements IExecuteRandomActions {
     @Override
     public void move() {
         if(active){
-            row++;
+            x++;
+            if(x > 7){
+                life = 0;
+            }
         }
     }
 
 
     @Override
     public void computerAction() {
-        if(!active){
-            if(IExecuteRandomActions.canGenerateRandomBomb(game)){
-                active = true;
-            }
-        }
+
     }
 
     @Override
@@ -79,31 +72,14 @@ public class Bomb extends Weapon implements IExecuteRandomActions {
 
     @Override
     public boolean performAttack(GameObject other) {
-        return other.receiveBombAttack(1);
-    }
+        boolean ok = false;
+        if(other.x == x && other.y == y) {
+            if(other.receiveBombAttack(1)){
+                life = 0;
+                ok = true;
+            }
 
-    public int getPositionX() {
-        return row;
-    }
-
-    public int getPositionY() {
-        return column;
-    }
-
-    public void setPositionX(int positionX) {
-        this.row = positionX;
-    }
-
-    public void setPositionY(int positionY) {
-        this.column = positionY;
-    }
-
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void resetBomb() {
-        active = false;
+        }
+        return ok;
     }
 }
