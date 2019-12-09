@@ -69,8 +69,8 @@ public class SuperMissile extends Weapon {
 	{
 		boolean ok = false;
 		if(other.x == x && other.y == y && active){
-			if(other.receiveMissileAttack(1)){
-				life--;
+			if(other.receiveMissileAttack(2)){
+				life = 0;
 				active = false;
 				ok = true;
 			}
@@ -97,6 +97,7 @@ public class SuperMissile extends Weapon {
 			throw new MissileInflightException("Ya hay un misil lanzado");
 		} else {
 			active = true;
+			life = 2;
 			x = player.x;
 			y = player.y;
 			ok = true;

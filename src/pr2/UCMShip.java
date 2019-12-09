@@ -1,5 +1,6 @@
 package pr2;
 
+import pr2.Exceptions.InsufficientPointsException;
 import pr2.Exceptions.MissileInflightException;
 
 public class UCMShip extends Ship {
@@ -14,11 +15,13 @@ public class UCMShip extends Ship {
 	
 	public UCMShip(Game game, int x, int y) {
 		super(game,y,x,3);
-		points = 0;
+		points = 60;
 		life = 3;
 		posibilityshockwave = false;
 		numSuperMissile = 0;
 		this.game = game;
+		missile = new Missile(game,y-1,x,this);
+		superMissile = new SuperMissile(game,y-1,x,this);
 		}
 
 
@@ -99,9 +102,16 @@ public class UCMShip extends Ship {
 
 
 	public boolean shootMissile() throws MissileInflightException {
-		missile = new Missile(game,y-1,x,this);
-		game.addObject(missile);
-		return missile.shoot();
+		boolean ok = false;
+		if (missile.isEnable() && !isOut()) {
+			throw new MissileInflightException("Ya hay un misil lanzado");
+		}
+		else{
+			ok = true;
+			game.addObject(missile);
+			missile.shoot();
+		}
+		return ok;
 	}
 
 
@@ -125,17 +135,25 @@ public class UCMShip extends Ship {
 		missile.setEnable();
 	}
 
-	public void buySuperMissile() {
+	public boolean buySuperMissile() throws MissileInflightException, InsufficientPointsException {
+		boolean ok = false;
+		if(!superMissile.isEnable()){
+			if (points >= 20) {
+				ok = true;
+				System.out.println(" Missile acquired");
+				game.addObject(superMissile);
+				superMissile.shoot();
+				points -= 20;
+			}
 
-		if (points >= 20) {
-			System.out.println(" Missile acquired");
-			superMissile = new SuperMissile(game,y-1,x,this);
-			game.addObject(superMissile);
-			points -= 20;
+			else
+				throw new InsufficientPointsException("Not enough points!!!");
+
 		}
-
-		else
-			System.out.println("  Not enough points");
+		else{
+			throw new MissileInflightException("Ya hay un misil lanzado!!!");
+		}
+		return ok;
 
 	}
 

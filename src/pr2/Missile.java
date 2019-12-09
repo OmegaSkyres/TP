@@ -2,8 +2,6 @@ package pr2;
 
 import pr2.Exceptions.MissileInflightException;
 
-import static pr2.Game.DIM_Y;
-
 public class Missile extends Weapon{
 	private Game game;
 	private UCMShip player;
@@ -64,17 +62,11 @@ public class Missile extends Weapon{
 		active = false;
 	}
 
-	public boolean shoot() throws MissileInflightException {
-		boolean ok = false;
-		if (isEnable() && !isOut()) {
-			throw new MissileInflightException("Ya hay un misil lanzado");
-		} else {
+	public void shoot() {
 			active = true;
+			life = 1;
 			x = player.x;
 			y = player.y;
-			ok = true;
-		}
-		return ok;
 	}
 
 	@Override

@@ -57,8 +57,8 @@ public class GameObjectBoard {
                 objects[i].move();
                 checkAttacks(objects[i]);
             }
-            removeDead();
         }
+        removeDead();
     }
 
 

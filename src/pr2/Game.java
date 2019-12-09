@@ -1,6 +1,7 @@
 package pr2;
 
 import pr2.Exceptions.FileContentsException;
+import pr2.Exceptions.InsufficientPointsException;
 import pr2.Exceptions.MissileInflightException;
 import pr2.util.MyStringUtils;
 import pr2.view.BoardPrinter;
@@ -118,6 +119,10 @@ public class Game implements IPlayerController {
 	public boolean shootLaser() throws MissileInflightException {
 		return player.shootMissile();
 
+	}
+
+	public boolean buySuperMissile() throws MissileInflightException, InsufficientPointsException {
+		return player.buySuperMissile();
 	}
 
 	@Override

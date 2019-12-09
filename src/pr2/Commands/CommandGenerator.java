@@ -1,7 +1,5 @@
 package pr2.Commands;
 
-import pr2.Commands.*;
-
 public class CommandGenerator {
     private static Command[] availableCommands = {
             new ListCommand(),
@@ -14,7 +12,8 @@ public class CommandGenerator {
             new ShockwaveCommand(),
             new LoadCommand(),
             new SaveCommand(),
-            new ShootCommand()
+            new ShootCommand(),
+            new BuySuperMissileCommand()
     };
 
     public static Command parse(String[] words) {
