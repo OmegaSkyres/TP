@@ -10,15 +10,13 @@ public class UCMShip extends Ship {
 	private Missile missile;
 	private SuperMissile superMissile;
 	private Shockwave s;
-	private int numSuperMissile;
 
 	
 	public UCMShip(Game game, int x, int y) {
 		super(game,y,x,3);
-		points = 60;
+		points = 0;
 		life = 3;
 		posibilityshockwave = false;
-		numSuperMissile = 0;
 		this.game = game;
 		missile = new Missile(game,y-1,x,this);
 		superMissile = new SuperMissile(game,y-1,x,this);
@@ -155,27 +153,5 @@ public class UCMShip extends Ship {
 		}
 		return ok;
 
-	}
-
-
-	public int getNumSupermissiles() {
-		return numSuperMissile;
-	}
-
-	public boolean shootSuperMissile() throws MissileInflightException {
-		if (!missile.active)
-			return false;
-
-		else {
-			superMissile.shoot();
-			points--;
-			substractMissile();
-			return true;
-		}
-
-	}
-
-	private void substractMissile() {
-		numSuperMissile--;
 	}
 }
