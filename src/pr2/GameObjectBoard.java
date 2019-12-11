@@ -132,4 +132,14 @@ public class GameObjectBoard {
         return chain;
     }
 
+
+    // Board info to Serialize
+    public String toStringifier() {
+        String text = "";
+
+        for (GameObject obj : objects)
+            text += obj.toStringified();
+
+        return text;
+    }
 }

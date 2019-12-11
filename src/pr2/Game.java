@@ -1,16 +1,8 @@
 package pr2;
 
-import pr2.Exceptions.FileContentsException;
 import pr2.Exceptions.InsufficientPointsException;
 import pr2.Exceptions.MissileInflightException;
-import pr2.util.MyStringUtils;
-import pr2.view.BoardPrinter;
-import pr2.view.GamePrinter;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Random;
 
 
@@ -134,6 +126,10 @@ public class Game implements IPlayerController {
 		return  ok;
 	}
 
+	public void damageNearbyObjects(int x, int y) {
+		board.explode(x, y);
+	}
+
 	@Override
 	public void receivePoints(int points) {
 		player.setPoints(points);
@@ -154,9 +150,15 @@ public class Game implements IPlayerController {
 		return infoToString();
 	}
 
-	public void damageNearbyObjects(int x, int y) {
-
+	public int getCycle() {
+		return currentCycle;
 	}
+
+	public String boardToStringifier() {
+		return board.toStringifier();
+	}
+
+
 	/*
 	public void store(BufferedWriter outChars) { //El store
 		outChars.write();

@@ -23,24 +23,11 @@ public class DestroyerShip extends AlienShip{
         return nave;
     }
 
-    public void recibeDamage(int damage){
-        this.life = this.life - damage;
-    }
 
     @Override
     public void onDelete() {
         game.receivePoints(points);
         AlienShip.setterRemaingAliens(AlienShip.getRemainingAliens()-1);
-    }
-
-    @Override
-    public boolean receiveShockWaveAttack(int damage) {
-        boolean ok = false;
-        if(this.life > 0) {
-            recibeDamage(1);
-            ok = true;
-        }
-        return ok;
     }
 
     @Override

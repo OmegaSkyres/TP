@@ -50,5 +50,6 @@ public abstract class GameObject implements IAttack {
     public abstract void move();
     public abstract String toString();
 
+    public abstract String toStringified();
 }
 

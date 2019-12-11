@@ -15,13 +15,12 @@ public class RegularShip extends AlienShip {
 
     @Override
     public void computerAction() {
-       /* if(IExecuteRandomActions.canGenerateTransPos(game)){
+        if(IExecuteRandomActions.canGenerateTransPos(game)){
             ExplosiveShip explosiveShip = new ExplosiveShip(game,x,y,3);
             game.addObject(explosiveShip);
             life = 0;
 
         }
-        */
     }
 
     @Override

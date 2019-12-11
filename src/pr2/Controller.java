@@ -12,13 +12,14 @@ import java.util.Scanner;
 public class Controller {
     private Game game;
     private Scanner in;
+    String printerType = "BOARDPRINTER";
     private String unknownCommandMsg = "Unknown Command" + "\n";
     GamePrinter printer;
 
     public Controller(Game game, Scanner in) {
         this.game = game;
         this.in = in;
-        printer = PrinterGenerator.parse("BOARDPRINTER");
+        printer = PrinterGenerator.parse(printerType);
 
     }
 
@@ -43,5 +44,13 @@ public class Controller {
         }
         System.out.print(game.getWinnerMessage());
 
+    }
+
+    public void changePrinter() {
+        if (printerType.equals("bordprinter"))
+            printerType = "stringifier";
+
+        else
+            printerType = "boardPrinter";
     }
 }
