@@ -22,6 +22,11 @@ public class Bomb extends Weapon implements IExecuteRandomActions {
         return bomb;
     }
 
+    @Override
+    public String toStringified() {
+        return "B;" + x + "," + y +"\n";
+    }
+
 
     @Override
     public void move() {

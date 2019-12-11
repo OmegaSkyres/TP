@@ -65,4 +65,9 @@ public class BoardPrinter extends GamePrinter {
     public String helpText() {
         return "HOLA";
     }
+
+    @Override
+    public void setGame(Game game) {
+
+    }
 }

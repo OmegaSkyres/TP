@@ -52,6 +52,11 @@ public class SuperMissile extends Weapon {
 	}
 
 	@Override
+	public String toStringified() {
+		return "M;" + x + "," + y +"\n";
+	}
+
+	@Override
 	public boolean receiveBombAttack(int damage) {
 		boolean ok;
 		if(life > 0 && active){

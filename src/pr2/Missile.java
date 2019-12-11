@@ -45,6 +45,11 @@ public class Missile extends Weapon{
 	}
 
 	@Override
+	public String toStringified() {
+		return "M;" + x + "," + y +"\n";
+	}
+
+	@Override
 	public void onDelete() {
 		reset();
 	}

@@ -33,8 +33,14 @@ public class UCMShip extends Ship {
 		}
 		return nave;
     }
-    
-    public void moveRight() {
+
+	@Override
+	public String toStringified() {
+		return "P;" + x + "," + y + ";" + life + ";" + points +
+				";" + posibilityshockwave + ";" +"\n";
+	}
+
+	public void moveRight() {
     	if (y < Game.DIM_Y - 1) y++;
     }
     

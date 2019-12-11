@@ -23,6 +23,11 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
         return nave ;
     }
 
+    @Override
+    public String toStringified() {
+        return "O;" + x + "," + y +"\n";
+    }
+
     public void moveLeft() {
         if (y > 0) y--;
     }

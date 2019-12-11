@@ -23,6 +23,15 @@ public class DestroyerShip extends AlienShip{
         return nave;
     }
 
+    @Override
+    public String toStringified() {
+        String dir = "left";
+        if (isLeft)
+            dir = "right";
+        return "D;" + x + "," + y + ";" + life + ";" + (3 - game.getCycle()%3) + ";" + dir + "\n";
+    }
+
+
 
     @Override
     public void onDelete() {

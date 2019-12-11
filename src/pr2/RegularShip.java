@@ -38,4 +38,13 @@ public class RegularShip extends AlienShip {
         return nave;
     }
 
+    @Override
+    public String toStringified() {
+        String dir = "left";
+        if (isLeft)
+            dir = "right";
+
+        return "R;" + x + "," + y + ";" + life + ";" + (3 - game.getCycle()%3) + ";" + dir + "\n";
+    }
+
 }

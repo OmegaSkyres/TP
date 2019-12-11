@@ -43,4 +43,9 @@ public class Shockwave extends Weapon {
         // TODO Auto-generated method stub
         return null;
     }
+
+    @Override
+    public String toStringified() {
+        return null;
+    }
 }

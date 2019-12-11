@@ -22,6 +22,11 @@ public class ExplosiveShip extends AlienShip{
 	}
 
     @Override
+    public String toStringified() {
+        return null;
+    }
+
+    @Override
     public void onDelete() {
 	    this.game.damageNearbyObjects(x, y);
 	    AlienShip.setterRemaingAliens(AlienShip.getRemainingAliens()-1);

@@ -25,5 +25,10 @@ public class Serializer extends GamePrinter {
     public String helpText() {
         return null;
     }
+
+    @Override
+    public void setGame(Game game) {
+
+    }
 }
 
