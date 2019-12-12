@@ -9,18 +9,23 @@ public class RegularShip extends AlienShip {
 
     public RegularShip(Game game, int x, int y){
         super(game,x,y,3);
+
+
+
         floor = false;
         this.game = game;
     }
 
     @Override
     public void computerAction() {
+        /*
         if(IExecuteRandomActions.canGenerateTransPos(game)){
             ExplosiveShip explosiveShip = new ExplosiveShip(game,x,y,3);
             game.addObject(explosiveShip);
             life = 0;
 
         }
+         */
     }
 
     @Override
@@ -41,7 +46,7 @@ public class RegularShip extends AlienShip {
     @Override
     public String toStringified() {
         String dir = "left";
-        if (isLeft)
+        if (!isLeft)
             dir = "right";
 
         return "R;" + x + "," + y + ";" + life + ";" + (3 - game.getCycle()%3) + ";" + dir + "\n";

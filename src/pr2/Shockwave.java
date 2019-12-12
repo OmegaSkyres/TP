@@ -17,11 +17,8 @@ public class Shockwave extends Weapon {
         }
         else if(other.receiveShockWaveAttack(1)){
             life--;
-            return true;
         }
-        else {
-            return true;
-        }
+        return false;
 
     }
     public void onDelete() {

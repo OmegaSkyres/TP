@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class SaveCommand extends Command {
-    String Filename;
+    private static String filename;
     private boolean filename_confirmed;
     public static final String filenameInUseMsg = "The file already exists ; do you want to overwrite it ? (Y/N)";
     static final String helpMessage = "save one class of a game.";
@@ -29,9 +29,9 @@ public class SaveCommand extends Command {
     public boolean execute(Game game) throws IOException {
         BufferedWriter outChars = null;
         try {
-            outChars = new BufferedWriter(new FileWriter("chars.dat"));
-            //game.store(outChars);
-            System.out.println("Game successfully saved in file: " + Filename + ".dat. Use the load command to reload it");
+            outChars = new BufferedWriter(new FileWriter(filename +".dat"));
+            game.store(outChars);
+            System.out.println("Game successfully saved in file: " + filename + ".dat. Use the load command to reload it");
         } catch (IOException e) {
             System.out.println("Invalid File");
         } finally {
@@ -45,14 +45,15 @@ public class SaveCommand extends Command {
     @Override
     public Command parse(String[] commandWords) {
         if ("save".equals(commandWords[0])) {
-            Filename = commandWords[1];
+            filename = commandWords[1];
+            setFilename(filename);
             Scanner in = new Scanner(System.in);
             try {
-                confirmFileNameStringForWrite(Filename, in);
+                confirmFileNameStringForWrite(filename, in);
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
             }
-            return new SaveCommand(Filename, helpMessage);
+            return new SaveCommand(filename, helpMessage);
         } else {
             return null;
         }
@@ -60,6 +61,7 @@ public class SaveCommand extends Command {
 
     private String confirmFileNameStringForWrite(String filenameString, Scanner in) throws IOException {
         String loadName = filenameString;
+        setFilename(filenameString);
         filename_confirmed = false;
         while (!filename_confirmed) {
             if (MyStringUtils.validFileName(loadName)) {
@@ -104,6 +106,10 @@ public class SaveCommand extends Command {
             }
         }
         return newFilename;
+    }
+
+    private void setFilename(String filename){
+       this.filename = filename;
     }
 
 

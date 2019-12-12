@@ -16,7 +16,7 @@ public class UCMShip extends Ship {
 		super(game,y,x,3);
 		points = 0;
 		life = 3;
-		posibilityshockwave = false;
+		posibilityshockwave = true;
 		this.game = game;
 		missile = new Missile(game,y-1,x,this);
 		superMissile = new SuperMissile(game,y-1,x,this);

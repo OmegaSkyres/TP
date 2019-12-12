@@ -66,10 +66,7 @@ public class GameObjectBoard {
         for(GameObject object1 : objects){ //Mira colisiones con el objeto
             if(object1 != null) {
                 if (object1 != object) {
-                    if  (object instanceof Shockwave ){
-                        object.performAttack(object1);
-                    }
-                    else if (object.performAttack(object1)){
+                    if (object.performAttack(object1)){
                         return;
                     }
                 }
@@ -138,8 +135,9 @@ public class GameObjectBoard {
         String text = "";
 
         for (GameObject obj : objects)
-            text += obj.toStringified();
-
+            if(obj != null){
+                text += obj.toStringified();
+            }
         return text;
     }
 }

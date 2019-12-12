@@ -26,7 +26,7 @@ public class DestroyerShip extends AlienShip{
     @Override
     public String toStringified() {
         String dir = "left";
-        if (isLeft)
+        if (!isLeft)
             dir = "right";
         return "D;" + x + "," + y + ";" + life + ";" + (3 - game.getCycle()%3) + ";" + dir + "\n";
     }

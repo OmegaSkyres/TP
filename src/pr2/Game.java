@@ -1,8 +1,13 @@
 package pr2;
 
+import pr2.Exceptions.FileContentsException;
 import pr2.Exceptions.InsufficientPointsException;
 import pr2.Exceptions.MissileInflightException;
+import pr2.view.StringifierPrinter;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.Random;
 
 
@@ -159,13 +164,17 @@ public class Game implements IPlayerController {
 	}
 
 
-	/*
-	public void store(BufferedWriter outChars) { //El store
-		outChars.write();
-		outChars.write(player.getPoints);
-		outChars.write(currentRules.toString());
-	}
 
+	public boolean store(BufferedWriter outChars) throws IOException { //El store
+		StringifierPrinter sp = new StringifierPrinter();
+		String text = sp.toString(this);
+
+		outChars.write(text);
+		outChars.close();
+
+		return true;
+	}
+	/*
 	public void load(BufferedReader inStream) throws IOException, FileContentsException, CloneNotSupportedException {
 		Game failSafe = (Game) this.clone();
 		boolean loading = false;
