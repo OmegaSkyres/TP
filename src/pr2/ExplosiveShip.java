@@ -23,13 +23,33 @@ public class ExplosiveShip extends AlienShip{
 
     @Override
     public String toStringified() {
-        return null;
+        String dir = "left";
+        if (!isLeft)
+            dir = "right";
+
+        return "E;" + x + "," + y + ";" + life + ";" + (3 - game.getCycle()%3) + ";" + dir + "\n";
     }
 
     @Override
     public void onDelete() {
-	    this.game.damageNearbyObjects(x, y);
+	    //performAttack()
 	    AlienShip.setterRemaingAliens(AlienShip.getRemainingAliens()-1);
     }
 
+    @Override
+    public boolean performAttack(GameObject other) {
+	    if(this.isAlive()){
+            for(int i = -1;i < 2; i++){
+                for(int j = -1; j < 2; j++){
+                    if((i != 0)&& (j!=0)) {
+                        if(other != null){
+                            other.receiveExplosionAttack(1);
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
 }

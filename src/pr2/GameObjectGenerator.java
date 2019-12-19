@@ -1,7 +1,7 @@
 package pr2;
-/*
-import pr2.Exceptions.FileContentsException;
 
+import pr2.Exceptions.FileContentsException;
+/*
 public class GameObjectGenerator {
     private static GameObject[] availableGameObjects = {
             new UCMShip(),

@@ -23,7 +23,7 @@ public class UCMShip extends Ship {
 		}
 
 
-    public String toString(){
+	public String toString(){
     	String nave;
 		if (life == 0) {
 			nave = "!xx!";
@@ -39,14 +39,6 @@ public class UCMShip extends Ship {
 		return "P;" + x + "," + y + ";" + life + ";" + points +
 				";" + posibilityshockwave + ";" +"\n";
 	}
-
-	public void moveRight() {
-    	if (y < Game.DIM_Y - 1) y++;
-    }
-    
-    public void moveLeft() {
-    	if (y > 0) y--;
-    }
 
     public boolean isOnPosition(int newx, int newy){
 		if(newx == x && newy == y) return true;

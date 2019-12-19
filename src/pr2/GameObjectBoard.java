@@ -75,19 +75,6 @@ public class GameObjectBoard {
 
     }
 
-    public boolean checkAnyOnBorder(){
-        boolean ok = false;
-        for(GameObject object1 : objects) {
-            if (object1 != null && object1 instanceof AlienShip) {
-                if (object1.y == 0 || object1.y == 8) {
-                    ok = true;
-                    break;
-                }
-            }
-        }
-        return ok;
-    }
-
     public void computerAction() {
         for(GameObject object : objects){
             if(object != null)
@@ -105,16 +92,6 @@ public class GameObjectBoard {
                 }
             }
         }
-    }
-
-    // explode
-    public void explode(int x, int y) {
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++) {
-                if (getObjectInPosition(x -1 +i, y -1 +j) != null) {
-                    getObjectInPosition(x -1 +i, y -1 +j).receiveExplosionAttack(1);
-                }
-            }
     }
 
     public String toString(int x, int y) {

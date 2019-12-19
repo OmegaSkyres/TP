@@ -131,10 +131,6 @@ public class Game implements IPlayerController {
 		return  ok;
 	}
 
-	public void damageNearbyObjects(int x, int y) {
-		board.explode(x, y);
-	}
-
 	@Override
 	public void receivePoints(int points) {
 		player.setPoints(points);
@@ -191,5 +187,5 @@ public class Game implements IPlayerController {
 			restoreGame(failstore);
 		}
 	}
-	*/
+	 */
 }

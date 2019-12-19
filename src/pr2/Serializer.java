@@ -7,9 +7,6 @@ public class Serializer extends GamePrinter {
 
     }
 
-
-
-
     @Override
     public String toString(Game game) {
         return null;

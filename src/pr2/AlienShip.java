@@ -7,6 +7,7 @@ public abstract class AlienShip extends EnemyShip {
     private static boolean floor;
     static boolean isLeft;
     static boolean moveDown;
+    static boolean turnDown;
     public AlienShip(Game game, int x, int y, int life) {
         super(game, x, y, life);
         this.life = life;
@@ -16,6 +17,7 @@ public abstract class AlienShip extends EnemyShip {
         isLeft = true;
         moveDown = false;
         numShips = 0;
+        turnDown = false;
 
     }
 
@@ -30,15 +32,20 @@ public abstract class AlienShip extends EnemyShip {
         }
         return ok;
     }
+
+
     @Override
     public void move() {
         if (numCycles == game.getLevel().getNumCyclesToMoveOneCell()) {
-            if (numShips > 0 && moveDown) {
-                x++;
-                numShips--;
-                if (numShips == 0) {
-                    isLeft = !isLeft;
-                    moveDown = false;
+            if(turnDown) {
+                if (numShips > 0 && moveDown) {
+                    x++;
+                    numShips--;
+                    if (numShips == 0) {
+                        isLeft = !isLeft;
+                        moveDown = false;
+                        turnDown = false;
+                    }
                 }
             }
             else {
@@ -47,14 +54,14 @@ public abstract class AlienShip extends EnemyShip {
                 else
                     y++;
                 numShips++;
+                if(onBorder() && !moveDown){
+                    moveDown = true;
+                }
+                else if(!onBorder() && !moveDown && numShips == numberEnemies){
+                    numShips = 0;
+                }
                 if(numShips == numberEnemies){
-                    if(shipsCanMove()){
-                        moveDown = true;
-                    }
-                    else{
-                        numShips = 0;
-                    }
-
+                    turnDown = true;
                 }
             }
             numCycles = 1;
@@ -71,13 +78,6 @@ public abstract class AlienShip extends EnemyShip {
         if(!isLeft && y==game.DIM_X-1) return true;
         else if(isLeft && y== 0) return true;
         return false;
-    }
-
-    public boolean shipsCanMove(){
-        if(game.board.checkAnyOnBorder()){
-            return true;
-        }
-        else return false;
     }
 
     public static boolean onTheFloor(){

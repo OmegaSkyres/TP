@@ -48,7 +48,7 @@ public class LoadCommand extends Command {
                 throw new CommandExecuteException(filenameMsg);
             }
             ok = true;
-            //game.load(inChars);
+           // game.load(inChars);
 
         } catch (FileNotFoundException | CommandExecuteException ex) {
             throw new CommandExecuteException(filenameMsg);
