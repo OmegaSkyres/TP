@@ -18,14 +18,14 @@ public class RegularShip extends AlienShip {
 
     @Override
     public void computerAction() {
-        /*
         if(IExecuteRandomActions.canGenerateTransPos(game)){
+            game.receivePoints(-5); //Para contrarrestar los que gano al destruir una Regular
             ExplosiveShip explosiveShip = new ExplosiveShip(game,x,y,3);
             game.addObject(explosiveShip);
+            AlienShip.setRemaingAliens(1);
             life = 0;
 
         }
-         */
     }
 
     @Override

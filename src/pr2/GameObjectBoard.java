@@ -35,6 +35,7 @@ public class GameObjectBoard {
         for(int i = 1; i < currentObjects; i++){
             if(x == objects[i].x && y == objects[i].y){
                 index = i;
+                break;
             }
         }
         return index;
@@ -43,11 +44,11 @@ public class GameObjectBoard {
     private void remove (GameObject object) {
         int i = 0;
         i = getIndex(object.x, object.y);
-        while ( i < currentObjects) {
-            objects[i] = objects[i+1];
-            i++;
-        }
-        currentObjects--;
+            while (i < currentObjects) {
+                objects[i] = objects[i + 1];
+                i++;
+            }
+            currentObjects--;
     }
 
 

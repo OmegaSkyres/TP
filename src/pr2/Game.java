@@ -28,7 +28,7 @@ public class Game implements IPlayerController {
 		this.level = level;
 		initializer = new BoardInitializer();
 		initGame();
-		currentCycle = 0;
+		currentCycle = 1;
 	}
 
 	public void initGame() {

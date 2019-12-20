@@ -5,6 +5,7 @@ public class ExplosiveShip extends AlienShip{
 
 	public ExplosiveShip(Game game, int x, int y, int life) {
 		super(game, x, y, 3);
+
 	}
 
     @Override
@@ -32,24 +33,23 @@ public class ExplosiveShip extends AlienShip{
 
     @Override
     public void onDelete() {
-	    //performAttack()
+	    //explote();
 	    AlienShip.setterRemaingAliens(AlienShip.getRemainingAliens()-1);
     }
 
-    @Override
-    public boolean performAttack(GameObject other) {
-	    if(this.isAlive()){
-            for(int i = -1;i < 2; i++){
-                for(int j = -1; j < 2; j++){
-                    if((i != 0)&& (j!=0)) {
-                        if(other != null){
-                            other.receiveExplosionAttack(1);
-                        }
-                    }
-                }
-            }
-        }
 
-        return true;
-    }
+    public void explote(GameObject other){
+	    if(this.isAlive()){
+	        for(int i = -1;i < 2; i++){
+	            for(int j = -1; j < 2; j++){
+	                if((i != 0)&& (j!=0)) {
+	                    if(other != null){
+	                        other.receiveExplosionAttack(1);
+	                    }
+	                }
+	            }
+	        }
+	    }
+	}
 }
+

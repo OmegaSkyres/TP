@@ -2,23 +2,15 @@ package pr2;
 
 public abstract class AlienShip extends EnemyShip {
     private static int numberEnemies = 0;
-    private static int numShips;
-    private int numCycles;
-    private static boolean floor;
-    static boolean isLeft;
-    static boolean moveDown;
-    static boolean turnDown;
+    private static int numShips = 0;
+    private static boolean floor = false;
+    static boolean isLeft = true;
+    static boolean moveDown = false;
+    static boolean turnDown = false;
     public AlienShip(Game game, int x, int y, int life) {
         super(game, x, y, life);
         this.life = life;
         this.game = game;
-        floor = false;
-        numCycles = 1;
-        isLeft = true;
-        moveDown = false;
-        numShips = 0;
-        turnDown = false;
-
     }
 
     public static int getRemainingAliens() {
@@ -36,7 +28,7 @@ public abstract class AlienShip extends EnemyShip {
 
     @Override
     public void move() {
-        if (numCycles == game.getLevel().getNumCyclesToMoveOneCell()) {
+        if (game.getCycle() % game.getLevel().getNumCyclesToMoveOneCell() == 0) {
             if(turnDown) {
                 if (numShips > 0 && moveDown) {
                     x++;
@@ -64,10 +56,6 @@ public abstract class AlienShip extends EnemyShip {
                     turnDown = true;
                 }
             }
-            numCycles = 1;
-        }
-        else {
-            numCycles++;
         }
         if (x == game.DIM_Y - 1) {
             floor = true;
