@@ -5,6 +5,10 @@ public abstract class Weapon extends GameObject {
         super(game, x, y, live);
     }
 
+    public Weapon() {
+
+    }
+
     @Override
     public boolean performAttack(GameObject other) {
         if(isAlive() || other.isAlive()){

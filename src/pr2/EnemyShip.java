@@ -5,6 +5,10 @@ public abstract class EnemyShip extends Ship {
         super(game, x, y, live);
     }
 
+    public EnemyShip() {
+
+    }
+
     @Override
     public boolean receiveShockWaveAttack(int damage) {
         boolean ok;

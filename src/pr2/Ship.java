@@ -8,4 +8,7 @@ public abstract class Ship extends GameObject {
     }
 
 
+    public Ship() {
+        super();
+    }
 }

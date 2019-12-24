@@ -13,6 +13,10 @@ public abstract class AlienShip extends EnemyShip {
         this.game = game;
     }
 
+    public AlienShip() {
+
+    }
+
     public static int getRemainingAliens() {
         return numberEnemies;
     }

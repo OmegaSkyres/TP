@@ -10,6 +10,11 @@ public class Bomb extends Weapon implements IExecuteRandomActions {
         ship = newShip;
 
     }
+
+    public Bomb() {
+
+    }
+
     @Override
     public String toString(){
         String bomb = " ";

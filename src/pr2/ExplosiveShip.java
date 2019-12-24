@@ -9,6 +9,10 @@ public class ExplosiveShip extends AlienShip{
 
 	}
 
+    public ExplosiveShip() {
+
+    }
+
     @Override
     public void computerAction() {
 

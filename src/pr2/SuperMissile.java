@@ -21,6 +21,10 @@ public class SuperMissile extends Weapon {
 		player = ship;
 	}
 
+    public SuperMissile() {
+
+    }
+
 	@Override
 	public void computerAction() {
 

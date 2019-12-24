@@ -12,7 +12,7 @@ public class UCMShip extends Ship {
 	private Shockwave s;
 
 	public UCMShip(){
-		super(game,y,x,3);
+		super();
 	}
 	
 	public UCMShip(Game game, int x, int y) {

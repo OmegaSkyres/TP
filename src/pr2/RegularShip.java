@@ -10,6 +10,10 @@ public class RegularShip extends AlienShip {
         this.game = game;
     }
 
+    public RegularShip() {
+        super();
+    }
+
     @Override
     public void computerAction() {
         if(IExecuteRandomActions.canGenerateTransPos(game)){

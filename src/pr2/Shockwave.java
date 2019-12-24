@@ -5,6 +5,10 @@ public class Shockwave extends Weapon {
         super(game, x, y, life);
     }
 
+    public Shockwave() {
+        super();
+    }
+
     @Override
     public void computerAction() {
 

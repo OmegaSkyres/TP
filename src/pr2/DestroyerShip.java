@@ -13,6 +13,10 @@ public class DestroyerShip extends AlienShip{
         this.game = game;
     }
 
+    public DestroyerShip() {
+
+    }
+
 
     public String toString(){
         String nave;

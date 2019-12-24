@@ -14,6 +14,10 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
         active = false;
     }
 
+    public Ovni() {
+        super();
+    }
+
     public String toString(){
         String nave;
         if (life == 0 || !active){

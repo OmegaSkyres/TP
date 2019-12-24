@@ -20,6 +20,10 @@ public class Missile extends Weapon{
 		player = ship;
 	}
 
+    public Missile() {
+
+    }
+
 	@Override
 	public void computerAction() { //No hace nada
 
