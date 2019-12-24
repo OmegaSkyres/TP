@@ -45,4 +45,9 @@ public class Shockwave extends Weapon {
     public String toStringified() {
         return null;
     }
+
+    @Override
+    public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+        return null;
+    }
 }

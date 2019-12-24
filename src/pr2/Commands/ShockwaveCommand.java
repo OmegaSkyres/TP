@@ -5,7 +5,7 @@ import pr2.Game;
 public class ShockwaveCommand extends Command {
     static final String helpMessage = "UCM-Ship releases a shock wave.";
     public ShockwaveCommand(){
-        super("ShockWave","s","",helpMessage);
+        super("ShockWave","s","ShockWave",helpMessage);
     }
 
 

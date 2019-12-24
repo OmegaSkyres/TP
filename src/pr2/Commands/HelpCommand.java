@@ -5,7 +5,7 @@ import pr2.Game;
 public class HelpCommand extends Command {
     static final String helpMessage = "Prints this help message.";
     public HelpCommand() {
-        super("help","h","", helpMessage);
+        super("help","h","Help", helpMessage);
     }
 
     @Override

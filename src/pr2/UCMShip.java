@@ -11,6 +11,9 @@ public class UCMShip extends Ship {
 	private SuperMissile superMissile;
 	private Shockwave s;
 
+	public UCMShip(){
+		super(game,y,x,3);
+	}
 	
 	public UCMShip(Game game, int x, int y) {
 		super(game,y,x,3);
@@ -20,7 +23,8 @@ public class UCMShip extends Ship {
 		this.game = game;
 		missile = new Missile(game,y-1,x,this);
 		superMissile = new SuperMissile(game,y-1,x,this);
-		}
+	}
+
 
 
 	public String toString(){
@@ -40,7 +44,12 @@ public class UCMShip extends Ship {
 				";" + posibilityshockwave + ";" +"\n";
 	}
 
-    public boolean isOnPosition(int newx, int newy){
+	@Override
+	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+		return null;
+	}
+
+	public boolean isOnPosition(int newx, int newy){
 		if(newx == x && newy == y) return true;
 		else return false;
 	}
@@ -109,7 +118,6 @@ public class UCMShip extends Ship {
 		}
 		return ok;
 	}
-
 
 	public void recibeDamage(int damage){
 		this.life = this.life - damage;

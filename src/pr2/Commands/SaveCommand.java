@@ -14,14 +14,14 @@ public class SaveCommand extends Command {
     private static String filename;
     private boolean filename_confirmed;
     public static final String filenameInUseMsg = "The file already exists ; do you want to overwrite it ? (Y/N)";
-    static final String helpMessage = "save one class of a game.";
+    static final String helpMessage = "Save one class of a game.";
 
     public SaveCommand(String commandName, String helpInfo) {
         super(commandName, "s", " ", helpMessage);
     }
 
     public SaveCommand() {
-        super("save", "s", "", helpMessage);
+        super("save", "s", "Save", helpMessage);
     }
 
 

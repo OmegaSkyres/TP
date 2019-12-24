@@ -19,7 +19,7 @@ public class LoadCommand extends Command {
     }
 
     public LoadCommand() {
-        super("load", "l", " ", helpMessage);
+        super("load", "l", "Load", helpMessage);
     }
 
     @Override

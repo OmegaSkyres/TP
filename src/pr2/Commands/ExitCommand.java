@@ -5,7 +5,7 @@ import pr2.Game;
 public class ExitCommand extends Command {
     static final String helpMessage = "Terminates the program.";
     public ExitCommand(){
-        super("exit","e"," ",helpMessage);
+        super("exit","e","Exit ",helpMessage);
     }
     @Override
     public boolean execute(Game game) {

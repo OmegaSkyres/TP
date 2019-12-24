@@ -51,5 +51,7 @@ public abstract class GameObject implements IAttack {
     public abstract String toString();
 
     public abstract String toStringified();
+
+    public abstract GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier);
 }
 

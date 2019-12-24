@@ -5,18 +5,11 @@ import pr2.view.StringifierPrinter;
 
 public class StringifyCommand extends Command {
 
-    // ______________________ Variables   ______________________
-
-
-    // ______________________ Constructor ______________________
-
-    public StringifyCommand() {
-        super("stringify","","stringify","Prints standart text format");
+    public StringifyCommand()
+    {
+        super("stringify","","Stringify","Prints standart text format");
     }
 
-    // ______________________   Methods   ______________________
-
-    // Parse
     public Command parse(String[] commandWords) {
         Command command = null;
 

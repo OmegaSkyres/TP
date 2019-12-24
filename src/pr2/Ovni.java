@@ -28,6 +28,11 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
         return "O;" + x + "," + y +"\n";
     }
 
+    @Override
+    public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+        return null;
+    }
+
     public void moveLeft() {
         if (y > 0) y--;
     }

@@ -1,18 +1,18 @@
 package pr2;
 
 import pr2.Exceptions.FileContentsException;
-/*
+
 public class GameObjectGenerator {
     private static GameObject[] availableGameObjects = {
             new UCMShip(),
             new Ovni(),
-            new RegularAlien(),
-            new DestroyerAlien(),
-            new ExplosiveAlien(),
-            new ShockWave(),
+            new RegularShip(),
+            new DestroyerShip(),
+            new ExplosiveShip(),
+            new Shockwave(),
             new Bomb(),
             new Missile(),
-            new Supermissile()
+            new SuperMissile()
     };
 
     public static GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) throws FileContentsException {
@@ -26,4 +26,3 @@ public class GameObjectGenerator {
 
 
 }
-*/

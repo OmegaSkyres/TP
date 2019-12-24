@@ -31,6 +31,10 @@ public class DestroyerShip extends AlienShip{
         return "D;" + x + "," + y + ";" + life + ";" + (3 - game.getCycle()%3) + ";" + dir + "\n";
     }
 
+    @Override
+    public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+        return null;
+    }
 
 
     @Override

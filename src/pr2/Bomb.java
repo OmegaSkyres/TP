@@ -27,6 +27,11 @@ public class Bomb extends Weapon implements IExecuteRandomActions {
         return "B;" + x + "," + y +"\n";
     }
 
+    @Override
+    public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+        return null;
+    }
+
 
     @Override
     public void move() {

@@ -1,7 +1,7 @@
 package pr2;
 
 import pr2.Game;
-/*
+
 import pr2.Level;
 
 public class FileContentsVerifier {
@@ -74,7 +74,7 @@ public class FileContentsVerifier {
 		if (!verifyCoords(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), game)
 				|| !verifyLives(Integer.parseInt(words[2]), armour)
 				|| !verifyCycleToNextAlienMove(Integer.parseInt(words[3]), game.getLevel())
-				|| !verifyDir(Move.parse(words[4]))) {
+				|| !verifyDir(words[4])) {
 			return false;
 		}
 		return true;
@@ -115,7 +115,7 @@ public class FileContentsVerifier {
 		return level != null;
 	}
 
-	public static boolean verifyDir(Move dir) {
+	public static boolean verifyDir(String dir) {
 		return dir != null;
 	}
 
@@ -153,4 +153,3 @@ public class FileContentsVerifier {
 	}
 }
 
-	*/

@@ -50,6 +50,11 @@ public class Missile extends Weapon{
 	}
 
 	@Override
+	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+		return null;
+	}
+
+	@Override
 	public void onDelete() {
 		reset();
 	}

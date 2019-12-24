@@ -6,7 +6,7 @@ public class MoveCommand extends Command {
     static final String helpMessage ="Moves UCM-Ship to the indicated direction.";
     private int numCells = 0; //Hay que guardar el valor del parseador
     public MoveCommand(){
-        super("move","m","",helpMessage);
+        super("move","m","Move",helpMessage);
 
     }
 

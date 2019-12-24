@@ -13,7 +13,7 @@ import java.io.IOException;
         }
 
         public BuySuperMissileCommand(){
-            super("BuySuperMissile","b","",helpMessage);
+            super("BuySuperMissile","b","BuySuperMissile",helpMessage);
         }
 
         @Override

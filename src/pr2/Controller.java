@@ -42,6 +42,7 @@ public class Controller {
                 }
 
         }
+        System.out.println(game + printer.toString(game));
         System.out.print(game.getWinnerMessage());
 
     }

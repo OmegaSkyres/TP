@@ -57,6 +57,11 @@ public class SuperMissile extends Weapon {
 	}
 
 	@Override
+	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+		return null;
+	}
+
+	@Override
 	public boolean receiveBombAttack(int damage) {
 		boolean ok;
 		if(life > 0 && active){

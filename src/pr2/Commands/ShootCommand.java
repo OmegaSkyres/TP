@@ -12,7 +12,7 @@ public class ShootCommand extends Command {
     }
 
     public ShootCommand(){
-        super("Shoot","s","",helpMessage);
+        super("Shoot","s","Shoot",helpMessage);
     }
 
     @Override

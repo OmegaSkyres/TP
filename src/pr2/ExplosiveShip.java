@@ -1,10 +1,11 @@
 package pr2;
 
 public class ExplosiveShip extends AlienShip{
+    private boolean active = false;
     private int points = 5;
 
 	public ExplosiveShip(Game game, int x, int y, int life) {
-		super(game, x, y, 3);
+		super(game, x, y, 1);
 
 	}
 
@@ -32,24 +33,33 @@ public class ExplosiveShip extends AlienShip{
     }
 
     @Override
+    public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+        return null;
+    }
+
+    @Override
     public void onDelete() {
-	    //explote();
+	    active = true;
+        game.receivePoints(points);
 	    AlienShip.setterRemaingAliens(AlienShip.getRemainingAliens()-1);
     }
 
-
-    public void explote(GameObject other){
-	    if(this.isAlive()){
-	        for(int i = -1;i < 2; i++){
-	            for(int j = -1; j < 2; j++){
-	                if((i != 0)&& (j!=0)) {
-	                    if(other != null){
-	                        other.receiveExplosionAttack(1);
-	                    }
-	                }
-	            }
-	        }
-	    }
-	}
+    @Override
+    public boolean performAttack(GameObject other) {
+	    boolean ok = false;
+        if(active){
+            for(int i = -1;i < 2; i++){
+                for(int j = -1; j < 2; j++){
+                    if((i != 0)&& (j!=0)) {
+                        if(other != null){
+                            other.receiveExplosionAttack(1);
+                            ok = true;
+                        }
+                    }
+                }
+            }
+        }
+        return ok;
+    }
 }
 

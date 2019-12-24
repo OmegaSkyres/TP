@@ -33,7 +33,7 @@ public class GameObjectBoard {
     private int getIndex(int x, int y) {
         int index = 0;
         for(int i = 1; i < currentObjects; i++){
-            if(x == objects[i].x && y == objects[i].y){
+            if(x == objects[i].x && y == objects[i].y && !objects[i].isAlive()){ //Te da el indice del objeto con esa posicion y que este muerto
                 index = i;
                 break;
             }
@@ -53,6 +53,7 @@ public class GameObjectBoard {
 
 
     public void update() {
+        removeDead();
         for (int i = 0; i < currentObjects; i++) {
             if(objects[i] != null){
                 objects[i].move();

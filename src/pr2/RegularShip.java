@@ -3,16 +3,10 @@ package pr2;
 public class RegularShip extends AlienShip {
     private Game game;
     private int points = 5;
-    private static boolean floor;
-    //private static String cadena = "[R]egular ship: Points: 5 - Harm: 0 - Shield: 2";
 
 
     public RegularShip(Game game, int x, int y){
         super(game,x,y,3);
-
-
-
-        floor = false;
         this.game = game;
     }
 
@@ -50,6 +44,11 @@ public class RegularShip extends AlienShip {
             dir = "right";
 
         return "R;" + x + "," + y + ";" + life + ";" + (3 - game.getCycle()%3) + ";" + dir + "\n";
+    }
+
+    @Override
+    public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+        return null;
     }
 
 }
