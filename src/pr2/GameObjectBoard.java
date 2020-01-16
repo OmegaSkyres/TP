@@ -20,7 +20,7 @@ public class GameObjectBoard {
         currentObjects++;
     }
 
-    private GameObject getObjectInPosition (int x, int y) {
+    public GameObject getObjectInPosition (int x, int y) { //He hecho este metodo publico de cara a que pueda utilizarlo para explotar las naves
         GameObject object = null;
         for(int i = 1; i < currentObjects; i++){
             if(x == objects[i].x && y == objects[i].y){
@@ -30,10 +30,10 @@ public class GameObjectBoard {
         return object;
     }
 
-    private int getIndex(int x, int y) {
+    private int getIndex(GameObject object) { //He modificado el parametro de entrada en vez de llevar x e y lleva el GameObject
         int index = 0;
         for(int i = 1; i < currentObjects; i++){
-            if(x == objects[i].x && y == objects[i].y && !objects[i].isAlive()){ //Te da el indice del objeto con esa posicion y que este muerto
+            if (objects[i].equals(object)){ //Te da el indice del objeto con esa posicion y que este muerto
                 index = i;
                 break;
             }
@@ -43,7 +43,10 @@ public class GameObjectBoard {
 
     private void remove (GameObject object) {
         int i = 0;
-        i = getIndex(object.x, object.y);
+        i = getIndex(object);
+        while(object != objects[i]){
+            i = getIndex(object);
+        }
             while (i < currentObjects) {
                 objects[i] = objects[i + 1];
                 i++;
@@ -89,7 +92,7 @@ public class GameObjectBoard {
         for(int i = currentObjects; i >= 0; i--){
             if(objects[i] != null){
                 if(!objects[i].isAlive()){
-                    objects[i].onDelete(); //Revisar ya que que dos objetos impacten no significa que lo tengas que borrar.
+                        objects[i].onDelete(); //Revisar ya que que dos objetos impacten no significa que lo tengas que borrar.
                     remove(objects[i]);
                 }
             }

@@ -1,7 +1,6 @@
 package pr2;
 
 public class ExplosiveShip extends AlienShip{
-    private boolean active = false;
     private int points = 5;
 
 	public ExplosiveShip(Game game, int x, int y, int life) {
@@ -43,27 +42,20 @@ public class ExplosiveShip extends AlienShip{
 
     @Override
     public void onDelete() {
-	    active = true;
-        game.receivePoints(points);
-	    AlienShip.setterRemaingAliens(AlienShip.getRemainingAliens()-1);
-    }
-
-    @Override
-    public boolean performAttack(GameObject other) {
-	    boolean ok = false;
-        if(active){
-            for(int i = -1;i < 2; i++){
-                for(int j = -1; j < 2; j++){
-                    if((i != 0)&& (j!=0)) {
-                        if(other != null){
-                            other.receiveExplosionAttack(1);
-                            ok = true;
-                        }
+	    GameObject other;
+        for(int i = -1;i < 2; i++){
+            for(int j = -1; j < 2; j++){
+                if((i != 0) || (j!=0)) {
+                    other = game.board.getObjectInPosition(x+i,y+j); //Para poder hacer esto he tenido que hacer este metodo publico.
+                    if(other != null){
+                        other.receiveExplosionAttack(1);
                     }
                 }
             }
         }
-        return ok;
+        game.receivePoints(points)  ;
+	    AlienShip.setterRemaingAliens(AlienShip.getRemainingAliens()-1);
     }
+
 }
 
