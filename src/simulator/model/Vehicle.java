@@ -36,6 +36,11 @@ public class Vehicle<Junction> extends SimulatedObject {
     protected void advance(int time) {
         if(estado == VehicleStatus.TRAVELING){
             localizacion = min((localizacion + velocidadActual),carretera.size()); //Preguntar que funcion min para importar
+            if(localizacion >= carretera.getLenght()) {
+                int anterior = localizacion;
+                localizacion = carretera.getLenght();
+                kilometraje = kilometraje - (anterior - localizacion);
+            }
         }
 
     }
