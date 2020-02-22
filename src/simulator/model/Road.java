@@ -19,8 +19,15 @@ public class Road extends SimulatedObject {
 
     Road(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) {
         super(id);
-        cruceOrigen
-    }
+        longitud = length;
+        velocidadMaxima = maxSpeed;
+        cruceOrigen = srcJunc;
+        cruceDestino = destJunc;
+        cruceOrigen.mapaCarreterasSalientes.put(srcJunc,this);
+        cruceDestino.mapaCarreterasSalientes.put(destJunc,this);
+}
+
+
 
     @Override
     protected void advance(int time) {
