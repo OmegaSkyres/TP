@@ -33,9 +33,10 @@ public class InterCityRoad extends Road {
     }
 
     protected void calculateVehicleSpeed(){
-        if(condicionAmbiental.equals("STORM")){
-            (int)(limiteVelocidad*0.8);
+        for(Vehicle v : vehiculos) { //TODO PREGUNTAR SI CUANDO SE CUANDO SE CALCULA LA VELOCIDAD SE LE PONE A TODOS LOS VEHICULOS
+            if (condicionAmbiental.equals("STORM")) {
+                v.velocidadActual = (int) (limiteVelocidad * 0.8);
+            } else v.velocidadActual = limiteVelocidad;
         }
-        else limiteVelocidad;
     }
 }
