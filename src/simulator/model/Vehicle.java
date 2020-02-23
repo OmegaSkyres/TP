@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static java.lang.Integer.min;
+
 
 public class Vehicle<Junction> extends SimulatedObject {
     protected List<Junction> itenerario;
@@ -35,10 +37,10 @@ public class Vehicle<Junction> extends SimulatedObject {
     @Override
     protected void advance(int time) {
         if(estado == VehicleStatus.TRAVELING){
-            localizacion = min((localizacion + velocidadActual),carretera.size()); //Preguntar que funcion min para importar
-            if(localizacion >= carretera.getLenght()) {
+            localizacion = min((localizacion + velocidadActual),carretera.getLength());
+            if(localizacion >= carretera.getLength()) {
                 int anterior = localizacion;
-                localizacion = carretera.getLenght();
+                localizacion = carretera.getLength();
                 kilometraje = kilometraje - (anterior - localizacion);
             }
         }
