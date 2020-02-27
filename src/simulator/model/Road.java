@@ -30,8 +30,6 @@ public class Road extends SimulatedObject {
         cruceDestino.mapaCarreterasSalientes.put(destJunc,this);
 }
 
-
-
     @Override
     protected void advance(int time) {
         reduceTotalContamination();
