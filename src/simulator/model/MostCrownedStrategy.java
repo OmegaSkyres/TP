@@ -2,7 +2,7 @@ package simulator.model;
 
 import java.util.List;
 
-public class MostCrownedStrategy implements LightSwitchingStrategy{
+public class MostCrownedStrategy implements LightSwitchStrategy {
     public MostCrownedStrategy(int value){
 
     }

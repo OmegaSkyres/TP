@@ -2,11 +2,9 @@ package simulator.model;
 
 import org.json.JSONObject;
 import simulator.exceptions.WrongValuesException;
+import simulator.exceptions.WrongValuesIncommingRoad;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Junction extends SimulatedObject {
     protected List<Road> listaCarreterasEntrantes; //Lista de Carreteras que entran al Cruce.
@@ -14,8 +12,8 @@ public class Junction extends SimulatedObject {
     protected List<List<Vehicle>> listaDeColas; //Lista de colas para las carreteras Entrantes.
     protected int indiceSemaforo; //Indice del semaforo de la carretera Entrante -1 indica rojo.
     protected int ultimoPasoDeCambio; //Paso en el cual el indice de Semaforo en verde ha cambiado de Valor.
-    protected LightSwitchingStrategy estrategiaCambioSemaforos; //Estrategia para cambiar el color de los semaforos.
-    protected DequeuingStrategy estrategiaEliminarCola; //Estrategia para eliminar vehiculos de las colas.
+    protected LightSwitchStrategy estrategiaCambioSemaforos; //Estrategia para cambiar el color de los semaforos.
+    protected DequeingStrategy estrategiaEliminarCola; //Estrategia para eliminar vehiculos de las colas.
     protected int coordenadaX; //Coordenada X;
     protected int coordenadaY; //Coordenada Y;
 
@@ -48,10 +46,17 @@ public class Junction extends SimulatedObject {
         return null;
     }
 
-    private void addIncommingRoad(Road r){
-        listaCarreterasEntrantes.add(r);
-        //TODO
+    private void addIncommingRoad(Road r) throws WrongValuesIncommingRoad {
+        if(checkIncommingRoad(r)){
+            listaCarreterasEntrantes.add(r);
+            List<Vehicle> cola = new LinkedList<Vehicle>();
+            listaDeColas.add(cola);
+        }
+    }
 
+    private Boolean checkIncommingRoad(Road r) throws WrongValuesIncommingRoad {
+        if(r.cruceDestino != this) throw new WrongValuesIncommingRoad("Wrong Incomming Road");
+        else return true;
     }
 
     private void addOutGoingRoad(Road r){
@@ -60,7 +65,7 @@ public class Junction extends SimulatedObject {
     }
 
     private void enter(Vehicle v){
-
+        v.carretera.vehiculos.add(v);
     }
 
     private Road roadTo(Junction j){

@@ -22,7 +22,7 @@ public class Vehicle<Junction> extends SimulatedObject {
     protected int contaminacionTotal; //total emitido
     protected int kilometraje; // distancia recorrida
 
-    public Vehicle(String id, int velocidadMaxima, int contClass, List<Junction> itinerario) throws WrongValuesException { //Preguntar que es contClass
+    public Vehicle(String id, int velocidadMaxima, int contClass, List<Junction> itinerario) throws WrongValuesException { //ConClass es grado de contaminacion
         super(id);
         Collections.unmodifiableList(new ArrayList<>(itinerario)); // creamos la copia aqui??
         if(!checkValores(velocidadMaxima,gradoContaminacion,itinerario)){
