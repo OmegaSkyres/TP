@@ -8,7 +8,7 @@ import simulator.exceptions.WrongValuesWeather;
 import java.util.Comparator;
 import java.util.List;
 
-public class Road extends SimulatedObject {
+public abstract class Road extends SimulatedObject {
     protected int longitud; // Longitud de la carretera
     protected int velocidadMaxima; // Velocidad maxima
     protected int limiteVelocidad; // Limite de velocidad en una carretera
@@ -51,6 +51,10 @@ public class Road extends SimulatedObject {
         return longitud;
     }
 
+    public String getId(){
+        return _id;
+    }
+
     private void enter(Vehicle v) throws WrongValuesVehicle {
         if(v.localizacion == 0 && v.velocidadActual == 0){
             vehiculos.add(v);
@@ -76,6 +80,38 @@ public class Road extends SimulatedObject {
             throw new WrongValuesContamination("El valor de la contaminacion es Erroneo");
         }
         contaminacionTotal += c;
+    }
+
+    public Junction getCruceDestino() {
+        return cruceDestino;
+    }
+
+    public Junction getCruceOrigen() {
+        return cruceOrigen;
+    }
+
+    public int getVelocidadMaxima() {
+        return velocidadMaxima;
+    }
+
+    public Weather getCondicionAmbiental() {
+        return condicionAmbiental;
+    }
+
+    public int getAlarmaContaminacion() {
+        return alarmaContaminacion;
+    }
+
+    public int getLongitud() {
+        return longitud;
+    }
+
+    public int getContaminacionTotal() {
+        return contaminacionTotal;
+    }
+
+    public int getLimiteVelocidad() {
+        return limiteVelocidad;
     }
 
     private abstract void reduceTotalContamination();

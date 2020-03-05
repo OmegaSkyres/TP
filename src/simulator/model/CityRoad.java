@@ -13,14 +13,14 @@ public class CityRoad extends Road {
         else{
             x = 2;
         }
-        if(contaminacionTotal - x > 0){
+        if(getContaminacionTotal() - x > 0){
             contaminacionTotal = contaminacionTotal - x;
         }
     }
 
     protected void calculateVehicleSpeed() {
         for (Vehicle v : vehiculos) {
-            v.velocidadActual = (int) (((11.0 - v.gradoContaminacion) / 11.0) * limiteVelocidad);
+            v.velocidadActual = (int) (((11.0 - v.getGradoContaminacion()) / 11.0) * getLimiteVelocidad());
         }
     }
 }

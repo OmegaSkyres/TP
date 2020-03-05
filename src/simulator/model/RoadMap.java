@@ -1,5 +1,9 @@
 package simulator.model;
 
+import simulator.exceptions.WrongValuesJuntion;
+import simulator.exceptions.WrongValuesRoad;
+import simulator.exceptions.WrongValuesVehicle;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,5 +27,38 @@ public class RoadMap {
         mapaDeCruces = new HashMap<>();
         mapaDeVehiculos = new HashMap<>();
     }
+
+    void addJuntion(Junction j) throws WrongValuesJuntion {
+        if(!mapaDeCruces.containsKey(j.getId())){
+            cruces.add(j);
+            mapaDeCruces.put(j.getId(),j);
+        }
+        else throw new WrongValuesJuntion("Este cruce ya esta en el Mapa de Cruces");
+    }
+    void addRoad(Road r) throws WrongValuesRoad {
+        if(!mapaDeCarreteras.containsKey(r.getId()) && mapaDeCruces.containsKey(r.getCruceDestino().getId()) && mapaDeCruces.containsKey(r.getCruceOrigen().getId())){
+            carreteras.add(r);
+            mapaDeCarreteras.put(r.getId(),r);
+        }
+        else throw new WrongValuesRoad("Esta carretera ya existe en el Mapa de Carreteras");
+    }
+
+    void addVehicle(Vehicle v) throws WrongValuesVehicle {
+        if(!mapaDeVehiculos.containsKey(v.getId())){ //TODO TE FALTA COMPROBAR el itinerario es válido, es decir, existen carreteras que conecten los cruces consecutivos de su itinerario
+            vehiculos.add(v);
+            mapaDeVehiculos.put(v.getId(),v);
+        }
+        else throw new WrongValuesVehicle("El Vehiculo ya existe en el mapa de Vehiculos");
+    }
+
+    public Junction getJunction(String id) throws Exception {
+        if(mapaDeCruces.containsKey(id)){
+            return mapaDeCruces.get(id);
+        }
+
+        else throw new Exception("El cruce no existe en el mapa de cruce");
+    }
+
+
 
 }

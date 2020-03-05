@@ -22,21 +22,21 @@ public class InterCityRoad extends Road {
         else{
             x = 20;
         }
-        return (int) (((100.0-x) / 100.0) * contaminacionTotal);
+        return (int) (((100.0-x) / 100.0) * getContaminacionTotal());
     }
 
     protected void updateSpeedLimit(){
-        if(contaminacionTotal > alarmaContaminacion){
-            limiteVelocidad = (int) (velocidadMaxima * 0.5);
+        if(getContaminacionTotal() > getAlarmaContaminacion()){
+            limiteVelocidad = (int) (getVelocidadMaxima() * 0.5);
         }
-        else limiteVelocidad = velocidadMaxima;
+        else limiteVelocidad = getVelocidadMaxima();
     }
 
     protected void calculateVehicleSpeed(){
         for(Vehicle v : vehiculos) { //TODO PREGUNTAR SI CUANDO SE CUANDO SE CALCULA LA VELOCIDAD SE LE PONE A TODOS LOS VEHICULOS
             if (condicionAmbiental.equals("STORM")) {
-                v.velocidadActual = (int) (limiteVelocidad * 0.8);
-            } else v.velocidadActual = limiteVelocidad;
+                v.velocidadActual = (int) (getLimiteVelocidad() * 0.8);
+            } else v.velocidadActual = getLimiteVelocidad();
         }
     }
 }

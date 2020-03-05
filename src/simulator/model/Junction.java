@@ -3,6 +3,7 @@ package simulator.model;
 import org.json.JSONObject;
 import simulator.exceptions.WrongValuesException;
 import simulator.exceptions.WrongValuesIncommingRoad;
+import simulator.exceptions.WrongValuesOutGoingRoad;
 
 import java.util.*;
 
@@ -31,10 +32,6 @@ public class Junction extends SimulatedObject {
         ultimoPasoDeCambio  = 0;
     }
 
-    private boolean checkValores(LightSwitchStrategy lsStrategy, DequeingStrategy dqStrategy, int xCoor, int yCoor) {
-        if(lsStrategy == null || dqStrategy == null || xCoor < 0 || yCoor < 0) return false;
-        else return true;
-    }
 
     @Override
     protected void advance(int time) {
@@ -55,13 +52,30 @@ public class Junction extends SimulatedObject {
     }
 
     private Boolean checkIncommingRoad(Road r) throws WrongValuesIncommingRoad {
-        if(r.cruceDestino != this) throw new WrongValuesIncommingRoad("Wrong Incomming Road");
+        if(r.getCruceDestino() != this) throw new WrongValuesIncommingRoad("Wrong Incomming Road");
         else return true;
     }
 
-    private void addOutGoingRoad(Road r){
-        mapaCarreterasSalientes.put(r.cruceDestino,r);
+    private void addOutGoingRoad(Road r) throws WrongValuesOutGoingRoad {
+        if(checkValuesOutGoingRoad(r)){
+            Junction j = r.getCruceDestino();
+            if(mapaCarreterasSalientes.containsKey(j)){ //Compruebo si mi cruce tiene otra carretera saliente.
+                mapaCarreterasSalientes.put(r.getCruceDestino(),r);
 
+            }
+
+        }
+
+
+    }
+
+    private boolean checkValores(LightSwitchStrategy lsStrategy, DequeingStrategy dqStrategy, int xCoor, int yCoor) {
+        if(lsStrategy == null || dqStrategy == null || xCoor < 0 || yCoor < 0) return false;
+        else return true;
+    }
+
+    private boolean checkValuesOutGoingRoad(Road r) throws WrongValuesOutGoingRoad {
+        if(r.getCruceOrigen() == this); throw new WrongValuesOutGoingRoad("Wrong Outgoing Road");
     }
 
     private void enter(Vehicle v){

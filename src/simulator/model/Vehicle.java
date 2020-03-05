@@ -37,11 +37,11 @@ public class Vehicle<Junction> extends SimulatedObject {
     @Override
     protected void advance(int time) {
         if(estado == VehicleStatus.TRAVELING){
-            localizacion = min((localizacion + velocidadActual),carretera.getLength());
-            if(localizacion >= carretera.getLength()) {
-                int anterior = localizacion;
+            localizacion = min((getLocalizacion() + getVelocidadActual()),carretera.getLength());
+            if(getLocalizacion() >= carretera.getLength()) {
+                int anterior = getLocalizacion();
                 localizacion = carretera.getLength();
-                kilometraje = kilometraje - (anterior - localizacion);
+                kilometraje = getKilometraje() - (anterior - getLocalizacion());
             }
         }
 
@@ -59,6 +59,30 @@ public class Vehicle<Junction> extends SimulatedObject {
 
     protected void setSpeed(int s){
         velocidadActual = s;
+    }
+
+    public int getContaminacionTotal() {
+        return contaminacionTotal;
+    }
+
+    public int getVelocidadMaxima() {
+        return velocidadMaxima;
+    }
+
+    public int getGradoContaminacion() {
+        return gradoContaminacion;
+    }
+
+    public int getVelocidadActual() {
+        return velocidadActual;
+    }
+
+    public int getKilometraje() {
+        return kilometraje;
+    }
+
+    public int getLocalizacion() {
+        return localizacion;
     }
 
     protected void setContaminationClass(int c){
