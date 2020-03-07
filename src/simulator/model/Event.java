@@ -1,5 +1,8 @@
 package simulator.model;
 
+import simulator.exceptions.WrongValuesException;
+import simulator.exceptions.WrongValuesJuntion;
+
 public abstract class Event implements Comparable<Event> {
 
 	protected int _time;
@@ -21,5 +24,5 @@ public abstract class Event implements Comparable<Event> {
 		return 0;
 	}
 
-	abstract void execute(RoadMap map);
+	abstract void execute(RoadMap map) throws Exception;
 }

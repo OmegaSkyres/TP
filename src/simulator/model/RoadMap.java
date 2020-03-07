@@ -1,5 +1,6 @@
 package simulator.model;
 
+import org.json.JSONObject;
 import simulator.exceptions.WrongValuesJuntion;
 import simulator.exceptions.WrongValuesRoad;
 import simulator.exceptions.WrongValuesVehicle;
@@ -57,6 +58,57 @@ public class RoadMap {
         }
 
         else throw new Exception("El cruce no existe en el mapa de cruce");
+    }
+
+    public Road getRoad(String id) throws Exception {
+        if(mapaDeCarreteras.containsKey(id)){
+            return mapaDeCarreteras.get(id);
+        }
+        else throw new Exception("La carretera no existe en el mapa de Carreteras");
+    }
+
+    public Vehicle getVehicle(String id) throws Exception {
+        if(mapaDeVehiculos.containsKey(id)){
+            return mapaDeVehiculos.get(id);
+        }
+        else throw new Exception("El vehiculo no existe en el mapa de Vehiculos");
+    }
+
+    public List<Junction>getJunctions(){ return cruces; }
+
+    public List<Road> getCarreteras() { return carreteras; }
+
+    public List<Vehicle> getVehiculos() { return vehiculos; }
+
+    void reset(){
+        cruces.clear(); //Todo preguntar si vale la funcion Clear
+        carreteras.clear();
+        vehiculos.clear();
+        mapaDeVehiculos.clear();
+        mapaDeCarreteras.clear();
+        mapaDeCruces.clear();
+    }
+
+    public JSONObject report(){
+        String report = "";
+        // genera informe para cruces
+
+        for(int i = 0; i < this.cruces.size(); i++){
+            report += this.cruces.get(i).report() + "\n";
+        }
+        // genera informe para carreteras
+
+        for(int i = 0; i < this.carreteras.size(); i++){
+            report += this.carreteras.get(i).report() + "\n";
+        }
+        // genera informe para vehiculos
+
+        for(int i = 0; i < this.vehiculos.size(); i++){
+            report += this.vehiculos.get(i).report() + "\n";
+        }
+
+
+        return report;
     }
 
 
