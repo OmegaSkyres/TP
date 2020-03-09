@@ -90,23 +90,22 @@ public class RoadMap {
     }
 
     public JSONObject report(){
-        JSONObject report;
+        JSONObject report = new JSONObject();
         // genera informe para cruces
 
-        for(int i = 0; i < this.cruces.size(); i++){
-            report.put(this.cruces.get(i).report());
+        for(Junction j : cruces){
+            report.put("juntions", j.report());
         }
+
         // genera informe para carreteras
-
-        for(int i = 0; i < this.carreteras.size(); i++){
-            report += this.carreteras.get(i).report() + "\n";
+        for(Road r : carreteras){
+            report.put("roads", r.report());
         }
+
         // genera informe para vehiculos
-
-        for(int i = 0; i < this.vehiculos.size(); i++){
-            report += this.vehiculos.get(i).report() + "\n";
+        for(Vehicle v : vehiculos){
+            report.put("vehicles",v.report());
         }
-
 
         return report;
     }

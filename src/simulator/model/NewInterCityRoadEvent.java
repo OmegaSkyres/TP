@@ -32,6 +32,6 @@ public class NewInterCityRoadEvent extends NewRoadEvent{
     }
 
     Road createRoad(Junction srcJunc, Junction destJunc){
-        return new Road(this.id,srcJunc,destJunc,this.maxSpeed,this.co2Limit,this.length,this.weather); //Todo Preguntar si necesitas implementar metodos como road es una clase abstratcta
+        return new InterCityRoad(this.id,srcJunc,destJunc,this.maxSpeed,this.co2Limit,this.length,this.weather);
     }
 }

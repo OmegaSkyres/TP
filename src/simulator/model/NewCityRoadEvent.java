@@ -31,6 +31,6 @@ public class NewCityRoadEvent extends NewRoadEvent {
     }
 
     Road createRoad(Junction srcJunc, Junction destJunc){
-        return new Road(this.id,srcJunc,destJunc,this.maxSpeed,this.co2Limit,this.length,this.weather);
+        return new CityRoad(this.id,srcJunc,destJunc,this.maxSpeed,this.co2Limit,this.length,this.weather);
     }
 }
