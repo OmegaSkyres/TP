@@ -66,7 +66,7 @@ public abstract class Road extends SimulatedObject {
         vehiculos.remove(v);
     }
 
-    private void setWeather(Weather w) throws WrongValuesWeather {
+    public void setWeather(Weather w) throws WrongValuesWeather {
         if(w == null){
             throw new WrongValuesWeather("El valor de las Condicioones Atmosfericas es Erroneo");
         }
@@ -75,7 +75,7 @@ public abstract class Road extends SimulatedObject {
         }
     }
 
-    private void addContamination(int c) throws WrongValuesContamination {
+    public void addContamination(int c) throws WrongValuesContamination {
         if(c < 0){
             throw new WrongValuesContamination("El valor de la contaminacion es Erroneo");
         }

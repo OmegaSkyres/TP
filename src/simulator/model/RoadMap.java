@@ -90,11 +90,11 @@ public class RoadMap {
     }
 
     public JSONObject report(){
-        String report = "";
+        JSONObject report;
         // genera informe para cruces
 
         for(int i = 0; i < this.cruces.size(); i++){
-            report += this.cruces.get(i).report() + "\n";
+            report.put(this.cruces.get(i).report());
         }
         // genera informe para carreteras
 

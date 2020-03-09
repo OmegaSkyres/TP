@@ -89,4 +89,6 @@ public class Vehicle<Junction> extends SimulatedObject {
         gradoContaminacion = c;
     }
 
+    protected void
+
 }

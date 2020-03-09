@@ -40,7 +40,21 @@ public class Junction extends SimulatedObject {
 
     @Override
     public JSONObject report() {
-        return null;
+        JSONObject report = new JSONObject();
+        report.put("id", _id);
+        if(indiceSemaforo == -1) report.put("green", "none");
+        else report.put("green", listaCarreterasEntrantes.get(indiceSemaforo).getId());
+        int i = 0;
+        for(List<Vehicle> lv : listaDeColas) {
+            JSONObject obj = new JSONObject();
+            obj.put("road", listaCarreterasEntrantes.get(i).getId());
+            for(Vehicle v : lv) {
+                obj.append("vehicles", v.getId());
+            }
+            report.append("queues", obj);
+            i++;
+        }
+        return report;
     }
 
     private void addIncommingRoad(Road r) throws WrongValuesIncommingRoad {

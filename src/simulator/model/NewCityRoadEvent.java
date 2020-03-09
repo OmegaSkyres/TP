@@ -1,6 +1,6 @@
 package simulator.model;
 
-public class NewCityRoadEvent extends Event {
+public class NewCityRoadEvent extends NewRoadEvent {
     protected String id;
     protected String srcJuncId;
     protected String destJuncId;
