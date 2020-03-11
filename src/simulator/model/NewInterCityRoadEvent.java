@@ -31,7 +31,7 @@ public class NewInterCityRoadEvent extends NewRoadEvent{
 
     }
 
-    Road createRoad(Junction srcJunc, Junction destJunc){
+    Road createRoad(Junction srcJunc, Junction destJunc) throws Exception {
         return new InterCityRoad(this.id,srcJunc,destJunc,this.maxSpeed,this.co2Limit,this.length,this.weather);
     }
 }

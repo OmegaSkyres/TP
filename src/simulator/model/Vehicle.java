@@ -87,7 +87,7 @@ public class Vehicle<Junction> extends SimulatedObject {
                 velocidadActual = 0;
             }
             else{
-                itinerario.get(lastPositionItenerary).roadTo(itinerario.get(lastPositionItenerary + 1));
+                itinerario.get(lastPositionItenerary);
             }
 
 
@@ -126,6 +126,10 @@ public class Vehicle<Junction> extends SimulatedObject {
 
     public int getLocalizacion() {
         return localizacion;
+    }
+
+    public List<Junction> getItinerario(){
+        return itinerario;
     }
 
     public void setContaminationClass(int c){

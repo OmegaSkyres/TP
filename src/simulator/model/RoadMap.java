@@ -5,10 +5,7 @@ import simulator.exceptions.WrongValuesJuntion;
 import simulator.exceptions.WrongValuesRoad;
 import simulator.exceptions.WrongValuesVehicle;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RoadMap {
     private List<Road> carreteras;
@@ -20,9 +17,9 @@ public class RoadMap {
     private Map<String, Vehicle> mapaDeVehiculos;
 
     protected RoadMap(){ //Preguntar si la construnctora tiene que ser protected
-        carreteras = new ArrayList<>();
-        cruces = new ArrayList<>();
-        vehiculos = new ArrayList<>();
+        carreteras = new LinkedList<Road>();
+        cruces = new LinkedList<Junction>();
+        vehiculos = new LinkedList<Vehicle>();
 
         mapaDeCarreteras = new HashMap<>();
         mapaDeCruces = new HashMap<>();
@@ -46,6 +43,7 @@ public class RoadMap {
 
     void addVehicle(Vehicle v) throws WrongValuesVehicle {
         if(!mapaDeVehiculos.containsKey(v.getId())){ //TODO TE FALTA COMPROBAR el itinerario es válido, es decir, existen carreteras que conecten los cruces consecutivos de su itinerario
+            List<Junction> lista = v.getItinerario();
             vehiculos.add(v);
             mapaDeVehiculos.put(v.getId(),v);
         }
@@ -81,7 +79,7 @@ public class RoadMap {
     public List<Vehicle> getVehiculos() { return vehiculos; }
 
     void reset(){
-        cruces.clear(); //Todo preguntar si vale la funcion Clear
+        cruces.clear();
         carreteras.clear();
         vehiculos.clear();
         mapaDeVehiculos.clear();
