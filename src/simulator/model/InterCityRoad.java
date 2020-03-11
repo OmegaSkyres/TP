@@ -1,11 +1,11 @@
 package simulator.model;
 
 public class InterCityRoad extends Road {
-    InterCityRoad(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) {
+    InterCityRoad(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) throws Exception {
         super(id, srcJunc, destJunc, maxSpeed, contLimit, length, weather);
     }
 
-    protected int reduceTotalContamination(){
+    protected void reduceTotalContamination(){
         int x;
         if(condicionAmbiental.equals("SUNNY")){
             x = 2;
@@ -22,7 +22,7 @@ public class InterCityRoad extends Road {
         else{
             x = 20;
         }
-        return (int) (((100.0-x) / 100.0) * getContaminacionTotal());
+        contaminacionTotal = (int) (((100.0-x) / 100.0) * getContaminacionTotal());
     }
 
     protected void updateSpeedLimit(){
@@ -32,11 +32,14 @@ public class InterCityRoad extends Road {
         else limiteVelocidad = getVelocidadMaxima();
     }
 
-    protected void calculateVehicleSpeed(){
-        for(Vehicle v : vehiculos) { //TODO PREGUNTAR SI CUANDO SE CUANDO SE CALCULA LA VELOCIDAD SE LE PONE A TODOS LOS VEHICULOS
+    @Override
+    int calculateVehicleSpeed(Vehicle v) {
             if (condicionAmbiental.equals("STORM")) {
                 v.velocidadActual = (int) (getLimiteVelocidad() * 0.8);
             } else v.velocidadActual = getLimiteVelocidad();
-        }
+            return v.velocidadActual;
     }
+
+
+
 }

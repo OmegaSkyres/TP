@@ -2,6 +2,7 @@ package simulator.model;
 
 import org.json.JSONObject;
 import simulator.exceptions.WrongValuesException;
+import simulator.exceptions.WrongValuesVehicle;
 import simulator.model.SimulatedObject;
 
 import java.util.ArrayList;
@@ -12,7 +13,8 @@ import static java.lang.Integer.min;
 
 
 public class Vehicle<Junction> extends SimulatedObject {
-    protected List<Junction> itenerario;
+    protected List<Junction> itinerario;
+    protected int lastPositionItenerary;
     protected int velocidadMaxima; // velocidad maxima
     protected int velocidadActual; // velocidad actual
     protected VehicleStatus estado; //estado
@@ -22,13 +24,22 @@ public class Vehicle<Junction> extends SimulatedObject {
     protected int contaminacionTotal; //total emitido
     protected int kilometraje; // distancia recorrida
 
-    public Vehicle(String id, int velocidadMaxima, int contClass, List<Junction> itinerario) throws WrongValuesException { //ConClass es grado de contaminacion
+
+    protected Vehicle(String id, int maxSpeed, int contClass, List<Junction> itinerary) throws WrongValuesException { //ConClass es grado de contaminacion
         super(id);
-        Collections.unmodifiableList(new ArrayList<>(itinerario)); // creamos la copia aqui??
         if(!checkValores(velocidadMaxima,gradoContaminacion,itinerario)){
             throw new WrongValuesException("Los valores introducidos son erroneos");
         }
         else{
+            velocidadMaxima = maxSpeed;
+            gradoContaminacion = contClass;
+            itinerario = Collections.unmodifiableList(new ArrayList<>(itinerary));
+            velocidadActual = 0;
+            estado = VehicleStatus.PENDING;
+            localizacion = 0;
+            kilometraje = 0;
+            contaminacionTotal = 0;
+            lastPositionItenerary = 0;
 
         }
 
@@ -49,7 +60,39 @@ public class Vehicle<Junction> extends SimulatedObject {
 
     @Override
     public JSONObject report() {
-        return null;
+        JSONObject report = new JSONObject();
+        report.put("id",this._id);
+        report.put("speed",this.velocidadActual);
+        report.put("distance",this.kilometraje);
+        report.put("co2",this.contaminacionTotal);
+        report.put("class",this.gradoContaminacion);
+        report.put("status",this.estado);
+        if(estado != VehicleStatus.PENDING || estado != VehicleStatus.ARRIVED){
+            report.put("road",this.carretera.getId());
+            report.put("location",this.localizacion);
+        }
+        return report;
+    }
+
+    void moveToNextRoad() throws WrongValuesVehicle {
+        if(this.estado != VehicleStatus.PENDING || this.estado != VehicleStatus.WAITING){
+            throw new WrongValuesVehicle("El estado del Vehiculo no es el correcto");
+        }
+        else{
+            if(this.estado == VehicleStatus.WAITING) {
+                carretera.exit(this);
+            }
+            if(lastPositionItenerary + 1 == itinerario.size()){
+                estado = VehicleStatus.ARRIVED;
+                velocidadActual = 0;
+            }
+            else{
+                itinerario.get(lastPositionItenerary).roadTo(itinerario.get(lastPositionItenerary + 1));
+            }
+
+
+        }
+
     }
 
     protected boolean checkValores(int velocidadMaxima, int contClass, List<Junction> itinerario){
@@ -57,7 +100,7 @@ public class Vehicle<Junction> extends SimulatedObject {
         else return false;
     }
 
-    protected void setSpeed(int s){
+    public void setSpeed(int s){
         velocidadActual = s;
     }
 
@@ -85,7 +128,7 @@ public class Vehicle<Junction> extends SimulatedObject {
         return localizacion;
     }
 
-    protected void setContaminationClass(int c){
+    public void setContaminationClass(int c){
         gradoContaminacion = c;
     }
 

@@ -57,7 +57,7 @@ public class Junction extends SimulatedObject {
         return report;
     }
 
-    private void addIncommingRoad(Road r) throws WrongValuesIncommingRoad {
+    public void addIncommingRoad(Road r) throws WrongValuesIncommingRoad {
         if(checkIncommingRoad(r)){
             listaCarreterasEntrantes.add(r);
             List<Vehicle> cola = new LinkedList<Vehicle>();
@@ -70,7 +70,7 @@ public class Junction extends SimulatedObject {
         else return true;
     }
 
-    private void addOutGoingRoad(Road r) throws WrongValuesOutGoingRoad {
+    public void addOutGoingRoad(Road r) throws WrongValuesOutGoingRoad {
         if(checkValuesOutGoingRoad(r)){
             Junction j = r.getCruceDestino();
             if(mapaCarreterasSalientes.containsKey(j)){ //Compruebo si mi cruce tiene otra carretera saliente.
@@ -92,11 +92,11 @@ public class Junction extends SimulatedObject {
         if(r.getCruceOrigen() == this); throw new WrongValuesOutGoingRoad("Wrong Outgoing Road");
     }
 
-    private void enter(Vehicle v){
+    public void enter(Vehicle v){
         v.carretera.vehiculos.add(v);
     }
 
-    private Road roadTo(Junction j){
+    public Road roadTo(Junction j){
         return mapaCarreterasSalientes.get(j);
     }
 }

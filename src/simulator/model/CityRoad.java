@@ -1,7 +1,7 @@
 package simulator.model;
 
 public class CityRoad extends Road {
-    CityRoad(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) {
+    CityRoad(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) throws Exception {
         super(id, srcJunc, destJunc, maxSpeed, contLimit, length, weather);
     }
 
@@ -18,9 +18,13 @@ public class CityRoad extends Road {
         }
     }
 
-    protected void calculateVehicleSpeed() {
-        for (Vehicle v : vehiculos) {
-            v.velocidadActual = (int) (((11.0 - v.getGradoContaminacion()) / 11.0) * getLimiteVelocidad());
-        }
+    @Override
+    void updateSpeedLimit() {
+        limiteVelocidad = velocidadMaxima;
+    }
+
+    @Override
+    int calculateVehicleSpeed(Vehicle v) {
+        return  v.velocidadActual = (int) (((11.0 - v.getGradoContaminacion()) / 11.0) * getLimiteVelocidad());
     }
 }
