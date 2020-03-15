@@ -1,6 +1,8 @@
 package simulator.factories;
 
 import org.json.JSONObject;
+import simulator.exceptions.WrongValuesContamination;
+import simulator.exceptions.WrongValuesWeather;
 
 public abstract class Builder<T> {
 	protected String _type;
@@ -23,5 +25,5 @@ public abstract class Builder<T> {
 		return b;
 	}
 
-	protected abstract T createTheInstance(JSONObject data);
+	protected abstract T createTheInstance(JSONObject data) throws WrongValuesWeather, WrongValuesContamination;
 }

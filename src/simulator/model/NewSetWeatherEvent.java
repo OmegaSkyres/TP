@@ -6,10 +6,10 @@ import simulator.misc.Pair;
 
 import java.util.List;
 
-public class SetWeatherEvent extends Event {
+public class NewSetWeatherEvent extends Event {
     protected List<Pair<String,Weather>> ws;
 
-    public SetWeatherEvent(int time, List<Pair<String,Weather>> ws) throws WrongValuesWeather {
+    public NewSetWeatherEvent(int time, List<Pair<String,Weather>> ws) throws WrongValuesWeather {
         super(time);
         this.ws = ws;
         checkContClass();
