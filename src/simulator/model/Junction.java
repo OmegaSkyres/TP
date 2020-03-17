@@ -32,12 +32,10 @@ public class Junction extends SimulatedObject {
             dqstr = dqStrategy;
             coordenadaX = xCoor;
             coordenadaY = yCoor;
-            indiceSemaforo = 0;
             listaCarreterasEntrantes = new LinkedList<Road>();
             mapaCarreterasSalientes = new HashMap<Junction, Road>();
             listaDeColas = new LinkedList<List<Vehicle>>();
             colaCarretera = new HashMap<Road, List<Vehicle>>();
-            ultimoPasoDeCambio  = 0;
         }
 
     }
