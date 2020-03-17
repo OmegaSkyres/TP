@@ -3,6 +3,7 @@ package simulator.model;
 import simulator.exceptions.WrongValuesException;
 import simulator.exceptions.WrongValuesVehicle;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class NewVehicleEvent extends Event {
@@ -19,13 +20,18 @@ public class NewVehicleEvent extends Event {
         this.itinerary = itinerary;
     }
     @Override
-    void execute(RoadMap map) throws WrongValuesVehicle, WrongValuesException {
-        Vehicle v = createVehicle();
+    void execute(RoadMap map) throws Exception {
+        Vehicle v = createVehicle(map);
         map.addVehicle(v);
+        v.moveToNextRoad();
 
     }
 
-    Vehicle createVehicle() throws WrongValuesException {
-        return new Vehicle(this.id,this.maxSpeed,this.contClass,this.itinerary);
+    Vehicle createVehicle(RoadMap map) throws Exception {
+        List<Junction> iti = new LinkedList<Junction>();
+        for(String s : itinerary ){
+            iti.add(map.getJunction(s));
+        }
+        return new Vehicle(this.id,this.maxSpeed,this.contClass,iti);
     }
 }

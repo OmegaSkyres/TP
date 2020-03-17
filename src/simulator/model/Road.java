@@ -35,6 +35,8 @@ public abstract class Road extends SimulatedObject {
             cruceOrigen.mapaCarreterasSalientes.put(srcJunc,this);
             cruceDestino.mapaCarreterasSalientes.put(destJunc,this);
             vehiculos = new LinkedList<Vehicle>();
+            cruceOrigen.addOutGoingRoad(this);
+            cruceDestino.addIncommingRoad(this);
             comparadorVehiculo = new Comparator<Vehicle>() {
                 @Override
                 public int compare(Vehicle v1, Vehicle v2) {
@@ -65,7 +67,7 @@ public abstract class Road extends SimulatedObject {
             v.setSpeed(calculateVehicleSpeed(v));;
             v.advance(time);
         }
-        vehiculos.sort(comparadorVehiculo); //TODO Revisar este apartado
+        vehiculos.sort(comparadorVehiculo);
 
     }
 

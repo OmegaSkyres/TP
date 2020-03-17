@@ -5,6 +5,7 @@ import simulator.exceptions.WrongValuesJuntion;
 import simulator.exceptions.WrongValuesRoad;
 import simulator.exceptions.WrongValuesVehicle;
 
+import javax.print.attribute.standard.JobHoldUntil;
 import java.util.*;
 
 public class RoadMap {
@@ -45,13 +46,15 @@ public class RoadMap {
         if(!mapaDeVehiculos.containsKey(v.getId())){ //TODO TE FALTA COMPROBAR el itinerario es válido, es decir, existen carreteras que conecten los cruces consecutivos de su itinerario
             List<Junction> lista = v.getItinerario();
             for(int i = 0; i < lista.size() - 1; i++){
-                Road r = lista.get(i).roadTo(lista.get(i+1));
-                carreteras.get(i).getCruceOrigen().equals()
-                if (r != null){
-                    vehiculos.add(v);
-                    mapaDeVehiculos.put(v.getId(),v);
+                Junction ori = lista.get(i);
+                Junction dest = lista.get(i+1);
+                Road r = ori.roadTo(dest);
+                if (r == null){
+                    throw new WrongValuesVehicle("El itinerario de este vehiculo es incorrecto");
                 }
             }
+            vehiculos.add(v);
+            mapaDeVehiculos.put(v.getId(),v);
 
 
         }

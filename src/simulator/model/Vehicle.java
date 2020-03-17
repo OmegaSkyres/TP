@@ -12,7 +12,7 @@ import java.util.List;
 import static java.lang.Integer.min;
 
 
-public class Vehicle<Junction> extends SimulatedObject {
+public class Vehicle extends SimulatedObject {
     protected List<Junction> itinerario;
     protected int lastPositionItenerary;
     protected int velocidadMaxima; // velocidad maxima
@@ -75,7 +75,7 @@ public class Vehicle<Junction> extends SimulatedObject {
     }
 
     void moveToNextRoad() throws WrongValuesVehicle {
-        if(this.estado != VehicleStatus.PENDING || this.estado != VehicleStatus.WAITING){
+        if(this.estado != VehicleStatus.PENDING && this.estado != VehicleStatus.WAITING){
             throw new WrongValuesVehicle("El estado del Vehiculo no es el correcto");
         }
         else{
@@ -100,39 +100,39 @@ public class Vehicle<Junction> extends SimulatedObject {
         else return false;
     }
 
-    public void setSpeed(int s){
+    protected void setSpeed(int s){
         velocidadActual = s;
     }
 
-    public int getContaminacionTotal() {
+    protected int getContaminacionTotal() {
         return contaminacionTotal;
     }
 
-    public int getVelocidadMaxima() {
+    protected int getVelocidadMaxima() {
         return velocidadMaxima;
     }
 
-    public int getGradoContaminacion() {
+    protected int getGradoContaminacion() {
         return gradoContaminacion;
     }
 
-    public int getVelocidadActual() {
+    protected int getVelocidadActual() {
         return velocidadActual;
     }
 
-    public int getKilometraje() {
+    protected int getKilometraje() {
         return kilometraje;
     }
 
-    public int getLocalizacion() {
+    protected int getLocalizacion() {
         return localizacion;
     }
 
-    public List<Junction> getItinerario(){
+    protected List<Junction> getItinerario(){
         return itinerario;
     }
 
-    public void setContaminationClass(int c){
+    protected void setContaminationClass(int c){
         gradoContaminacion = c;
     }
 
