@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SetWeatherEventBuilder extends Builder<Event> {
-    SetWeatherEventBuilder() {
+    public SetWeatherEventBuilder() {
         super("set_weather");
     }
 
@@ -24,6 +24,12 @@ public class SetWeatherEventBuilder extends Builder<Event> {
         for(int i = 0; i < array.length(); i++){
             pares.add(new Pair<String,Weather>(array.getJSONObject(i).getString("road"),Weather.valueOf(array.getJSONObject(i).getString("weather").toUpperCase())));
         }
-        return new NewSetWeatherEvent(time,pares);
+        try{
+            return new NewSetWeatherEvent(time,pares);
+        } catch (Exception e){
+            System.out.format(e.getMessage() + " %n %n");
+            return null;
+        }
+
     }
 }

@@ -1,36 +1,22 @@
 package simulator.model;
 
 public class NewCityRoadEvent extends NewRoadEvent {
-    protected String id;
-    protected String srcJuncId;
-    protected String destJuncId;
-    protected int length;
-    protected int co2Limit;
-    protected int maxSpeed;
-    protected Weather weather;
 
     public NewCityRoadEvent(int time, String id, String srcJun, String destJunc, int length, int co2Limit, int maxSpeed, Weather weather)
     {
-        super(time);
-        this.id = id;
-        this.srcJuncId = srcJun;
-        this.destJuncId = destJunc;
-        this.length = length;
-        this.co2Limit = co2Limit;
-        this.maxSpeed = maxSpeed;
-        this.weather = weather;
+        super(time, id, srcJun, destJunc, length, co2Limit, maxSpeed, weather);
     }
 
     @Override
     void execute(RoadMap map) throws Exception {
-        Junction srcJunc = map.getJunction(this.srcJuncId);
-        Junction destJunc = map.getJunction(this.destJuncId);
-        Road r = createRoad(srcJunc,destJunc);
+        Junction srcJunc = map.getJunction(origen);
+        Junction destJunc = map.getJunction(destino);
+        CityRoad r = createRoad(srcJunc,destJunc);
         map.addRoad(r);
 
     }
 
-    Road createRoad(Junction srcJunc, Junction destJunc) throws Exception {
-        return new CityRoad(this.id,srcJunc,destJunc,this.maxSpeed,this.co2Limit,this.length,this.weather);
+    CityRoad createRoad(Junction srcJunc, Junction destJunc) throws Exception {
+        return new CityRoad(this.newId,srcJunc,destJunc,this.newMaxSpeed,this.newClassLimit,this.newlength,this.newWeather);
     }
 }

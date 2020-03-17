@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import simulator.exceptions.WrongValuesException;
 import simulator.exceptions.WrongValuesIncommingRoad;
 import simulator.exceptions.WrongValuesOutGoingRoad;
+import simulator.exceptions.WrongValuesVehicle;
 
 import java.util.*;
 
@@ -18,7 +19,6 @@ public class Junction extends SimulatedObject {
     protected DequeingStrategy dqstr; //EstrategiaEliminarCola; //Estrategia para eliminar vehiculos de las colas.
     protected int coordenadaX; //Coordenada X;
     protected int coordenadaY; //Coordenada Y;
-
 
 
 
@@ -44,7 +44,23 @@ public class Junction extends SimulatedObject {
 
 
     @Override
-    protected void advance(int time) {
+    protected void advance(int time) throws WrongValuesVehicle {
+        if(!listaDeColas.isEmpty() && !listaDeColas.get(indiceSemaforo).isEmpty()){
+            List<Vehicle> vehiculosAMover = dqstr.dequeue(listaDeColas.get(indiceSemaforo));
+            for(Vehicle v : vehiculosAMover){
+                try{
+                    v.moveToNextRoad();
+                } catch (WrongValuesVehicle e){
+                    System.out.format(e.getMessage() + " %n %n");
+                }
+                vehiculosAMover.clear();
+            }
+            int index = ligstr.chooseNextGreen(listaCarreterasEntrantes,listaDeColas,indiceSemaforo,ultimoPasoDeCambio,time);
+            if(index != indiceSemaforo){
+                indiceSemaforo = index;
+                ultimoPasoDeCambio = time;
+            }
+        }
 
     }
 
@@ -70,7 +86,7 @@ public class Junction extends SimulatedObject {
     public void addIncommingRoad(Road r) throws WrongValuesIncommingRoad {
         if(checkIncommingRoad(r)){
             listaCarreterasEntrantes.add(r);
-            List<Vehicle> cola = new LinkedList<Vehicle>();
+            LinkedList<Vehicle> cola = new LinkedList<Vehicle>();
             listaDeColas.add(cola);
             colaCarretera.put(r,cola);
         }
@@ -83,15 +99,9 @@ public class Junction extends SimulatedObject {
 
     public void addOutGoingRoad(Road r) throws WrongValuesOutGoingRoad {
         if(checkValuesOutGoingRoad(r)){
-            Junction j = r.getCruceDestino();
-            if(mapaCarreterasSalientes.containsKey(j)){ //Compruebo si mi cruce tiene otra carretera saliente. //Todo revisar si esta comprobacion esta bien
-                mapaCarreterasSalientes.put(r.getCruceDestino(),r);
-
-            }
+            mapaCarreterasSalientes.put(r.getCruceDestino(),r);
 
         }
-
-
     }
 
     private boolean checkValores(LightSwitchStrategy lsStrategy, DequeingStrategy dqStrategy, int xCoor, int yCoor) {
@@ -100,7 +110,8 @@ public class Junction extends SimulatedObject {
     }
 
     private boolean checkValuesOutGoingRoad(Road r) throws WrongValuesOutGoingRoad {
-        if(r.getCruceOrigen() == this); throw new WrongValuesOutGoingRoad("Wrong Outgoing Road");
+        if(r.getCruceOrigen() != this ||  mapaCarreterasSalientes.containsKey(r.getCruceDestino())) throw new WrongValuesOutGoingRoad("Wrong Outgoing Road");
+        else return true;
     }
 
     public void enter(Vehicle v){

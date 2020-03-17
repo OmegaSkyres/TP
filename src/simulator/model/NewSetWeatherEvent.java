@@ -25,6 +25,5 @@ public class NewSetWeatherEvent extends Event {
 
     void checkContClass() throws WrongValuesWeather {
         if(this.ws == null) throw new WrongValuesWeather("El dato del tiempo es un valor nulo");
-        else
     }
 }

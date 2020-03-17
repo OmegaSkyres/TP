@@ -27,7 +27,7 @@ public class Vehicle<Junction> extends SimulatedObject {
 
     protected Vehicle(String id, int maxSpeed, int contClass, List<Junction> itinerary) throws WrongValuesException { //ConClass es grado de contaminacion
         super(id);
-        if(!checkValores(velocidadMaxima,gradoContaminacion,itinerario)){
+        if(!checkValores(maxSpeed,contClass,itinerary)){
             throw new WrongValuesException("Los valores introducidos son erroneos");
         }
         else{
@@ -96,7 +96,7 @@ public class Vehicle<Junction> extends SimulatedObject {
     }
 
     protected boolean checkValores(int velocidadMaxima, int contClass, List<Junction> itinerario){
-        if(velocidadMaxima > 0 && contClass > 0 && contClass < 10 && itinerario.size() >= 2) return true;
+        if(velocidadMaxima > 0 && contClass >= 0 && contClass < 10 && itinerario.size() >= 2) return true;
         else return false;
     }
 

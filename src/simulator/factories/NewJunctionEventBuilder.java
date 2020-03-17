@@ -2,12 +2,11 @@ package simulator.factories;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import simulator.model.DequeingStrategy;
-import simulator.model.Junction;
-import simulator.model.LightSwitchStrategy;
-import simulator.model.NewJunctionEvent;
+import simulator.exceptions.WrongValuesContamination;
+import simulator.exceptions.WrongValuesWeather;
+import simulator.model.*;
 
-public class NewJunctionEventBuilder extends Builder<NewJunctionEvent> {
+public class NewJunctionEventBuilder extends Builder<Event> {
 
     Factory<LightSwitchStrategy> ls;
     Factory<DequeingStrategy> dq;
@@ -20,7 +19,7 @@ public class NewJunctionEventBuilder extends Builder<NewJunctionEvent> {
     }
 
     @Override
-    protected NewJunctionEvent createTheInstance(JSONObject data) {
+    protected NewJunctionEvent createTheInstance(JSONObject data) throws WrongValuesContamination, WrongValuesWeather {
         int time = data.getInt("time");
         String id = data.getString("id");
         JSONArray coordenadas = data.getJSONArray("coor");

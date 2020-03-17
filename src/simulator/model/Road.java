@@ -35,12 +35,20 @@ public abstract class Road extends SimulatedObject {
             cruceOrigen.mapaCarreterasSalientes.put(srcJunc,this);
             cruceDestino.mapaCarreterasSalientes.put(destJunc,this);
             vehiculos = new LinkedList<Vehicle>();
+            comparadorVehiculo = new Comparator<Vehicle>() {
+                @Override
+                public int compare(Vehicle v1, Vehicle v2) {
+                    if(v1.getLocalizacion() < v2.getLocalizacion()) return 1;
+                    else if(v1.getLocalizacion() > v2.getLocalizacion()) return -1;
+                    else return 0;
+                }
+            };
         }
 
 }
 
     private boolean checkValues(Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) throws Exception {
-        if(velocidadMaxima <= 0) throw new Exception("El valor de la velocidad no puede ser negativo");
+        if(maxSpeed <= 0) throw new Exception("El valor de la velocidad no puede ser negativo");
         if(contLimit < 0) throw new Exception("El valor de contLimit no puede ser negativo");
         if(length <= 0 ) throw  new Exception("El valor de lenght no puede ser negativo");
         if(srcJunc == null || destJunc == null) throw new Exception("Los cruces deben existir");

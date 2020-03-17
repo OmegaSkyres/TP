@@ -44,8 +44,16 @@ public class RoadMap {
     void addVehicle(Vehicle v) throws WrongValuesVehicle {
         if(!mapaDeVehiculos.containsKey(v.getId())){ //TODO TE FALTA COMPROBAR el itinerario es válido, es decir, existen carreteras que conecten los cruces consecutivos de su itinerario
             List<Junction> lista = v.getItinerario();
-            vehiculos.add(v);
-            mapaDeVehiculos.put(v.getId(),v);
+            for(int i = 0; i < lista.size() - 1; i++){
+                Road r = lista.get(i).roadTo(lista.get(i+1));
+                carreteras.get(i).getCruceOrigen().equals()
+                if (r != null){
+                    vehiculos.add(v);
+                    mapaDeVehiculos.put(v.getId(),v);
+                }
+            }
+
+
         }
         else throw new WrongValuesVehicle("El Vehiculo ya existe en el mapa de Vehiculos");
     }

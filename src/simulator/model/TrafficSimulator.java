@@ -24,11 +24,14 @@ public class TrafficSimulator {
 
     public void advance() throws Exception {
         time = time + 1;
-        for(Event e : listaEventos){
+        int i = 0;
+        for(i = 0; i < listaEventos.size();) {
+            Event e = listaEventos.get(i);
             if(e.getTime() == time){
                 e.execute(mapaDeCarreteras);
-                listaEventos.remove(e);
+                listaEventos.remove(i);
             }
+            else i++;
 
         }
         for(Junction j : mapaDeCarreteras.getJunctions()){

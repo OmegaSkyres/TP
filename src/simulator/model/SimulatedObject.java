@@ -1,6 +1,7 @@
 package simulator.model;
 
 import org.json.JSONObject;
+import simulator.exceptions.WrongValuesVehicle;
 
 public abstract class SimulatedObject {
 
@@ -19,7 +20,7 @@ public abstract class SimulatedObject {
 		return _id;
 	}
 
-	protected abstract void advance(int time);
+	protected abstract void advance(int time) throws WrongValuesVehicle;
 
 	abstract public JSONObject report();
 }
