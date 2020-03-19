@@ -24,7 +24,7 @@ public class TrafficSimulator {
 
     public void advance() throws Exception {
         time = time + 1;
-        int i = 0;
+        int i;
         for(i = 0; i < listaEventos.size();) {
             Event e = listaEventos.get(i);
             if(e.getTime() == time){

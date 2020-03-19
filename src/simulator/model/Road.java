@@ -5,6 +5,7 @@ import simulator.exceptions.WrongValuesContamination;
 import simulator.exceptions.WrongValuesVehicle;
 import simulator.exceptions.WrongValuesWeather;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -63,10 +64,13 @@ public abstract class Road extends SimulatedObject {
     protected void advance(int time) {
         reduceTotalContamination();
         updateSpeedLimit();
-        for(Vehicle v : vehiculos){
-            v.setSpeed(calculateVehicleSpeed(v));;
-            v.advance(time);
+        if(!vehiculos.isEmpty()){
+            for(Vehicle v : vehiculos){
+                v.setSpeed(calculateVehicleSpeed(v));;
+                v.advance(time);
+            }
         }
+
         vehiculos.sort(comparadorVehiculo);
 
     }
@@ -77,10 +81,16 @@ public abstract class Road extends SimulatedObject {
         report.put("id",this._id);
         report.put("speedlimit",this.getVelocidadMaxima());
         report.put("weather",this.getCondicionAmbiental());
-        report.put("CO2", this.getContaminacionTotal());
-        for(Vehicle v : vehiculos){
-            report.append("vehicles", v.getId());
+        report.put("co2", this.getContaminacionTotal());
+        if(vehiculos.isEmpty()){
+            report.put("vehicles", (Collection<?>) null);
         }
+        else{
+            for(Vehicle v : vehiculos){
+                report.append("vehicles", v.getId());
+            }
+        }
+
         return report;
 
     }

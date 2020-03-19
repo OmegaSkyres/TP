@@ -1,5 +1,7 @@
 package simulator.model;
 
+import static simulator.model.Weather.*;
+
 public class InterCityRoad extends Road {
     InterCityRoad(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) throws Exception {
         super(id, srcJunc, destJunc, maxSpeed, contLimit, length, weather);
@@ -7,20 +9,19 @@ public class InterCityRoad extends Road {
 
     protected void reduceTotalContamination(){
         int x;
-        if(condicionAmbiental.equals("SUNNY")){
-            x = 2;
-        }
-        else if (condicionAmbiental.equals("CLOUDY")){
-            x = 3;
-        }
-        else if (condicionAmbiental.equals("RAINY")){
-            x = 10;
-        }
-        else if (condicionAmbiental.equals("WINDY")){
-            x = 15;
-        }
-        else{
-            x = 20;
+        switch (condicionAmbiental) {
+            case CLOUDY: x = 3;
+                break;
+            case RAINY: x = 10;
+                break;
+            case STORM: x = 20;
+                break;
+            case SUNNY: x = 2;
+                break;
+            case WINDY: x = 15;
+                break;
+            default: x = 0;
+                break;
         }
         contaminacionTotal = (int) (((100.0-x) / 100.0) * getContaminacionTotal());
     }

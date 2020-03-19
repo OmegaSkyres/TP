@@ -120,7 +120,7 @@ public class Main {
 
 	}
 
-	private static void startBatchMode() throws IOException, WrongValuesException, WrongValuesContamination, WrongValuesWeather {
+	private static void startBatchMode() throws Exception {
 		InputStream in = new FileInputStream(new File(_inFile));
 		OutputStream out = _outFile == null ?
 				System.out : new FileOutputStream(new File(_outFile));
@@ -135,7 +135,7 @@ public class Main {
 	private static void start(String[] args) throws Exception {
 		initFactories();
 		parseArgs(args);
-			startBatchMode();
+		startBatchMode();
 	}
 
 	// example command lines:

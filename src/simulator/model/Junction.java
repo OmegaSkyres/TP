@@ -51,13 +51,13 @@ public class Junction extends SimulatedObject {
                 } catch (WrongValuesVehicle e){
                     System.out.format(e.getMessage() + " %n %n");
                 }
-                vehiculosAMover.clear();
             }
-            int index = ligstr.chooseNextGreen(listaCarreterasEntrantes,listaDeColas,indiceSemaforo,ultimoPasoDeCambio,time);
-            if(index != indiceSemaforo){
-                indiceSemaforo = index;
-                ultimoPasoDeCambio = time;
-            }
+            vehiculosAMover.clear();
+        }
+        int index = ligstr.chooseNextGreen(listaCarreterasEntrantes,listaDeColas,indiceSemaforo,ultimoPasoDeCambio,time);
+        if(index != indiceSemaforo){
+            indiceSemaforo = index;
+            ultimoPasoDeCambio = time;
         }
 
     }
@@ -69,11 +69,19 @@ public class Junction extends SimulatedObject {
         if(indiceSemaforo == -1) report.put("green", "none");
         else report.put("green", listaCarreterasEntrantes.get(indiceSemaforo).getId());
         int i = 0;
+        if(listaDeColas.isEmpty()){
+            report.put("queues", (Collection<?>) null);
+        }
         for(List<Vehicle> lv : listaDeColas) {
             JSONObject obj = new JSONObject();
             obj.put("road", listaCarreterasEntrantes.get(i).getId());
-            for(Vehicle v : lv) {
-                obj.append("vehicles", v.getId());
+            if(lv.isEmpty()){
+                obj.put("vehicles", (Collection<?>) null);
+            }
+            else{
+                for(Vehicle v : lv) {
+                    obj.append("vehicles", v.getId());
+                }
             }
             report.append("queues", obj);
             i++;
@@ -113,7 +121,7 @@ public class Junction extends SimulatedObject {
     }
 
     public void enter(Vehicle v){
-        v.carretera.vehiculos.add(v);
+        colaCarretera.get(v.carretera).add(v);
     }
 
     protected Road roadTo(Junction j){

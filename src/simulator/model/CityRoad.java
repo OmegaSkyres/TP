@@ -7,11 +7,13 @@ public class CityRoad extends Road {
 
     protected void reduceTotalContamination(){
         int x;
-        if(condicionAmbiental.equals("WINDY") || condicionAmbiental.equals("STORM")){
-            x = 10;
-        }
-        else{
-            x = 2;
+        switch(condicionAmbiental) {
+            case STORM: x = 10;
+                break;
+            case WINDY: x = 10;
+                break;
+            default: x = 2;
+                break;
         }
         if(getContaminacionTotal() - x > 0){
             contaminacionTotal = contaminacionTotal - x;
@@ -25,6 +27,7 @@ public class CityRoad extends Road {
 
     @Override
     int calculateVehicleSpeed(Vehicle v) {
-        return  v.velocidadActual = (int) (((11.0 - v.getGradoContaminacion()) / 11.0) * getLimiteVelocidad());
+        double velocidadRedondeo =  Math.ceil(((11.0 - v.getGradoContaminacion()) / 11.0) * getLimiteVelocidad());
+        return v.velocidadActual = (int) velocidadRedondeo;
     }
 }

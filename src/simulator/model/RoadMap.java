@@ -1,5 +1,6 @@
 package simulator.model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import simulator.exceptions.WrongValuesJuntion;
 import simulator.exceptions.WrongValuesRoad;
@@ -43,7 +44,6 @@ public class RoadMap {
     }
 
     void addVehicle(Vehicle v) throws WrongValuesVehicle {
-        if(!mapaDeVehiculos.containsKey(v.getId())){ //TODO TE FALTA COMPROBAR el itinerario es válido, es decir, existen carreteras que conecten los cruces consecutivos de su itinerario
             List<Junction> lista = v.getItinerario();
             for(int i = 0; i < lista.size() - 1; i++){
                 Junction ori = lista.get(i);
@@ -53,6 +53,7 @@ public class RoadMap {
                     throw new WrongValuesVehicle("El itinerario de este vehiculo es incorrecto");
                 }
             }
+        if(!mapaDeVehiculos.containsKey(v.getId())){
             vehiculos.add(v);
             mapaDeVehiculos.put(v.getId(),v);
 
@@ -100,20 +101,21 @@ public class RoadMap {
 
     public JSONObject report(){
         JSONObject report = new JSONObject();
-        // genera informe para cruces
 
-        for(Junction j : cruces){
-            report.put("juntions", j.report());
-        }
 
         // genera informe para carreteras
         for(Road r : carreteras){
-            report.put("roads", r.report());
+            report.append("roads", r.report());
         }
 
         // genera informe para vehiculos
         for(Vehicle v : vehiculos){
-            report.put("vehicles",v.report());
+            report.append("vehicles",v.report());
+        }
+
+        // genera informe para cruces
+        for(Junction j : cruces){
+            report.append("junctions", j.report());
         }
 
         return report;

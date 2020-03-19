@@ -1,6 +1,7 @@
 package simulator.model;
 
 import org.json.JSONObject;
+import simulator.exceptions.WrongValuesContamination;
 import simulator.exceptions.WrongValuesException;
 import simulator.exceptions.WrongValuesVehicle;
 import simulator.model.SimulatedObject;
@@ -48,11 +49,25 @@ public class Vehicle extends SimulatedObject {
     @Override
     protected void advance(int time) {
         if(estado == VehicleStatus.TRAVELING){
-            localizacion = min((getLocalizacion() + getVelocidadActual()),carretera.getLength());
-            if(getLocalizacion() >= carretera.getLength()) {
-                int anterior = getLocalizacion();
-                localizacion = carretera.getLength();
-                kilometraje = getKilometraje() - (anterior - getLocalizacion());
+            int localizacionPrevia = getLocalizacion();
+            int localizacionActual = localizacion + velocidadActual;
+            int longitudCarreteraActual = carretera.longitud;
+            //a
+            localizacion = min(localizacionActual, longitudCarreteraActual);
+            kilometraje += localizacion - localizacionPrevia;
+            //b
+            int contClass = (localizacion - localizacionPrevia) * gradoContaminacion;
+            contaminacionTotal += contClass;
+            try{
+                carretera.addContamination(contClass);
+            } catch (WrongValuesContamination wrongValuesContamination) {
+                wrongValuesContamination.getMessage();
+            }
+            //c
+            if(localizacion >= longitudCarreteraActual) {
+                carretera.getCruceDestino().enter(this);
+                estado = VehicleStatus.WAITING;
+                velocidadActual = 0;
             }
         }
 
@@ -67,7 +82,7 @@ public class Vehicle extends SimulatedObject {
         report.put("co2",this.contaminacionTotal);
         report.put("class",this.gradoContaminacion);
         report.put("status",this.estado);
-        if(estado != VehicleStatus.PENDING || estado != VehicleStatus.ARRIVED){
+        if(estado != VehicleStatus.PENDING && estado != VehicleStatus.ARRIVED){
             report.put("road",this.carretera.getId());
             report.put("location",this.localizacion);
         }
@@ -82,12 +97,16 @@ public class Vehicle extends SimulatedObject {
             if(this.estado == VehicleStatus.WAITING) {
                 carretera.exit(this);
             }
-            if(lastPositionItenerary + 1 == itinerario.size()){
+            if(lastPositionItenerary + 1 >= itinerario.size()){
                 estado = VehicleStatus.ARRIVED;
                 velocidadActual = 0;
             }
             else{
-                itinerario.get(lastPositionItenerary);
+                carretera = itinerario.get(lastPositionItenerary).roadTo(itinerario.get(lastPositionItenerary+1));
+                localizacion = 0;
+                carretera.enter(this);
+                estado = VehicleStatus.TRAVELING;
+                lastPositionItenerary = lastPositionItenerary +1;
             }
 
 
@@ -101,7 +120,7 @@ public class Vehicle extends SimulatedObject {
     }
 
     protected void setSpeed(int s){
-        velocidadActual = s;
+        velocidadActual = min(s,velocidadMaxima);
     }
 
     protected int getContaminacionTotal() {

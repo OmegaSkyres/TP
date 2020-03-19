@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.Collection;
 
 public class Controller {
     protected TrafficSimulator trafficSimulator; //Utilizado para ejecutar la simulación.
@@ -47,20 +48,26 @@ public class Controller {
 
     }
 
-    public void run(int n, OutputStream out) throws IOException {
-        JSONObject object = new JSONObject();
-        try{
-            for(int i = 0; i < n; i++){
-                trafficSimulator.advance();
-                object.append("states",trafficSimulator.report());
-            }
-            PrintStream print = new PrintStream(out);
-            print.print(object.toString());
+    public void run(int n, OutputStream out) throws Exception {
+        if (out == null) {
+            out = new OutputStream() {
+                @Override
+                public void write(int b) throws IOException {}
+            };
         }
+        PrintStream p = new PrintStream(out);
+        p.println("{");
+        p.println("  \"states\": [");
+        for(int i = 0; i < n - 1; i++){
+            trafficSimulator.advance();
+            p.print(trafficSimulator.report());
+            p.println(",");
+        }
+        trafficSimulator.advance();
+        p.println(trafficSimulator.report());
+        p.println("]");
+        p.println("}");
 
-        catch (Exception e){
-            System.out.format(e.getMessage() + "%n %n");
-        }
     }
 
     public void reset() {
