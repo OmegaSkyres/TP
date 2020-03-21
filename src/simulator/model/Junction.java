@@ -32,6 +32,7 @@ public class Junction extends SimulatedObject {
             dqstr = dqStrategy;
             coordenadaX = xCoor;
             coordenadaY = yCoor;
+            indiceSemaforo = -1;
             listaCarreterasEntrantes = new LinkedList<Road>();
             mapaCarreterasSalientes = new HashMap<Junction, Road>();
             listaDeColas = new LinkedList<List<Vehicle>>();
@@ -43,22 +44,27 @@ public class Junction extends SimulatedObject {
 
     @Override
     protected void advance(int time) throws WrongValuesVehicle {
-        if(!listaDeColas.isEmpty() && !listaDeColas.get(indiceSemaforo).isEmpty()){
-            List<Vehicle> vehiculosAMover = dqstr.dequeue(listaDeColas.get(indiceSemaforo));
-            for(Vehicle v : vehiculosAMover){
-                try{
-                    v.moveToNextRoad();
-                } catch (WrongValuesVehicle e){
-                    System.out.format(e.getMessage() + " %n %n");
+        if(indiceSemaforo != -1) {
+            if(!listaDeColas.isEmpty()) {
+                List<Vehicle> vehiculosAMover = dqstr.dequeue(listaDeColas.get(indiceSemaforo));
+                for (Vehicle v : vehiculosAMover) {
+                    try {
+                        v.moveToNextRoad();
+                        listaDeColas.get(indiceSemaforo).clear();
+                    } catch (WrongValuesVehicle e) {
+                        System.out.format(e.getMessage() + " %n %n");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-            vehiculosAMover.clear();
         }
-        int index = ligstr.chooseNextGreen(listaCarreterasEntrantes,listaDeColas,indiceSemaforo,ultimoPasoDeCambio,time);
-        if(index != indiceSemaforo){
-            indiceSemaforo = index;
-            ultimoPasoDeCambio = time;
-        }
+            int index = ligstr.chooseNextGreen(listaCarreterasEntrantes, listaDeColas, indiceSemaforo, ultimoPasoDeCambio, time);
+            if (index != indiceSemaforo) {
+                indiceSemaforo = index;
+                ultimoPasoDeCambio = time;
+            }
+
 
     }
 
@@ -72,20 +78,23 @@ public class Junction extends SimulatedObject {
         if(listaDeColas.isEmpty()){
             report.put("queues", (Collection<?>) null);
         }
-        for(List<Vehicle> lv : listaDeColas) {
-            JSONObject obj = new JSONObject();
-            obj.put("road", listaCarreterasEntrantes.get(i).getId());
-            if(lv.isEmpty()){
-                obj.put("vehicles", (Collection<?>) null);
-            }
-            else{
-                for(Vehicle v : lv) {
-                    obj.append("vehicles", v.getId());
+        else {
+            for(List<Vehicle> lv : listaDeColas) {
+                JSONObject obj = new JSONObject();
+                obj.put("road", listaCarreterasEntrantes.get(i).getId());
+                if(lv.isEmpty()){
+                    obj.put("vehicles", (Collection<?>) null);
                 }
+                else{
+                    for(Vehicle v : lv) {
+                        obj.append("vehicles", v.getId());
+                    }
+                }
+                report.append("queues", obj);
+                i++;
             }
-            report.append("queues", obj);
-            i++;
         }
+
         return report;
     }
 

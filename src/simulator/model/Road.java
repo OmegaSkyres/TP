@@ -66,8 +66,14 @@ public abstract class Road extends SimulatedObject {
         updateSpeedLimit();
         if(!vehiculos.isEmpty()){
             for(Vehicle v : vehiculos){
-                v.setSpeed(calculateVehicleSpeed(v));;
-                v.advance(time);
+                if(v.estado == VehicleStatus.WAITING){
+                    v.velocidadActual = 0;
+                }
+                else{
+                    v.setSpeed(calculateVehicleSpeed(v));;
+                    v.advance(time);
+                }
+
             }
         }
 
@@ -79,7 +85,7 @@ public abstract class Road extends SimulatedObject {
     public JSONObject report() {
         JSONObject report = new JSONObject();
         report.put("id",this._id);
-        report.put("speedlimit",this.getVelocidadMaxima());
+        report.put("speedlimit",this.getLimiteVelocidad());
         report.put("weather",this.getCondicionAmbiental());
         report.put("co2", this.getContaminacionTotal());
         if(vehiculos.isEmpty()){
