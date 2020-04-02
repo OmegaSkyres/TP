@@ -52,7 +52,7 @@ public class Junction extends SimulatedObject {
                         v.moveToNextRoad();
                         listaDeColas.get(indiceSemaforo).clear();
                     } catch (WrongValuesVehicle e) {
-                        System.out.format(e.getMessage() + " %n %n");
+                        System.out.format(e.getMessage());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -135,5 +135,21 @@ public class Junction extends SimulatedObject {
 
     protected Road roadTo(Junction j){
         return mapaCarreterasSalientes.get(j);
+    }
+
+    public int getCoordenadaX() {
+        return coordenadaX;
+    }
+
+    public int getCoordenadaY(){
+        return coordenadaY;
+    }
+
+    public int getIndiceSemaforo() {
+        return indiceSemaforo;
+    }
+
+    public List<Road> getListaCarreterasEntrantes() {
+        return listaCarreterasEntrantes;
     }
 }

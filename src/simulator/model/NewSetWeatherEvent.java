@@ -22,6 +22,10 @@ public class NewSetWeatherEvent extends Event {
         }
 
     }
+    @Override
+    public String toString() {
+        return "New Weather '"+ws.toString()+"'"; //Todo revisar si esta bien este ws.toString
+    }
 
     void checkContClass() throws WrongValuesWeather {
         if(this.ws == null) throw new WrongValuesWeather("El dato del tiempo es un valor nulo");

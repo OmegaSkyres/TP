@@ -20,4 +20,9 @@ public abstract class NewRoadEvent extends Event {
         newWeather = weather;
     }
 
+    @Override
+    public String toString() {
+        return "New Road '"+newId+"'";
+    }
+
 }

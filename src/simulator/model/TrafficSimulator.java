@@ -5,7 +5,7 @@ import simulator.misc.SortedArrayList;
 
 import java.util.List;
 
-public class TrafficSimulator {
+public class TrafficSimulator implements Observable<TrafficSimObserver> {
 
     protected RoadMap mapaDeCarreteras;
     protected List<Event> listaEventos;
@@ -55,4 +55,14 @@ public class TrafficSimulator {
         return  report;
     }
 
+
+    @Override
+    public void addObserver(TrafficSimObserver o) {
+
+    }
+
+    @Override
+    public void removeObserver(TrafficSimObserver o) {
+
+    }
 }

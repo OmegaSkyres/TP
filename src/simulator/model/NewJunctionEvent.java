@@ -26,6 +26,11 @@ public class NewJunctionEvent extends Event {
         map.addJuntion(createJuntion());
     }
 
+    @Override
+    public String toString() {
+        return "New Juntion '"+id+"'";
+    }
+
     protected Junction createJuntion() throws WrongValuesException {
         return new Junction(this.id,this.lsStrategy,this.dqStrategy,this.xCoor,this.yCoor);
     }

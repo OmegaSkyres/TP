@@ -9,17 +9,16 @@ import simulator.exceptions.WrongValuesException;
 import simulator.exceptions.WrongValuesWeather;
 import simulator.factories.Factory;
 import simulator.model.Event;
+import simulator.model.TrafficSimObserver;
 import simulator.model.TrafficSimulator;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.Collection;
 
 public class Controller {
     protected TrafficSimulator trafficSimulator; //Utilizado para ejecutar la simulación.
     protected Factory<Event> eventFactory; //: Se usa para parsear los eventos suministrados por el usuario
+    private FileInputStream ficheroEntrada;
 
     public Controller(TrafficSimulator sim, Factory<Event> eventsFactory) throws IOException {
         trafficSimulator = sim;
@@ -72,6 +71,22 @@ public class Controller {
 
     public void reset() {
         trafficSimulator.reset();
+    }
+
+    public void addObserver(TrafficSimObserver o){
+        trafficSimulator.addObserver(o);
+    }
+
+    void removeObserver(TrafficSimObserver o){
+        trafficSimulator.removeObserver(o);
+    }
+
+    void addEvent(Event e){
+        trafficSimulator.addEvent(e);
+    }
+
+    public void setFicheroEntrada(File ficheroEntrada) throws FileNotFoundException {
+        this.ficheroEntrada = new FileInputStream(ficheroEntrada);
     }
 
 }

@@ -119,41 +119,47 @@ public class Vehicle extends SimulatedObject {
         else return false;
     }
 
-    protected void setSpeed(int s){
+    public void setSpeed(int s){
         velocidadActual = min(s,velocidadMaxima);
     }
 
-    protected int getContaminacionTotal() {
+    public int getContaminacionTotal() {
         return contaminacionTotal;
     }
 
-    protected int getVelocidadMaxima() {
+    public int getVelocidadMaxima() {
         return velocidadMaxima;
     }
 
-    protected int getGradoContaminacion() {
+    public int getGradoContaminacion() {
         return gradoContaminacion;
     }
 
-    protected int getVelocidadActual() {
+    public int getVelocidadActual() {
         return velocidadActual;
     }
 
-    protected int getKilometraje() {
+    public int getKilometraje() {
         return kilometraje;
     }
 
-    protected int getLocalizacion() {
+    public int getLocalizacion() {
         return localizacion;
     }
 
-    protected List<Junction> getItinerario(){
+    public List<Junction> getItinerario(){
         return itinerario;
     }
 
-    protected void setContaminationClass(int c){
+    public void setContaminationClass(int c){
         gradoContaminacion = c;
     }
 
+    public VehicleStatus getEstado() {
+        return estado;
+    }
 
+    public Road getCarretera() {
+        return carretera;
+    }
 }

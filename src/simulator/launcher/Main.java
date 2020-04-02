@@ -18,6 +18,9 @@ import simulator.exceptions.WrongValuesException;
 import simulator.exceptions.WrongValuesWeather;
 import simulator.factories.*;
 import simulator.model.*;
+import simulator.view.MainWindow;
+
+import javax.swing.*;
 
 public class Main {
 
@@ -26,6 +29,32 @@ public class Main {
 	private static String _outFile = null;
 	private static int _timeLimit = 0;
 	private static Factory<Event> _eventsFactory = null;
+	private static ModoEjecucion modo = null;
+
+	private enum ModoEjecucion {
+		CONSOLE("console"), GUI("gui");
+		private String descModo;
+		private ModoEjecucion(String modeDesc) {
+			descModo = modeDesc;
+		}
+		private String getModelDesc() {
+			return descModo;
+		}
+	}
+
+	private static void parseaOpcionModo(CommandLine commandLine){
+		String mode = commandLine.getOptionValue("m");
+
+		if(mode == null ||mode.equals(ModoEjecucion.CONSOLE.getModelDesc()))
+			Main.modo = ModoEjecucion.CONSOLE;
+
+		else if(mode.equals("gui"))
+			Main.modo = ModoEjecucion.GUI;
+
+		else new ParseException("El modo introducido no es compatible");
+	}
+
+
 
 	private static void parseArgs(String[] args) {
 
@@ -39,6 +68,7 @@ public class Main {
 		try {
 			CommandLine line = parser.parse(cmdLineOptions, args);
 			parseHelpOption(line, cmdLineOptions);
+			parseaOpcionModo(line);
 			parseInFileOption(line);
 			parseOutFileOption(line);
 			parseTicksOption(line);
@@ -68,6 +98,7 @@ public class Main {
 		cmdLineOptions.addOption(Option.builder("o").longOpt("output").hasArg().desc("Output file, where reports are written.").build());
 		cmdLineOptions.addOption(Option.builder("t").longOpt("ticks").hasArg().desc("Ticks to the simulator’s main loop (default value is 10)").build());
 		cmdLineOptions.addOption(Option.builder("h").longOpt("help").desc("Print this message").build());
+		cmdLineOptions.addOption(Option.builder("m").longOpt("ticks").hasArg().desc("'batch' for batch mode and 'gui' for GUI mode (defaul value is batch)").build());
 
 		return cmdLineOptions;
 	}
@@ -132,10 +163,35 @@ public class Main {
 		System.out.println("Done!");
 	}
 
+	private static void startGUIMode() throws Exception {
+		InputStream in = new FileInputStream(new File(_inFile));
+		OutputStream out = _outFile == null ?
+				System.out : new FileOutputStream(new File(_outFile));
+		TrafficSimulator sim = new TrafficSimulator();
+		Controller ctrl = new Controller(sim, _eventsFactory);
+		ctrl.loadEvents(in);
+		ctrl.run(_timeLimit, out);
+		in.close();
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				new MainWindow(ctrl);
+			}
+		});
+
+
+	}
+
 	private static void start(String[] args) throws Exception {
 		initFactories();
 		parseArgs(args);
-		startBatchMode();
+		if(modo == ModoEjecucion.CONSOLE){
+			startBatchMode();
+		}
+		else if(modo == ModoEjecucion.GUI){
+			startGUIMode();
+		}
+
 	}
 
 	// example command lines:

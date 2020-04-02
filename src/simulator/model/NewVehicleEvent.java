@@ -27,6 +27,11 @@ public class NewVehicleEvent extends Event {
 
     }
 
+    @Override
+    public String toString() {
+        return "New Vehicle '"+id+"'";
+    }
+
     Vehicle createVehicle(RoadMap map) throws Exception {
         List<Junction> iti = new LinkedList<Junction>();
         for(String s : itinerary ){
