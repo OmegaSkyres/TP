@@ -2,13 +2,28 @@ package simulator.view;
 
 import extra.jtable.EventsTableModel;
 import simulator.control.Controller;
+import simulator.model.Junction;
+import simulator.model.Road;
+import simulator.model.Vehicle;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class MainWindow extends JFrame {
     private Controller _ctrl;
     private boolean _stopped;
+    public static Border bordePorDefecto = BorderFactory.createLineBorder(Color.black, 2);
+
+    //private PanelTabla<Vehicle> panelVehiculos;
+    //private PanelTabla<Road> panelCarreteras;
+    //private PanelTabla<Junction> panelCruces;
+
+
     public MainWindow(Controller ctrl) {
         super("Traffic Simulator");
         _ctrl = ctrl;
@@ -32,6 +47,15 @@ public class MainWindow extends JFrame {
         JPanel eventsView = createViewPanel(new JTable(new EventsTableModel(_ctrl)), "Events");
         eventsView.setPreferredSize(new Dimension(500, 200));
         tablesPanel.add(eventsView);
+        tablesPanel.setLayout(new BoxLayout(tablesPanel,BoxLayout.Y_AXIS));
+        /*
+        this.panelVehiculos = new PanelTabla<Vehiculo>("Vehiculos", new ModeloTablaVehiculos(VentanaPrincipal.columnIdVehiculo, this.controlador));
+        paneltablas.add(this.panelVehiculos);
+        this.panelCarreteras = new PanelTabla<Carretera>("Carretras", new ModeloTablaCarreteras(VentanaPrincipal.columnIdCarretera, this.controlador));
+        paneltablas.add(this.panelCarreteras);
+        this.panelCruces = new PanelTabla<CruceGenerico<?>>("Cruces", new ModeloTablaCruces(VentanaPrincipal.columnIdCruce,this.controlador));
+        paneltablas.add(panelCruces);
+        */
 // TODO add other tables
 // ...
 // maps
@@ -79,4 +103,6 @@ public class MainWindow extends JFrame {
     private void stop() {
         _stopped = true;
     }
+
+
 }

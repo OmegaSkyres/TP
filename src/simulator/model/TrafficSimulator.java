@@ -44,8 +44,10 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 
     public void reset(){
         mapaDeCarreteras.reset();
+        //mapaDeCarreteras = new RoadMap();
         listaEventos.clear();
         time = 0;
+
     }
 
     public JSONObject report(){
