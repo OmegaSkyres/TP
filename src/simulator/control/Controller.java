@@ -89,4 +89,8 @@ public class Controller {
         this.ficheroEntrada = new FileInputStream(ficheroEntrada);
     }
 
+    public int getSteps(){
+        return trafficSimulator.getTime();
+    }
+
 }

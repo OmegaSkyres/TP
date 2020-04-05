@@ -2,12 +2,11 @@ package simulator.view;
 
 import extra.jtable.EventsTableModel;
 import simulator.control.Controller;
-import simulator.model.Junction;
-import simulator.model.Road;
-import simulator.model.Vehicle;
+import simulator.model.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,7 +26,6 @@ public class MainWindow extends JFrame {
     public MainWindow(Controller ctrl) {
         super("Traffic Simulator");
         _ctrl = ctrl;
-        _stopped = false;
         initGUI();
     }
     private void initGUI() {
@@ -48,61 +46,36 @@ public class MainWindow extends JFrame {
         eventsView.setPreferredSize(new Dimension(500, 200));
         tablesPanel.add(eventsView);
         tablesPanel.setLayout(new BoxLayout(tablesPanel,BoxLayout.Y_AXIS));
-        /*
-        this.panelVehiculos = new PanelTabla<Vehiculo>("Vehiculos", new ModeloTablaVehiculos(VentanaPrincipal.columnIdVehiculo, this.controlador));
-        paneltablas.add(this.panelVehiculos);
-        this.panelCarreteras = new PanelTabla<Carretera>("Carretras", new ModeloTablaCarreteras(VentanaPrincipal.columnIdCarretera, this.controlador));
-        paneltablas.add(this.panelCarreteras);
-        this.panelCruces = new PanelTabla<CruceGenerico<?>>("Cruces", new ModeloTablaCruces(VentanaPrincipal.columnIdCruce,this.controlador));
-        paneltablas.add(panelCruces);
-        */
-// TODO add other tables
-// ...
+        JPanel vehiculosView = createViewPanel(new JTable(new VehiclesTableModel(_ctrl)), "Vehicles");
+        vehiculosView.setPreferredSize(new Dimension(500, 200));
+        tablesPanel.add(vehiculosView);
+        JPanel roadsView = createViewPanel(new JTable(new RoadsTableModel(_ctrl)), "Roads");
+        roadsView.setPreferredSize(new Dimension(500, 200));
+        tablesPanel.add(roadsView);
+        JPanel juntionsView = createViewPanel(new JTable(new JunctionsTableModel(_ctrl)), "Juntions");
+        juntionsView.setPreferredSize(new Dimension(500, 200));
+        tablesPanel.add(juntionsView);
+
 // maps
         JPanel mapView = createViewPanel(new MapComponent(_ctrl), "Map");
         mapView.setPreferredSize(new Dimension(500, 400));
         mapsPanel.add(mapView);
-// TODO add a map for MapByRoadComponent
-// ...
+        JPanel mapViewRoads = createViewPanel(new MapByRoadComponent(_ctrl), "Map by Road");
+        mapView.setPreferredSize(new Dimension(500, 400));
+        mapsPanel.add(mapViewRoads);
+
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.pack();
         this.setVisible(true);
     }
     private JPanel createViewPanel(JComponent c, String title) {
         JPanel p = new JPanel( new BorderLayout() );
-// TODO add a framed border to p with title
+        p.setBorder(BorderFactory.createTitledBorder(MainWindow.bordePorDefecto, title, TitledBorder.LEFT, TitledBorder.TOP));
         p.add(new JScrollPane(c));
         return p;
     }
 
-    private void run_sim(int n) {
-        if (n > 0 && !_stopped) {
-            try {
-               // _ctrl.run(1);
-            } catch (Exception e) {
-// TODO show error message
-                _stopped = true;
-                return;
-            }
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    run_sim(n - 1);
-                }
-            });
-        } else {
-            enableToolBar(true);
-            _stopped = true;
-        }
-    }
 
-    private void enableToolBar(boolean b) {
-
-    }
-
-    private void stop() {
-        _stopped = true;
-    }
 
 
 }

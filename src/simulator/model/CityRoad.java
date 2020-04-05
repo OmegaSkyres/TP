@@ -30,4 +30,5 @@ public class CityRoad extends Road {
         double velocidadRedondeo =  Math.ceil(((11.0 - v.getGradoContaminacion()) / 11.0) * getLimiteVelocidad());
         return v.velocidadActual = (int) velocidadRedondeo;
     }
+
 }

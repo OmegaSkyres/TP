@@ -171,4 +171,5 @@ public abstract class Road extends SimulatedObject {
     abstract void reduceTotalContamination();
     abstract void updateSpeedLimit();
     abstract int calculateVehicleSpeed(Vehicle v);
+
 }

@@ -152,4 +152,28 @@ public class Junction extends SimulatedObject {
     public List<Road> getListaCarreterasEntrantes() {
         return listaCarreterasEntrantes;
     }
+
+    public String muestraSemaforoVerde(){
+        String queue = "";
+
+        for (int i = 0; i < listaCarreterasEntrantes.size(); i++) {
+            if(indiceSemaforo != -1)
+                queue += "(" + listaCarreterasEntrantes.get(i).toString() + ")";
+        }
+
+
+        return queue;
+    }
+
+    public String muestraSemaforoRojo() {
+        String queue = "";
+
+        for (int i = 0; i < listaCarreterasEntrantes.size(); i++) {
+            if(indiceSemaforo == -1)
+                queue += "(" + listaCarreterasEntrantes.get(i).toString() + ")";
+        }
+
+
+        return queue;
+    }
 }

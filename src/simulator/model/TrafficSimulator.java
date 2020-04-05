@@ -67,4 +67,8 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
     public void removeObserver(TrafficSimObserver o) {
 
     }
+
+    public int getTime() {
+        return time;
+    }
 }
