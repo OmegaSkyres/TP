@@ -164,14 +164,10 @@ public class Main {
 	}
 
 	private static void startGUIMode() throws Exception {
-		InputStream in = new FileInputStream(new File(_inFile));
 		OutputStream out = _outFile == null ?
 				System.out : new FileOutputStream(new File(_outFile));
 		TrafficSimulator sim = new TrafficSimulator();
 		Controller ctrl = new Controller(sim, _eventsFactory);
-		ctrl.loadEvents(in);
-		ctrl.run(_timeLimit, out);
-		in.close();
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {

@@ -93,7 +93,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 enableToolBar(false);
-                //run_sim(ticks);
+                run_sim(ticks);
             }
         });
         toolBar.add(botonPlay);
@@ -106,7 +106,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 enableToolBar(false);
-                //run_sim(ticks);
+                run_sim(ticks);
+                contadorTiempo += ticks;
             }
         });
         toolBar.add(botonStop);
@@ -187,7 +188,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     private void run_sim(int n) {
         if (n > 0 && !_stopped) {
             try {
-                //_ctrl.run(1);
+                _ctrl.run(1);
             } catch (Exception e) {
 // TODO show error message
                 _stopped = true;

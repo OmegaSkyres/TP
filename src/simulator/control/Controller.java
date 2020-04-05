@@ -47,6 +47,12 @@ public class Controller {
 
     }
 
+    public void run(int n) throws Exception {
+        for(int i = 0; i < n; i++){
+            trafficSimulator.advance();
+        }
+    }
+
     public void run(int n, OutputStream out) throws Exception {
         if (out == null) {
             out = new OutputStream() {

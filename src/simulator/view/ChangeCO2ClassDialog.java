@@ -50,14 +50,14 @@ public class ChangeCO2ClassDialog extends JDialog {
         ok.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e){
-                //cargaFichero();
+                ChangeCO2ClassDialog.this.setVisible(false);
             }
         });
         JButton cancelar = new JButton("Cancel");
         cancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e){
-                //cargaFichero();
+                ChangeCO2ClassDialog.this.setVisible(false); //Todo cambiar esto para cerrar ventana
             }
         });
         inferior.add(ok);

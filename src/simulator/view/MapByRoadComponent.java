@@ -108,12 +108,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 
     }
 
-    private void drawLineWithArrow(//
-                                   Graphics g, //
-                                   int x1, int y1, //
-                                   int x2, int y2, //
-                                   int w, int h, //
-                                   Color lineColor, Color arrowColor) {
+    private void drawLineWithArrow(Graphics g, int x1, int y1, int x2, int y2, int w, int h, Color lineColor, Color arrowColor) {
 
         int dx = x2 - x1, dy = y2 - y1;
         double D = Math.sqrt(dx * dx + dy * dy);
