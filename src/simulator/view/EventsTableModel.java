@@ -1,4 +1,4 @@
-package simulator.model;
+package simulator.view;
 
 
 import extra.jtable.EventEx;
@@ -14,7 +14,7 @@ import javax.swing.table.AbstractTableModel;
 public class EventsTableModel extends AbstractTableModel implements TrafficSimObserver {
     private Controller ctrl;
     private List<Event> _events;
-    private String[] _colNames = { "#", "Time", "Priority" };
+    private String[] _colNames = { "Time", "Desc" };
 
     public EventsTableModel() {
         _events=null;
@@ -22,6 +22,7 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 
     public EventsTableModel(Controller controller) {
         ctrl = controller;
+        ctrl.addObserver(this);
         _events=null;
     }
 
@@ -79,12 +80,9 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
         Object s = null;
         switch (columnIndex) {
             case 0:
-                s = rowIndex;
-                break;
-            case 1:
                 s = _events.get(rowIndex).getTime();
                 break;
-            case 2:
+            case 1:
                 s = _events.get(rowIndex).toString();
                 break;
         }

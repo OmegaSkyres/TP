@@ -157,23 +157,31 @@ public class Junction extends SimulatedObject {
         String queue = "";
 
         for (int i = 0; i < listaCarreterasEntrantes.size(); i++) {
-            if(indiceSemaforo != -1)
-                queue += "(" + listaCarreterasEntrantes.get(i).toString() + ")";
+            int idx = listaCarreterasEntrantes.get(i).getCruceDestino().getIndiceSemaforo();
+            if(idx != -1 && listaCarreterasEntrantes.get(i).equals(listaCarreterasEntrantes.get(i).getCruceDestino().getListaCarreterasEntrantes().get(idx))){
+                queue = listaCarreterasEntrantes.get(i).toString();
+            }
+        }
+        if(queue == ""){
+            queue = "NONE";
         }
 
 
         return queue;
     }
 
-    public String muestraSemaforoRojo() {
+    public String muestraColas() {
         String queue = "";
+        Iterator it = colaCarretera.keySet().iterator();
+        while(it.hasNext()){
+            Object key = it.next();
+            queue += key.toString() + ":" + "[";
+            for(int i = 0; i < colaCarretera.get(key).size(); i++){
+                queue += colaCarretera.get(key).get(i);
+            }
+            queue += "]" + " ";
 
-        for (int i = 0; i < listaCarreterasEntrantes.size(); i++) {
-            if(indiceSemaforo == -1)
-                queue += "(" + listaCarreterasEntrantes.get(i).toString() + ")";
         }
-
-
         return queue;
     }
 }

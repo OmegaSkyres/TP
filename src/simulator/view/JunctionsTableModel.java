@@ -1,6 +1,10 @@
-package simulator.model;
+package simulator.view;
 
 import simulator.control.Controller;
+import simulator.model.Event;
+import simulator.model.Junction;
+import simulator.model.RoadMap;
+import simulator.model.TrafficSimObserver;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
@@ -12,6 +16,7 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 
     public JunctionsTableModel(Controller controller) {
         ctrl = controller;
+        ctrl.addObserver(this);
     }
 
     @Override
@@ -37,10 +42,10 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
                 o = this.lista.get(indiceFila).getId();
                 break;
             case 1:
-                o = "[" + this.lista.get(indiceFila).muestraSemaforoVerde() + "]";
+                o = this.lista.get(indiceFila).muestraSemaforoVerde();
                 break;
             case 2:
-                o = "[" + this.lista.get(indiceFila).muestraSemaforoRojo() + "]";
+                o = this.lista.get(indiceFila).muestraColas();
                 break;
             default:
                 assert (false);

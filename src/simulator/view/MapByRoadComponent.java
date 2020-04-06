@@ -196,8 +196,15 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
         }
         maxW += 20;
         maxH += 20;
-        setPreferredSize(new Dimension(maxW, maxH));
-        setSize(new Dimension(maxW, maxH));
+        if (maxW > getWidth() || maxH > getHeight()) {
+            setPreferredSize(new Dimension(maxW, maxH));
+            setSize(new Dimension(maxW, maxH));
+        }
+        else{
+            setPreferredSize(new Dimension(maxW, maxH));
+            setSize(new Dimension(maxW, maxH));
+        }
+
     }
 
     private Image loadImage(String img) {
@@ -209,7 +216,10 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
         return i;
     }
 
-
+    private void update(RoadMap map) {
+        _map = map;
+        repaint();
+    }
 
     @Override
     public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
@@ -218,22 +228,22 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 
     @Override
     public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-
+        update(map);
     }
 
     @Override
     public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-
+        update(map);
     }
 
     @Override
     public void onReset(RoadMap map, List<Event> events, int time) {
-
+        update(map);
     }
 
     @Override
     public void onRegister(RoadMap map, List<Event> events, int time) {
-
+        update(map);
     }
 
     @Override

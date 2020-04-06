@@ -1,6 +1,10 @@
-package simulator.model;
+package simulator.view;
 
 import simulator.control.Controller;
+import simulator.model.Event;
+import simulator.model.Road;
+import simulator.model.RoadMap;
+import simulator.model.TrafficSimObserver;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
@@ -12,6 +16,7 @@ public class RoadsTableModel extends AbstractTableModel implements TrafficSimObs
 
     public RoadsTableModel(Controller controller){
         ctrl = controller;
+        ctrl.addObserver(this);
     }
     @Override
     public String getColumnName(int column) {

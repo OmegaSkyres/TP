@@ -1,17 +1,11 @@
 package simulator.view;
 
-import extra.jtable.EventsTableModel;
 import simulator.control.Controller;
-import simulator.model.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 
 public class MainWindow extends JFrame {
     private Controller _ctrl;
@@ -61,7 +55,7 @@ public class MainWindow extends JFrame {
         mapView.setPreferredSize(new Dimension(500, 400));
         mapsPanel.add(mapView);
         JPanel mapViewRoads = createViewPanel(new MapByRoadComponent(_ctrl), "Map by Road");
-        mapView.setPreferredSize(new Dimension(500, 400));
+        mapViewRoads.setPreferredSize(new Dimension(500, 400));
         mapsPanel.add(mapViewRoads);
 
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

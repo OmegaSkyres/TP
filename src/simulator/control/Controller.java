@@ -35,7 +35,7 @@ public class Controller {
         }
     }
 
-    public void loadEvents(InputStream in) throws WrongValuesException, WrongValuesContamination, WrongValuesWeather {
+    public void loadEvents(InputStream in) throws Exception {
         JSONObject object = new JSONObject(new JSONTokener(in));
         if(object.isEmpty() || !object.has("events")) throw new WrongValuesException("Los valores del JSon son incorrectos");
         else{
@@ -87,7 +87,7 @@ public class Controller {
         trafficSimulator.removeObserver(o);
     }
 
-    void addEvent(Event e){
+    void addEvent(Event e) throws Exception {
         trafficSimulator.addEvent(e);
     }
 
@@ -99,4 +99,7 @@ public class Controller {
         return trafficSimulator.getTime();
     }
 
+    public FileInputStream getFichero() {
+        return ficheroEntrada;
+    }
 }

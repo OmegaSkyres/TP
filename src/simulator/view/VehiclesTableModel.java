@@ -1,6 +1,10 @@
-package simulator.model;
+package simulator.view;
 
 import simulator.control.Controller;
+import simulator.model.Event;
+import simulator.model.RoadMap;
+import simulator.model.TrafficSimObserver;
+import simulator.model.Vehicle;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
@@ -12,6 +16,7 @@ public class VehiclesTableModel extends AbstractTableModel implements TrafficSim
 
     public VehiclesTableModel(Controller controller){
         ctrl = controller;
+        ctrl.addObserver(this);
     }
     @Override
     public String getColumnName(int column) {
@@ -37,21 +42,24 @@ public class VehiclesTableModel extends AbstractTableModel implements TrafficSim
                     s = lista.get(indiceFil).getId();
                     break;
                 case 1:
-                    s = this.lista.get(indiceFil).getCarretera();
+                    s = this.lista.get(indiceFil).getCarretera() + ":" + this.lista.get(indiceFil).getKilometraje();
                     break;
                 case 2:
-                    s = "[" + this.lista.get(indiceFil).getItinerario() + "]";
+                    s = this.lista.get(indiceFil).getItinerario();
                     break;
                 case 3:
-                    s = Integer.toString(lista.get(indiceFil).getVelocidadMaxima());
+                    s = Integer.toString(lista.get(indiceFil).getGradoContaminacion());
                     break;
                 case 4:
-                    s = Integer.toString(lista.get(indiceFil).getVelocidadActual());
+                    s = Integer.toString(lista.get(indiceFil).getVelocidadMaxima());
                     break;
                 case 5:
-                    s = Integer.toString(lista.get(indiceFil).getContaminacionTotal());
+                    s = Integer.toString(lista.get(indiceFil).getVelocidadActual());
                     break;
                 case 6:
+                    s = Integer.toString(lista.get(indiceFil).getContaminacionTotal());
+                    break;
+                case 7:
                     s = Integer.toString(lista.get(indiceFil).getKilometraje());
                     break;
 

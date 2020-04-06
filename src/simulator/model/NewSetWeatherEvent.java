@@ -24,7 +24,13 @@ public class NewSetWeatherEvent extends Event {
     }
     @Override
     public String toString() {
-        return "New Weather '"+ws.toString()+"'"; //Todo revisar si esta bien este ws.toString
+        StringBuilder sb = new StringBuilder("[");
+        String cadena = "";
+        for(int i = 0; i < ws.size(); i++){
+            cadena = sb.append("(" + ws.get(i).getFirst() + "," + ws.get(i).getSecond() + ")").toString();
+        }
+        return "Change CO2 Class: " + cadena + "]";
+
     }
 
     void checkContClass() throws WrongValuesWeather {

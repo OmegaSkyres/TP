@@ -1,9 +1,14 @@
 package simulator.view;
 
 import Utils.Utils;
+import extra.jtable.EventEx;
 import javafx.scene.control.ToolBar;
 import simulator.control.Controller;
+import simulator.exceptions.WrongValuesContamination;
+import simulator.exceptions.WrongValuesException;
+import simulator.exceptions.WrongValuesWeather;
 import simulator.model.Event;
+import simulator.model.Observable;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 
@@ -14,10 +19,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 public class ControlPanel extends JPanel implements TrafficSimObserver {
@@ -38,6 +40,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     private int ticks;
 
     public ControlPanel(Controller ctrl) {
+        ticks = 1;
         _stopped = false;
         _ctrl = ctrl;
         BorderLayout layout = new BorderLayout();
@@ -94,6 +97,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
             public void actionPerformed(ActionEvent actionEvent) {
                 enableToolBar(false);
                 run_sim(ticks);
+                _stopped = false;
             }
         });
         toolBar.add(botonPlay);
@@ -105,9 +109,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         botonStop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                enableToolBar(false);
-                run_sim(ticks);
-                contadorTiempo += ticks;
+                _stopped = true;
             }
         });
         toolBar.add(botonStop);
@@ -160,9 +162,18 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
                 String s = leeFichero(fichero);
                 this.controlador.reset();
                 this.ficheroActual = fichero;
-                controlador.setFicheroEntrada(this.ficheroActual); //TODO REVISAR
+                controlador.setFicheroEntrada(this.ficheroActual);
+                controlador.loadEvents(controlador.getFichero());
             }
             catch (IOException e) {
+                e.printStackTrace();
+            } catch (WrongValuesException e) {
+                e.printStackTrace();
+            } catch (WrongValuesContamination wrongValuesContamination) {
+                wrongValuesContamination.printStackTrace();
+            } catch (WrongValuesWeather wrongValuesWeather) {
+                wrongValuesWeather.printStackTrace();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
