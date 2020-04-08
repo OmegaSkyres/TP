@@ -1,6 +1,7 @@
 package simulator.view;
 
 import simulator.control.Controller;
+import simulator.model.Weather;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -27,7 +28,7 @@ public class ChangeRoadWeather extends JDialog{
         estilo = new BorderLayout();
         panel.setLayout(estilo);
         central = construyePanelCentral(ctrl);
-        inferior = construyePanelInferior();
+        inferior = construyePanelInferior(box);
         estilo = new BorderLayout();
         panel.setLayout(estilo);
         texto = new JLabel(message);
@@ -43,20 +44,19 @@ public class ChangeRoadWeather extends JDialog{
         box.setVisible(true);
     }
 
-    private JPanel construyePanelInferior() {
+    private JPanel construyePanelInferior(JDialog main) {
         inferior = new JPanel();
         JButton ok = new JButton("OK");
         ok.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e){
-                //cargaFichero();
             }
         });
         JButton cancelar = new JButton("Cancel");
         cancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e){
-                //cargaFichero();
+                main.dispose();
             }
         });
         inferior.add(ok);

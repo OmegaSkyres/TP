@@ -21,14 +21,16 @@ public class ChangeCO2ClassDialog extends JDialog {
     private JPanel panel;
     private JPanel central;
     private JPanel inferior;
+    private Controller controller;
 
     public ChangeCO2ClassDialog(Controller ctrl){
+        controller = ctrl;
         box = new JDialog();
         panel = new JPanel();
         estilo = new BorderLayout();
         panel.setLayout(estilo);
         central = construyePanelCentral(ctrl);
-        inferior = construyePanelInferior();
+        inferior = construyePanelInferior(box);
         estilo = new BorderLayout();
         panel.setLayout(estilo);
         texto = new JLabel(message);
@@ -44,20 +46,20 @@ public class ChangeCO2ClassDialog extends JDialog {
         box.setVisible(true);
     }
 
-    private JPanel construyePanelInferior() {
+    private JPanel construyePanelInferior(JDialog main) {
         inferior = new JPanel();
         JButton ok = new JButton("OK");
         ok.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e){
-                ChangeCO2ClassDialog.this.setVisible(false);
+                ;
             }
         });
         JButton cancelar = new JButton("Cancel");
         cancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e){
-                ChangeCO2ClassDialog.this.setVisible(false); //Todo cambiar esto para cerrar ventana
+               main.dispose();
             }
         });
         inferior.add(ok);

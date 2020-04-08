@@ -25,6 +25,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
     private static final Color _JUNCTION_LABEL_COLOR = new Color(200, 100, 0);
     private static final Color _GREEN_LIGHT_COLOR = Color.GREEN;
     private static final Color _RED_LIGHT_COLOR = Color.RED;
+    private static final Color _RoadColor = Color.black;
 
     private RoadMap _map;
 
@@ -34,6 +35,13 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
     private Image _wind;
     private Image _storm;
     private Image _rainy;
+    private Image cont_0;
+    private Image cont_1;
+    private Image cont_2;
+    private Image cont_3;
+    private Image cont_4;
+    private Image cont_5;
+
 
 
     public MapByRoadComponent(Controller ctrl){
@@ -49,6 +57,13 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
        _storm = loadImage("storm.png");
        _sunny = loadImage("sun.png");
        _wind = loadImage("wind.png");
+       cont_0 = loadImage("cont_0.png");
+       cont_1 = loadImage("cont_1.png");
+       cont_2 = loadImage("cont_2.png");
+       cont_3 = loadImage("cont_3.png");
+       cont_4 = loadImage("cont_4.png");
+       cont_5 = loadImage("cont_5.png");
+
 
 
     }
@@ -73,44 +88,106 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
     }
 
     private void drawMap(Graphics g) {
-
         drawRoads(g);
-        drawVehicles(g);
-        drawJunctions(g);
     }
 
     private void drawRoads(Graphics g) {
-        for (Road r : _map.getCarreteras()) {
+        for (int i = 0; i < _map.getCarreteras().size(); i++) {
 
-            // the road goes from (x1,y1) to (x2,y2)
-            int x1 = r.getCruceOrigen().getCoordenadaX();
-            int y1 = r.getCruceOrigen().getCoordenadaY();
-            int x2 = r.getCruceDestino().getCoordenadaX();
-            int y2 = r.getCruceDestino().getCoordenadaY();
+            int x1 = 50;
+            int x2 = getWidth() - 100;
+            int y = (i+1) * 50;
+            int A = 0;
+            int B;
+            int C;
 
             // choose a color for the arrow depending on the traffic light of the road
             Color arrowColor = _RED_LIGHT_COLOR;
-            int idx = r.getCruceDestino().getIndiceSemaforo();
-            if (idx != -1 && r.equals(r.getCruceDestino().getListaCarreterasEntrantes().get(idx))) {
+            int idx = _map.getCarreteras().get(i).getCruceDestino().getIndiceSemaforo();
+            if (idx != -1 && _map.getCarreteras().get(i).equals(_map.getCarreteras().get(i).getCruceDestino().getListaCarreterasEntrantes().get(idx))) {
                 arrowColor = _GREEN_LIGHT_COLOR;
             }
+            Junction origen = _map.getCarreteras().get(i).getCruceOrigen();
+            Junction destino = _map.getCarreteras().get(i).getCruceDestino();
+            g.setColor(_RoadColor);
+            Road r = _map.getCarreteras().get(i);
 
-            // choose a color for the road depending on the total contamination, the darker
-            // the
-            // more contaminated (wrt its co2 limit)
-            int roadColorValue = 200 - (int) (200.0 * Math.min(1.0, (double) r.getContaminacionTotal() / (1.0 + (double) r.getAlarmaContaminacion())));
-            Color roadColor = new Color(roadColorValue, roadColorValue, roadColorValue);
+            g.drawString(r.getId(),x1-30,y);
+            drawLine(g,x1,y,x2,y,15, 5,  _RoadColor);
+            // Dibuja los cruces
+            drawJunctions(g,x1,y,_JUNCTION_COLOR,origen);
+            drawJunctions(g,x2,y,arrowColor,destino);
+            for (Vehicle v : _map.getVehiculos()) {
+                if(v.getCarretera() == r) {
+                    drawVehicles(g,v,x1,x2,y);
+                }
+                A = v.getContaminacionTotal();
+            }
+            //------------------------------Dibujo Weather---------------------------------//
+            Image weather = drawWeather(r.getCondicionAmbiental());
+            g.drawImage(weather,x2+10,y-20,32,32,this);
 
-            // draw line from (x1,y1) to (x2,y2) with arrow of color arrowColor and line of
-            // color roadColor. The size of the arrow is 15px length and 5 px width
-            drawLineWithArrow(g, x1, y1, x2, y2, 15, 5, roadColor, arrowColor);
+            //------------------------------Dibujo Contaminacion---------------------------//
+            B = r.getAlarmaContaminacion();
+            C =  (int) Math.floor(Math.min((double) A/(1.0 + (double) B),1.0) / 0.19);
+            Image contClass = drawContClass(C);
+            g.drawImage(contClass,x2+50,y-20,32,32,this);
         }
-
     }
 
-    private void drawLineWithArrow(Graphics g, int x1, int y1, int x2, int y2, int w, int h, Color lineColor, Color arrowColor) {
+    private Image drawWeather(Weather condicionAmbiental) {
+        Image i;
+        switch (condicionAmbiental) {
+            case SUNNY:
+                i = _sunny;
+                break;
+            case STORM:
+                i = _storm;
+                break;
+            case CLOUDY:
+                i = _cloud;
+                break;
+            case RAINY:
+                i = _rainy;
+                break;
+            case WINDY:
+                i = _wind;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + condicionAmbiental);
+        }
+        return i;
+    }
 
-        int dx = x2 - x1, dy = y2 - y1;
+    private Image drawContClass(int c) {
+        Image i;
+        switch (c) {
+            case 0:
+                i = cont_0;
+                break;
+            case 1:
+                i = cont_1;
+                break;
+            case 2:
+                i = cont_2;
+                break;
+            case 3:
+                i = cont_3;
+                break;
+            case 4:
+                i = cont_4;
+                break;
+            case 5:
+                i = cont_5;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + c);
+        }
+        return i;
+    }
+
+    private void drawLine(Graphics g, int x1, int y, int x2, int y1, int w, int h, Color roadColor) {
+        int dx = x2 - x1, dy = y;
         double D = Math.sqrt(dx * dx + dy * dy);
         double xm = D - w, xn = xm, ym = h, yn = -h, x;
         double sin = dy / D, cos = dx / D;
@@ -124,65 +201,46 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
         xn = x;
 
         int[] xpoints = { x2, (int) xm, (int) xn };
-        int[] ypoints = { y2, (int) ym, (int) yn };
+        int[] ypoints = { y, (int) ym, (int) yn };
 
-        g.setColor(lineColor);
-        g.drawLine(x1, y1, x2, y2);
-        g.setColor(arrowColor);
-        g.fillPolygon(xpoints, ypoints, 3);
+        g.setColor(roadColor);
+        g.drawLine(x1, y1, x2, y);
     }
 
-    private void drawVehicles(Graphics g) {
-        for (Vehicle v : _map.getVehiculos()) {
-            if (v.getEstado() != VehicleStatus.ARRIVED) {
+    private void drawVehicles(Graphics g, Vehicle v, int x1, int x2,int y) {
+        if (v.getEstado() != VehicleStatus.ARRIVED) {
 
-                // The calculation below compute the coordinate (vX,vY) of the vehicle on the
-                // corresponding road. It is calculated relativly to the length of the road, and
-                // the location on the vehicle.
-                Road r = v.getCarretera();
-                int x1 = r.getCruceOrigen().getCoordenadaX();
-                int y1 = r.getCruceOrigen().getCoordenadaY();
-                int x2 = r.getCruceDestino().getCoordenadaX();
-                int y2 = r.getCruceDestino().getCoordenadaY();
-                double roadLength = Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-                double alpha = Math.atan(((double) Math.abs(x1 - x2)) / ((double) Math.abs(y1 - y2)));
-                double relLoc = roadLength * ((double) v.getLocalizacion()) / ((double) r.getLength());
-                double x = Math.sin(alpha) * relLoc;
-                double y = Math.cos(alpha) * relLoc;
-                int xDir = x1 < x2 ? 1 : -1;
-                int yDir = y1 < y2 ? 1 : -1;
+            // The calculation below compute the coordinate (vX,vY) of the vehicle on the
+            // corresponding road. It is calculated relativly to the length of the road, and
+            // the location on the vehicle.
+            Road r = v.getCarretera();
 
-                int vX = x1 + xDir * ((int) x);
-                int vY = y1 + yDir * ((int) y);
+            int A = v.getLocalizacion();
+            int B = r.getLongitud();
+            int vX =  x1 + (int) ((x2 - x1) * ((double) A / (double) B));
 
-                // Choose a color for the vehcile's label and background, depending on its
-                // contamination class
-                int vLabelColor = (int) (25.0 * (10.0 - (double) v.getGradoContaminacion()));
-                g.setColor(new Color(0, vLabelColor, 0));
+            // Choose a color for the vehcile's label and background, depending on its
+            // contamination class
+            int vLabelColor = (int) (25.0 * (10.0 - (double) v.getGradoContaminacion()));
+            g.setColor(new Color(0, vLabelColor, 0));
 
-                // draw an image of a car (with circle as background) and it identifier
-                g.fillOval(vX - 1, vY - 6, 14, 14);
-                g.drawImage(_car, vX, vY - 6, 12, 12, this);
-                g.drawString(v.getId(), vX, vY - 6);
-            }
+            // draw an image of a car (with circle as background) and it identifier
+            g.drawImage(_car, vX, y-10, 16, 16, this);
+            g.drawString(v.getId(), vX, y - 6);
         }
     }
 
-    private void drawJunctions(Graphics g) {
-        for (Junction j : _map.getJunctions()) {
+    private void drawJunctions(Graphics g, int x, int y, Color color, Junction j) {
 
             // (x,y) are the coordinates of the junction
-            int x = j.getCoordenadaX();
-            int y = j.getCoordenadaY();
 
             // draw a circle with center at (x,y) with radius _JRADIUS
-            g.setColor(_JUNCTION_COLOR);
+            g.setColor(color);
             g.fillOval(x - _JRADIUS / 2, y - _JRADIUS / 2, _JRADIUS, _JRADIUS);
 
             // draw the junction's identifier at (x,y)
             g.setColor(_JUNCTION_LABEL_COLOR);
             g.drawString(j.getId(), x, y);
-        }
     }
 
     // this method is used to update the preffered and actual size of the component,
@@ -223,7 +281,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 
     @Override
     public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-
+        update(map);
     }
 
     @Override
