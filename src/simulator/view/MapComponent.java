@@ -171,12 +171,6 @@ public class MapComponent extends JPanel implements TrafficSimObserver {
 			setPreferredSize(new Dimension(maxW, maxH));
 			setSize(new Dimension(maxW, maxH));
 		}
-		else{
-			setPreferredSize(new Dimension(maxW, maxH));
-			setSize(new Dimension(maxW, maxH));
-		}
-
-
 
 	}
 

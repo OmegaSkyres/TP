@@ -38,24 +38,27 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
     }
 
     public void advance() throws Exception {
-        time = time + 1;
-        int i;
-        for(i = 0; i < listaEventos.size();) {
-            Event e = listaEventos.get(i);
-            if(e.getTime() == time){
-                e.execute(mapaDeCarreteras);
-                listaEventos.remove(i);
-            }
-            else i++;
+        try {
+            time = time + 1;
+            int i;
+            for (i = 0; i < listaEventos.size(); ) {
+                Event e = listaEventos.get(i);
+                if (e.getTime() == time) {
+                    e.execute(mapaDeCarreteras);
+                    listaEventos.remove(i);
+                } else i++;
 
+            }
+            for (Junction j : mapaDeCarreteras.getJunctions()) {
+                j.advance(time);
+            }
+            for (Road r : mapaDeCarreteras.getCarreteras()) {
+                r.advance(time);
+            }
+            notificaAvanza();
+        }catch (Exception e){
+            notificaError(e.getMessage());
         }
-        for(Junction j : mapaDeCarreteras.getJunctions()){
-            j.advance(time);
-        }
-        for(Road r : mapaDeCarreteras.getCarreteras()){
-            r.advance(time);
-        }
-        notificaAvanza();
     }
 
     public void reset(){

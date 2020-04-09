@@ -95,9 +95,9 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         botonPlay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                _stopped = false; //Este valor a false es porque cuando se completa el tick se activa el toolbar y se pone el valor a true.
                 enableToolBar(false);
                 run_sim(ticks);
-                _stopped = false;
             }
         });
         toolBar.add(botonPlay);
@@ -201,7 +201,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
             try {
                 _ctrl.run(1);
             } catch (Exception e) {
-// TODO show error message
+                JOptionPane.showConfirmDialog(this, "No se ha podido ejecutar", "Error", JOptionPane.ERROR_MESSAGE, JOptionPane.WARNING_MESSAGE);
                 _stopped = true;
                 return;
             }

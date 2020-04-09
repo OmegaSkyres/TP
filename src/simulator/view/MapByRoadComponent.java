@@ -258,10 +258,6 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
             setPreferredSize(new Dimension(maxW, maxH));
             setSize(new Dimension(maxW, maxH));
         }
-        else{
-            setPreferredSize(new Dimension(maxW, maxH));
-            setSize(new Dimension(maxW, maxH));
-        }
 
     }
 
