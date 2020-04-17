@@ -1,6 +1,6 @@
 package simulator.view;
 
-import Utils.Utils;
+
 import simulator.control.Controller;
 
 import javax.swing.*;

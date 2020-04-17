@@ -35,15 +35,12 @@ public class MapComponent extends JPanel implements TrafficSimObserver {
 
 	private RoadMap _map;
 
-	private Image _car;
-
 	MapComponent(Controller ctrl) {
 		initGUI();
 		ctrl.addObserver(this);
 	}
 
 	private void initGUI() {
-		_car = loadImage("car_front.png");
 	}
 
 	public void paintComponent(Graphics graphics) {
@@ -130,7 +127,7 @@ public class MapComponent extends JPanel implements TrafficSimObserver {
 
 				// draw an image of a car (with circle as background) and it identifier
 				g.fillOval(vX - 1, vY - 6, 14, 14);
-				g.drawImage(_car, vX, vY - 6, 12, 12, this);
+				g.drawImage(Images.CAR_FRONT.ima(), vX, vY - 6, 12, 12, this);
 				g.drawString(v.getId(), vX, vY - 6);
 			}
 		}

@@ -29,20 +29,6 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 
     private RoadMap _map;
 
-    private Image _car;
-    private Image _cloud;
-    private Image _sunny;
-    private Image _wind;
-    private Image _storm;
-    private Image _rainy;
-    private Image cont_0;
-    private Image cont_1;
-    private Image cont_2;
-    private Image cont_3;
-    private Image cont_4;
-    private Image cont_5;
-
-
 
     public MapByRoadComponent(Controller ctrl){
         this.setPreferredSize(new Dimension(300, 200));
@@ -51,20 +37,6 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
     }
 
     private void initGUI() {
-       _car = loadImage("car.png");
-       _cloud = loadImage("cloud.png");
-       _rainy = loadImage("rain.png");
-       _storm = loadImage("storm.png");
-       _sunny = loadImage("sun.png");
-       _wind = loadImage("wind.png");
-       cont_0 = loadImage("cont_0.png");
-       cont_1 = loadImage("cont_1.png");
-       cont_2 = loadImage("cont_2.png");
-       cont_3 = loadImage("cont_3.png");
-       cont_4 = loadImage("cont_4.png");
-       cont_5 = loadImage("cont_5.png");
-
-
 
     }
 
@@ -139,19 +111,19 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
         Image i;
         switch (condicionAmbiental) {
             case SUNNY:
-                i = _sunny;
+                i = Images.SUNNY.ima();
                 break;
             case STORM:
-                i = _storm;
+                i = Images.STORM.ima();
                 break;
             case CLOUDY:
-                i = _cloud;
+                i = Images.CLOUDY.ima();
                 break;
             case RAINY:
-                i = _rainy;
+                i = Images.RAINY.ima();
                 break;
             case WINDY:
-                i = _wind;
+                i = Images.WINDY.ima();
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + condicionAmbiental);
@@ -163,22 +135,22 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
         Image i;
         switch (c) {
             case 0:
-                i = cont_0;
+                i = Images.CONT_0.ima();
                 break;
             case 1:
-                i = cont_1;
+                i = Images.CONT_1.ima();
                 break;
             case 2:
-                i = cont_2;
+                i = Images.CONT_2.ima();
                 break;
             case 3:
-                i = cont_3;
+                i = Images.CONT_3.ima();
                 break;
             case 4:
-                i = cont_4;
+                i = Images.CONT_4.ima();
                 break;
             case 5:
-                i = cont_5;
+                i = Images.CONT_5.ima();
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + c);
@@ -225,7 +197,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
             g.setColor(new Color(0, vLabelColor, 0));
 
             // draw an image of a car (with circle as background) and it identifier
-            g.drawImage(_car, vX, y-10, 16, 16, this);
+            g.drawImage(Images.CAR.ima(), vX, y-10, 16, 16, this);
             g.drawString(v.getId(), vX, y - 6);
         }
     }
