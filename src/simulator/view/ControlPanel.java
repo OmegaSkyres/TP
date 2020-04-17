@@ -134,7 +134,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 
         botonApagar = new JButton();
         botonApagar.setToolTipText("Salir de la Simulación");
-        botonApagar.setIcon(Images.STOP.imagen());
+        botonApagar.setIcon(Images.EXIT.imagen());
         botonApagar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
