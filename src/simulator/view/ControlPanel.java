@@ -52,7 +52,12 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         //Boton de cargar
         botonCargar = new JButton();
         botonCargar.setToolTipText("Carga un fichero de ventos");
-        botonCargar.setIcon(Images.OPEN.imagen());
+        if(Images.OPEN.imagen() == null){
+            botonCargar.setText("Load Events");
+        }
+        else{
+            botonCargar.setIcon(Images.OPEN.imagen());
+        }
         botonCargar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e){
@@ -64,7 +69,12 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         //Boton de cambiar contaminacion
         botonChangeContamination = new JButton();
         botonChangeContamination.setToolTipText("Cambio de las condiciones atmosféricas de una carretera ");
-        botonChangeContamination.setIcon(Images.CO2CLASS.imagen());
+        if(Images.CO2CLASS.imagen() == null){
+            botonChangeContamination.setText("Change C02");
+        }
+        else{
+            botonChangeContamination.setIcon(Images.CO2CLASS.imagen());
+        }
         botonChangeContamination.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -76,7 +86,12 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         //Boton de cambiar el tiempo
         botonChangeWeather= new JButton();
         botonChangeWeather.setToolTipText("Cambio de el tiempo ");
-        botonChangeWeather.setIcon(Images.WEATHER.imagen());
+        if(Images.WEATHER.imagen() == null){
+            botonChangeWeather.setText("Change Weather");
+        }
+        else{
+            botonChangeWeather.setIcon(Images.WEATHER.imagen());
+        }
         botonChangeWeather.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -90,7 +105,12 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         //Boton de Play
         botonPlay= new JButton();
         botonPlay.setToolTipText("Comienza la simulacion");
-        botonPlay.setIcon(Images.RUN.imagen());
+        if(Images.RUN.imagen() == null){
+            botonPlay.setText("RUN");
+        }
+        else{
+            botonPlay.setIcon(Images.RUN.imagen());
+        }
         botonPlay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -104,7 +124,12 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         //Boton de Detener
         botonStop = new JButton();
         botonStop.setToolTipText("Detiene la Simulación");
-        botonStop.setIcon(Images.STOP.imagen());
+        if(Images.STOP.imagen() == null){
+            botonStop.setText("STOP");
+        }
+        else{
+            botonStop.setIcon(Images.STOP.imagen());
+        }
         botonStop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -134,7 +159,12 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 
         botonApagar = new JButton();
         botonApagar.setToolTipText("Salir de la Simulación");
-        botonApagar.setIcon(Images.EXIT.imagen());
+        if(Images.EXIT.imagen() == null){
+            botonApagar.setText("Exit");
+        }
+        else{
+            botonApagar.setIcon(Images.EXIT.imagen());
+        }
         botonApagar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
