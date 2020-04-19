@@ -1,6 +1,6 @@
 package simulator.model;
 
-public class CityRoad extends Road {
+public class    CityRoad extends Road {
     CityRoad(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) throws Exception {
         super(id, srcJunc, destJunc, maxSpeed, contLimit, length, weather);
     }
@@ -15,9 +15,13 @@ public class CityRoad extends Road {
             default: x = 2;
                 break;
         }
-        if(getContaminacionTotal() - x > 0){
+        if (getContaminacionTotal() < 0){
+            contaminacionTotal = 0;
+        }
+        else if(getContaminacionTotal() - x > 0){
             contaminacionTotal = contaminacionTotal - x;
         }
+
     }
 
     @Override

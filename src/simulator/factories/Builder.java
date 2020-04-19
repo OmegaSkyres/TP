@@ -14,7 +14,7 @@ public abstract class Builder<T> {
 			_type = type;
 	}
 
-	public T createInstance(JSONObject info) throws WrongValuesContamination, WrongValuesWeather {
+	public T createInstance(JSONObject info) throws Exception {
 
 		T b = null;
 
@@ -25,5 +25,5 @@ public abstract class Builder<T> {
 		return b;
 	}
 
-	protected abstract T createTheInstance(JSONObject data) throws WrongValuesWeather, WrongValuesContamination;
+	protected abstract T createTheInstance(JSONObject data) throws Exception;
 }

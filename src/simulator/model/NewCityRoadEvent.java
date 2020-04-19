@@ -10,17 +10,10 @@ public class NewCityRoadEvent extends NewRoadEvent {
     }
 
     @Override
-    void execute(RoadMap map) throws Exception {
-        Junction srcJunc = map.getJunction(origen);
-        Junction destJunc = map.getJunction(destino);
-        CityRoad r = createRoad(srcJunc,destJunc);
-        map.addRoad(r);
-
-    }
-
-    CityRoad createRoad(Junction srcJunc, Junction destJunc) throws Exception {
+    protected Road createRoad(Junction srcJunc, Junction destJunc) throws Exception {
         return new CityRoad(this.newId,srcJunc,destJunc,this.newMaxSpeed,this.newClassLimit,this.newlength,this.newWeather);
     }
+
 
     @Override
     public String toString() {

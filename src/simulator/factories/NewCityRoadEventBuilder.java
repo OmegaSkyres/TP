@@ -1,17 +1,14 @@
 package simulator.factories;
 
 import org.json.JSONObject;
-import simulator.model.Event;
-import simulator.model.NewCityRoadEvent;
-import simulator.model.Weather;
+import simulator.model.*;
 
-public class NewCityRoadEventBuilder extends Builder<Event> {
+public class NewCityRoadEventBuilder extends NewRoadEventBuilder {
     public NewCityRoadEventBuilder() {
         super("new_city_road");
     }
 
-    @Override
-    protected Event createTheInstance(JSONObject data) {
+    protected Event createEvent(JSONObject data) throws Exception {
         int time = data.getInt("time");
         String id = data.getString("id");
         String origen = data.getString("src");

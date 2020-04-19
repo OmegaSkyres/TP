@@ -19,7 +19,7 @@ public class NewJunctionEventBuilder extends Builder<Event> {
     }
 
     @Override
-    protected NewJunctionEvent createTheInstance(JSONObject data) throws WrongValuesContamination, WrongValuesWeather {
+    protected NewJunctionEvent createTheInstance(JSONObject data) throws Exception {
         int time = data.getInt("time");
         String id = data.getString("id");
         JSONArray coordenadas = data.getJSONArray("coor");

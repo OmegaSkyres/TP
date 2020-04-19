@@ -16,7 +16,7 @@ public class BuilderBasedFactory<T> implements Factory<T> {
 	}
 
 	@Override
-	public T createInstance(JSONObject info) throws WrongValuesContamination, WrongValuesWeather {
+	public T createInstance(JSONObject info) throws Exception {
 		if (info != null) {
 			for (Builder<T> bb : _builders) {
 				T o = bb.createInstance(info);

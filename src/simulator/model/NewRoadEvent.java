@@ -21,6 +21,17 @@ public abstract class NewRoadEvent extends Event {
     }
 
     @Override
+    void execute(RoadMap map) throws Exception {
+        Junction srcJunc = map.getJunction(origen);
+        Junction destJunc = map.getJunction(destino);
+        Road r = createRoad(srcJunc,destJunc);
+        map.addRoad(r);
+
+    }
+
+    protected abstract Road createRoad(Junction srcJunc, Junction destJunc) throws Exception;
+
+    @Override
     public String toString() {
         return "New Road '"+newId+"'";
     }

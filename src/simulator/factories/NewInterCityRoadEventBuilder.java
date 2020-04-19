@@ -1,17 +1,15 @@
 package simulator.factories;
 
 import org.json.JSONObject;
-import simulator.model.Event;
-import simulator.model.NewInterCityRoadEvent;
-import simulator.model.Weather;
+import simulator.model.*;
 
-public class NewInterCityRoadEventBuilder extends Builder<Event> {
+public class NewInterCityRoadEventBuilder extends NewRoadEventBuilder {
     public NewInterCityRoadEventBuilder() {
         super("new_inter_city_road");
     }
 
     @Override
-    protected Event createTheInstance(JSONObject data) {
+    protected Event createEvent(JSONObject data) throws Exception {
         int time = data.getInt("time");
         String id = data.getString("id");
         String src = data.getString("src");
@@ -22,4 +20,6 @@ public class NewInterCityRoadEventBuilder extends Builder<Event> {
         Weather weather = Weather.valueOf(data.getString("weather").toUpperCase());
         return new NewInterCityRoadEvent(time, id, src, dst, length, co2limit, maxSpeed, weather);
     }
+
+
 }
