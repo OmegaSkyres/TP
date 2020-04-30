@@ -116,7 +116,7 @@ public class Controller {
         ls.add(p);
 
 
-        NewSetContClassEvent e = new NewSetContClassEvent(newTicks,ls);
+        NewSetContClassEvent e = new NewSetContClassEvent(newTicks + trafficSimulator.getTime(),ls);
         addEvent(e);
     }
 
@@ -124,7 +124,7 @@ public class Controller {
         Pair p = new Pair<String, Weather>(newRoad, newWeather);
         ArrayList<Pair<String,Weather>> ls = new ArrayList<Pair<String,Weather>>();
         ls.add(p);
-        NewSetWeatherEvent e = new NewSetWeatherEvent(newTicks,ls);
+        NewSetWeatherEvent e = new NewSetWeatherEvent(newTicks + trafficSimulator.getTime(),ls);
         addEvent(e);
     }
 }

@@ -66,6 +66,7 @@ public class ChangeCO2ClassDialog extends JDialog {
                     }
                     else{
                         ctrl.newEventC02(newVehicle,newCO2,newTicks);
+                        main.dispose();
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();

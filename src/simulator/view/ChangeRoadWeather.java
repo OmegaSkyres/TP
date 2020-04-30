@@ -64,6 +64,7 @@ public class ChangeRoadWeather extends JDialog{
                     }
                     else{
                         ctrl.newEventRoadWeather(newRoad,newWeather,newTicks);
+                        main.dispose();
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
