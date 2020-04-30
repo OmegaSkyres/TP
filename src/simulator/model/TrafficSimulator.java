@@ -75,6 +75,14 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
         return  report;
     }
 
+    public List<Vehicle> getVehiculos(){
+        return mapaDeCarreteras.getVehiculos();
+    }
+
+    public List<Road> getRoads(){
+        return mapaDeCarreteras.getCarreteras();
+    }
+
     private void notificaNuevoEvento(Event e) {
         for (TrafficSimObserver o : this.observadores) {
             o.onEventAdded(mapaDeCarreteras,listaEventos,e,time);

@@ -8,12 +8,11 @@ import simulator.exceptions.WrongValuesContamination;
 import simulator.exceptions.WrongValuesException;
 import simulator.exceptions.WrongValuesWeather;
 import simulator.factories.Factory;
-import simulator.model.Event;
-import simulator.model.TrafficSimObserver;
-import simulator.model.TrafficSimulator;
+import simulator.misc.Pair;
+import simulator.model.*;
 
 import java.io.*;
-import java.util.Collection;
+import java.util.*;
 
 public class Controller {
     protected TrafficSimulator trafficSimulator; //Utilizado para ejecutar la simulación.
@@ -101,5 +100,31 @@ public class Controller {
 
     public FileInputStream getFichero() {
         return ficheroEntrada;
+    }
+
+    public List<Vehicle> getVehiculos(){
+        return trafficSimulator.getVehiculos();
+    }
+
+    public List<Road> getRoads(){
+        return trafficSimulator.getRoads();
+    }
+
+    public void newEventC02(String newVehicle, int newCO2, int newTicks) throws Exception {
+        Pair p = new Pair<String, Integer>(newVehicle, newCO2);
+        ArrayList<Pair<String,Integer>> ls = new ArrayList<Pair<String,Integer>>();
+        ls.add(p);
+
+
+        NewSetContClassEvent e = new NewSetContClassEvent(newTicks,ls);
+        addEvent(e);
+    }
+
+    public void newEventRoadWeather(String newRoad, Weather newWeather, int newTicks) throws Exception {
+        Pair p = new Pair<String, Weather>(newRoad, newWeather);
+        ArrayList<Pair<String,Weather>> ls = new ArrayList<Pair<String,Weather>>();
+        ls.add(p);
+        NewSetWeatherEvent e = new NewSetWeatherEvent(newTicks,ls);
+        addEvent(e);
     }
 }

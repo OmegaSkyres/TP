@@ -1,6 +1,8 @@
 package simulator.view;
 
 import simulator.control.Controller;
+import simulator.model.Road;
+import simulator.model.Vehicle;
 import simulator.model.Weather;
 
 import javax.swing.*;
@@ -9,9 +11,10 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class ChangeRoadWeather extends JDialog{
-    private static String [] road={"r1","r2","r3","r4"};//array del primer combo //Seguro que habra que cambiarlo
+    private List<Road> roads;//array del primer combo //Seguro que habra que cambiarlo
     private static String [] weather={"SUNNY","STORM","CLOUDY", "RAINY", "WINDY", "STORM"};//array del segundo combo //Seguro que habra que cambiarlo
 
     private static String message = "<html>Schedule an event to change the weather of a road after given number<P><html>number of simulation ticks from now<P>";
@@ -21,14 +24,18 @@ public class ChangeRoadWeather extends JDialog{
     private JPanel panel;
     private JPanel central;
     private JPanel inferior;
+    private Weather newWeather = Weather.SUNNY;
+    private String newRoad = "r1";
+    private int newTicks = 1;
 
     public ChangeRoadWeather(Controller ctrl){
         box = new JDialog();
         panel = new JPanel();
         estilo = new BorderLayout();
         panel.setLayout(estilo);
+        roads = ctrl.getRoads();
         central = construyePanelCentral(ctrl);
-        inferior = construyePanelInferior(box);
+        inferior = construyePanelInferior(ctrl,box);
         estilo = new BorderLayout();
         panel.setLayout(estilo);
         texto = new JLabel(message);
@@ -44,12 +51,23 @@ public class ChangeRoadWeather extends JDialog{
         box.setVisible(true);
     }
 
-    private JPanel construyePanelInferior(JDialog main) {
+    private JPanel construyePanelInferior(Controller ctrl, JDialog main) {
         inferior = new JPanel();
         JButton ok = new JButton("OK");
         ok.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e){
+                try {
+                    if(roads.size() == 0){
+                        JOptionPane.showMessageDialog(main,"No hay Carreteras cargados");
+                        main.dispose();
+                    }
+                    else{
+                        ctrl.newEventRoadWeather(newRoad,newWeather,newTicks);
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         JButton cancelar = new JButton("Cancel");
@@ -68,9 +86,30 @@ public class ChangeRoadWeather extends JDialog{
     private JPanel construyePanelCentral(Controller ctrl) {
         central = new JPanel();
         central.add(new JLabel(" Road: "));
-        JComboBox vehicle = new JComboBox(road);
-        vehicle.setSelectedIndex(0);
-        JComboBox cO2Class = new JComboBox(weather);
+        JComboBox r = new JComboBox();
+        for(Object objeto : roads) {
+            r.addItem(objeto.toString());
+        }
+        if(roads.size() == 0){
+
+        }
+        else{
+            r.setSelectedIndex(0);
+        }
+        r.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                newRoad = (String) r.getSelectedItem();
+            }
+        });
+        JComboBox weath = new JComboBox(weather);
+        weath.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                newWeather = Weather.valueOf((String) weath.getSelectedItem());
+
+            }
+        });
         JSpinner ticks = new JSpinner(new SpinnerNumberModel(5, 1, 1000, 1));
         ticks.setToolTipText("pasos a ejecutar: 1-1000");
         ticks.setMaximumSize(new Dimension(70, 70));
@@ -79,13 +118,12 @@ public class ChangeRoadWeather extends JDialog{
         ticks.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                //int value = (int) ctrl..getValue();
-                //mainWindow.setSteps(value);
+                newTicks = (int) ticks.getValue();
             }
         });
-        central.add(vehicle);
-        central.add(new JLabel(" CO2 Class: "));
-        central.add(cO2Class);
+        central.add(r);
+        central.add(new JLabel(" Weather: "));
+        central.add(weath);
         central.add(new JLabel(" Ticks: "));
         central.add(ticks);
         return central;
