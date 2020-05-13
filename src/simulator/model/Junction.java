@@ -50,7 +50,7 @@ public class Junction extends SimulatedObject {
                 for (Vehicle v : vehiculosAMover) {
                     try {
                         v.moveToNextRoad();
-                        listaDeColas.get(indiceSemaforo).clear();
+                        listaDeColas.get(indiceSemaforo).remove(v);
                     } catch (WrongValuesVehicle e) {
                         System.out.format(e.getMessage());
                     } catch (Exception e) {

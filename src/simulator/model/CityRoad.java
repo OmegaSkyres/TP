@@ -31,7 +31,7 @@ public class    CityRoad extends Road {
 
     @Override
     int calculateVehicleSpeed(Vehicle v) {
-        double velocidadRedondeo =  Math.ceil(((11.0 - v.getGradoContaminacion()) / 11.0) * getLimiteVelocidad());
+        double velocidadRedondeo =  (((11.0 - v.getGradoContaminacion()) / 11.0) * getLimiteVelocidad());
         return v.velocidadActual = (int) velocidadRedondeo;
     }
 
