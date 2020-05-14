@@ -11,7 +11,7 @@ import simulator.model.Observable;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 
-import javax.print.attribute.standard.JobImpressions;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -23,8 +23,8 @@ import java.util.List;
 
 public class ControlPanel extends JPanel implements TrafficSimObserver {
     private JSpinner steps;
+    private JSpinner delay;
     private JFileChooser fc;
-    private int contadorTiempo;
     private Controller controlador;
     private File ficheroActual;
     private JToolBar toolBar;
@@ -35,12 +35,13 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     private JButton botonStop;
     private JButton botonApagar;
     private Controller _ctrl;
-    private boolean _stopped;
     private int ticks;
+    private long delayTime;
+    private volatile Thread _thread;
 
     public ControlPanel(Controller ctrl) {
+
         ticks = 1;
-        _stopped = false;
         _ctrl = ctrl;
         BorderLayout layout = new BorderLayout();
         this.controlador = ctrl;
@@ -114,9 +115,14 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         botonPlay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                _stopped = false; //Este valor a false es porque cuando se completa el tick se activa el toolbar y se pone el valor a true.
-                enableToolBar(false);
-                run_sim(ticks);
+                _thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        enableToolBar(false);
+                        run_sim(ticks,delayTime);
+                    }
+                });
+                _thread.start();
             }
         });
         toolBar.add(botonPlay);
@@ -133,7 +139,9 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         botonStop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                _stopped = true;
+                if(_thread != null){
+                    _thread.interrupt();
+                }
             }
         });
         toolBar.add(botonStop);
@@ -152,6 +160,20 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
             }
         });
         toolBar.add(steps);
+        toolBar.add(new JLabel(" Delay: "));
+        this.delay = new JSpinner(new SpinnerNumberModel(5, 0, 1000, 1));
+        this.delay.setToolTipText("pasos a ejecutar: 0-1000");
+        this.delay.setMaximumSize(new Dimension(70, 70));
+        this.delay.setMinimumSize(new Dimension(70, 70));
+        this.delay.setValue(0);
+        delay.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int value = (int)delay.getValue();
+                setDelay(value);
+            }
+        });
+        toolBar.add(delay);
         toolBar.add(Box.createGlue());
 
 
@@ -183,7 +205,6 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     }
 
     public void cargaFichero() {
-        contadorTiempo = 0;
         int returnVal = this.fc.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File fichero = this.fc.getSelectedFile();
@@ -225,25 +246,19 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         return res;
     }
 
-    private void run_sim(int n) {
-        if (n > 0 && !_stopped) {
+    private void run_sim(int n, long delay) {
+        while (n > 0 && !_thread.isInterrupted()) {
             try {
                 _ctrl.run(1);
+                Thread.sleep(delay);
+
             } catch (Exception e) {
-                JOptionPane.showConfirmDialog(this, "No se ha podido ejecutar", "Error", JOptionPane.ERROR_MESSAGE, JOptionPane.WARNING_MESSAGE);
-                _stopped = true;
-                return;
+                Thread.currentThread().interrupt();
             }
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    run_sim(n - 1);
-                }
-            });
-        } else {
-            enableToolBar(true);
-            _stopped = true;
+            //n--;
         }
+
+        enableToolBar(true);
     }
 
     private void enableToolBar(boolean b) {
@@ -265,16 +280,16 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     }
 
     private void stop() {
-        _stopped = true;
+        _thread.interrupt();
     }
 
     private void setTicks(int setticks){
         ticks = setticks;
     }
 
-
-
-
+    private void setDelay(int newDelay){
+        delayTime = newDelay;
+    }
 
     @Override
     public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
