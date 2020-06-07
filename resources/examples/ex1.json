@@ -117,6 +117,15 @@
                          { "vehicle" : "v2", "class": 2 }, 
                        ]
       }
-    }  
+    },
+    {
+      "type" : "set_weather",
+      "data" : {
+        "time"     : 101,
+        "info"     : [ { "road" : "r1", "weather": "SUNNY" },
+                       { "road" : "r88", "weather": "STORM" },
+                     ]
+      }
+    }
    ]
 }

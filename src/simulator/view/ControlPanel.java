@@ -303,7 +303,9 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 
     @Override
     public void onError(String err) {
-
+        if(err == "Carretera inexistente"){
+            JOptionPane.showConfirmDialog(this, "Carretera Inexistente", "Error", JOptionPane.ERROR_MESSAGE, JOptionPane.WARNING_MESSAGE);
+        }
     }
 
 }

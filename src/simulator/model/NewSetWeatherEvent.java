@@ -1,6 +1,7 @@
 package simulator.model;
 
 import simulator.exceptions.WrongValuesContamination;
+import simulator.exceptions.WrongValuesRoad;
 import simulator.exceptions.WrongValuesWeather;
 import simulator.misc.Pair;
 
@@ -18,7 +19,10 @@ public class NewSetWeatherEvent extends Event {
     @Override
     void execute(RoadMap map) throws Exception {
         for(Pair p : ws){
-            map.getRoad(p.getFirst().toString()).setWeather((Weather) p.getSecond());
+            if(!map.getCarreteras().contains(p.getFirst()))throw new WrongValuesRoad("Carretera inexistente");
+            else{
+                map.getRoad(p.getFirst().toString()).setWeather((Weather) p.getSecond());
+            }
         }
 
     }

@@ -1,8 +1,12 @@
 package simulator.model;
 
 import org.json.JSONObject;
+import simulator.exceptions.WrongValuesRoad;
+import simulator.exceptions.WrongValuesWeather;
 import simulator.misc.SortedArrayList;
+import simulator.view.MainWindow;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +50,8 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
                 if (e.getTime() == time) {
                     e.execute(mapaDeCarreteras);
                     listaEventos.remove(i);
+
+
                 } else i++;
 
             }
