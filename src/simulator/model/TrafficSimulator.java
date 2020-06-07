@@ -43,6 +43,7 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 
     public void advance() throws Exception {
         try {
+            notificaAvanza();
             time = time + 1;
             int i;
             for (i = 0; i < listaEventos.size(); ) {
@@ -50,7 +51,6 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
                 if (e.getTime() == time) {
                     e.execute(mapaDeCarreteras);
                     listaEventos.remove(i);
-
 
                 } else i++;
 
@@ -61,11 +61,13 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
             for (Road r : mapaDeCarreteras.getCarreteras()) {
                 r.advance(time);
             }
-            notificaAvanza();
+           notificaAvanzaT();
         }catch (Exception e){
             notificaError(e.getMessage());
         }
     }
+
+
 
     public void reset(){
         mapaDeCarreteras.reset();
@@ -107,11 +109,18 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
         }
     }
 
+    private void notificaAvanzaT() {
+        for (TrafficSimObserver o : this.observadores) {
+            o.onAdvanceEnd(mapaDeCarreteras,listaEventos,time);
+        }
+    }
+
 
     @Override
     public void addObserver(TrafficSimObserver o) {
         if (o != null && !this.observadores.contains(o)) {
             this.observadores.add(o);
+            o.onRegister(mapaDeCarreteras,listaEventos,time);
         }
     }
 

@@ -19,10 +19,13 @@ public class NewSetWeatherEvent extends Event {
     @Override
     void execute(RoadMap map) throws Exception {
         for(Pair p : ws){
-            if(!map.getCarreteras().contains(p.getFirst()))throw new WrongValuesRoad("Carretera inexistente");
-            else{
+            try{
                 map.getRoad(p.getFirst().toString()).setWeather((Weather) p.getSecond());
+            }catch (Exception e){
+                throw new WrongValuesRoad("Carretera inexistente");
             }
+
+
         }
 
     }
