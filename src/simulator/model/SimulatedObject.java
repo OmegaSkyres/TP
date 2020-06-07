@@ -1,0 +1,26 @@
+package simulator.model;
+
+import org.json.JSONObject;
+import simulator.exceptions.WrongValuesVehicle;
+
+public abstract class SimulatedObject {
+
+	protected String _id;
+
+	SimulatedObject(String id) {
+		_id = id;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	@Override
+	public String toString() {
+		return _id;
+	}
+
+	protected abstract void advance(int time) throws WrongValuesVehicle;
+
+	abstract public JSONObject report();
+}
