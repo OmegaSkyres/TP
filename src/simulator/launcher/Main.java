@@ -113,9 +113,6 @@ public class Main {
 
 	private static void parseInFileOption(CommandLine line) throws ParseException {
 		_inFile = line.getOptionValue("i");
-		if (_inFile == null) {
-			throw new ParseException("An events file is missing");
-		}
 	}
 
 	private static void parseOutFileOption(CommandLine line) throws ParseException {
@@ -164,7 +161,8 @@ public class Main {
 	}
 
 	private static void startGUIMode() throws Exception {
-		InputStream in = new FileInputStream(new File(_inFile));
+		InputStream in =  _inFile == null ?
+				System.in : new FileInputStream(new File(_inFile));
 		OutputStream out = _outFile == null ?
 				System.out : new FileOutputStream(new File(_outFile));
 		TrafficSimulator sim = new TrafficSimulator();
@@ -174,6 +172,7 @@ public class Main {
 			public void run() {
 				new MainWindow(ctrl);
 				try {
+					if(_inFile != null)
 					ctrl.loadEvents(in);
 				} catch (Exception e) {
 					e.printStackTrace();
